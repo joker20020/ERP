@@ -1,0 +1,43 @@
+<mxfile host="Electron" modified="2023-09-13T10:59:37.093Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.5.1 Chrome/112.0.5615.204 Electron/24.6.0 Safari/537.36" etag="Av2VI0FubYGAD0ILAItf" version="21.5.1" type="device">
+  <diagram name="第 1 页" id="QBxuN26RDLddkOAQD2wr">
+    <mxGraphModel dx="941" dy="692" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="GgDtMRvrFvS02ZCUQ_Kf-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="GgDtMRvrFvS02ZCUQ_Kf-7" target="GgDtMRvrFvS02ZCUQ_Kf-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GgDtMRvrFvS02ZCUQ_Kf-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="GgDtMRvrFvS02ZCUQ_Kf-7" target="GgDtMRvrFvS02ZCUQ_Kf-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GgDtMRvrFvS02ZCUQ_Kf-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="GgDtMRvrFvS02ZCUQ_Kf-7" target="GgDtMRvrFvS02ZCUQ_Kf-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GgDtMRvrFvS02ZCUQ_Kf-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="GgDtMRvrFvS02ZCUQ_Kf-7" target="GgDtMRvrFvS02ZCUQ_Kf-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GgDtMRvrFvS02ZCUQ_Kf-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="GgDtMRvrFvS02ZCUQ_Kf-7" target="GgDtMRvrFvS02ZCUQ_Kf-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GgDtMRvrFvS02ZCUQ_Kf-7" value="共性基础字典管理" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="90" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GgDtMRvrFvS02ZCUQ_Kf-8" value="共性基础字典创建" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GgDtMRvrFvS02ZCUQ_Kf-9" value="共性基础字典内容添加" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GgDtMRvrFvS02ZCUQ_Kf-10" value="共性基础字典内容删除" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GgDtMRvrFvS02ZCUQ_Kf-11" value="共性基础字典内容修改" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GgDtMRvrFvS02ZCUQ_Kf-12" value="共性基础字典内容查找" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="670" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

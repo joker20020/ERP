@@ -1,0 +1,49 @@
+<mxfile host="Electron" modified="2023-09-13T11:48:59.966Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.5.1 Chrome/112.0.5615.204 Electron/24.6.0 Safari/537.36" etag="MnqVdb-WfBTcJhlliwNF" version="21.5.1" type="device">
+  <diagram name="第 1 页" id="TFzBGVawsYrUYzqUThqc">
+    <mxGraphModel dx="941" dy="692" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="5gpPqB77LEtl8uCmtEOj-1" target="5gpPqB77LEtl8uCmtEOj-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="5gpPqB77LEtl8uCmtEOj-1" target="5gpPqB77LEtl8uCmtEOj-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="5gpPqB77LEtl8uCmtEOj-1" target="5gpPqB77LEtl8uCmtEOj-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="5gpPqB77LEtl8uCmtEOj-1" target="5gpPqB77LEtl8uCmtEOj-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="5gpPqB77LEtl8uCmtEOj-1" target="5gpPqB77LEtl8uCmtEOj-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="5gpPqB77LEtl8uCmtEOj-1" target="5gpPqB77LEtl8uCmtEOj-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-1" value="系统与基础信息管理模块" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="480" y="210" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-2" value="产品信息管理" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="170" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-3" value="工艺信息管理" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="310" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-4" value="组织与人员信息管理" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="450" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-6" value="共性基础字典" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="590" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-7" value="系统访问权限管理" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="730" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="5gpPqB77LEtl8uCmtEOj-8" value="系统操作日志管理" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="870" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

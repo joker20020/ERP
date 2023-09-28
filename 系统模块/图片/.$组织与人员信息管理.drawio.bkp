@@ -1,0 +1,73 @@
+<mxfile host="Electron" modified="2023-09-13T10:54:32.727Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.5.1 Chrome/112.0.5615.204 Electron/24.6.0 Safari/537.36" etag="gk0oaMpllHsYISWfqZp6" version="21.5.1" type="device">
+  <diagram name="第 1 页" id="042zHYNonQd5HWO-lwxl">
+    <mxGraphModel dx="941" dy="692" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_YRsAoWVU7ChOqbyJG8v-7" target="_YRsAoWVU7ChOqbyJG8v-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_YRsAoWVU7ChOqbyJG8v-7" target="_YRsAoWVU7ChOqbyJG8v-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_YRsAoWVU7ChOqbyJG8v-7" target="_YRsAoWVU7ChOqbyJG8v-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="_YRsAoWVU7ChOqbyJG8v-7" target="_YRsAoWVU7ChOqbyJG8v-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_YRsAoWVU7ChOqbyJG8v-7" target="_YRsAoWVU7ChOqbyJG8v-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_YRsAoWVU7ChOqbyJG8v-7" target="_YRsAoWVU7ChOqbyJG8v-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_YRsAoWVU7ChOqbyJG8v-7" target="_YRsAoWVU7ChOqbyJG8v-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_YRsAoWVU7ChOqbyJG8v-7" target="_YRsAoWVU7ChOqbyJG8v-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_YRsAoWVU7ChOqbyJG8v-7" target="_YRsAoWVU7ChOqbyJG8v-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_YRsAoWVU7ChOqbyJG8v-7" target="_YRsAoWVU7ChOqbyJG8v-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-7" value="组织与人员信息管理" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="354" y="150" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-8" value="组织结构树创建" style="rounded=0;whiteSpace=wrap;html=1;flipH=0;" vertex="1" parent="1">
+          <mxGeometry x="189" y="260" width="16" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-9" value="组织结构树内容添加" style="rounded=0;whiteSpace=wrap;html=1;flipH=0;" vertex="1" parent="1">
+          <mxGeometry x="237" y="260" width="16" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-10" value="组织结构树内容删除" style="rounded=0;whiteSpace=wrap;html=1;flipH=0;" vertex="1" parent="1">
+          <mxGeometry x="283" y="260" width="20" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-11" value="组织结构树内容修改" style="rounded=0;whiteSpace=wrap;html=1;flipH=0;" vertex="1" parent="1">
+          <mxGeometry x="332" y="260" width="20" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-12" value="组织结构树内容查找" style="rounded=0;whiteSpace=wrap;html=1;flipH=0;" vertex="1" parent="1">
+          <mxGeometry x="382" y="260" width="16" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-13" value="人员信息表创建" style="rounded=0;whiteSpace=wrap;html=1;flipH=0;" vertex="1" parent="1">
+          <mxGeometry x="430" y="260" width="16" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-14" value="人员信息表内容添加" style="rounded=0;whiteSpace=wrap;html=1;flipH=0;" vertex="1" parent="1">
+          <mxGeometry x="478" y="260" width="16" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-15" value="人员信息表内容删除" style="rounded=0;whiteSpace=wrap;html=1;flipH=0;" vertex="1" parent="1">
+          <mxGeometry x="525" y="260" width="20" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-16" value="人员信息表内容修改" style="rounded=0;whiteSpace=wrap;html=1;flipH=0;" vertex="1" parent="1">
+          <mxGeometry x="573" y="260" width="20" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="_YRsAoWVU7ChOqbyJG8v-17" value="人员信息表内容查找" style="rounded=0;whiteSpace=wrap;html=1;flipH=0;" vertex="1" parent="1">
+          <mxGeometry x="623" y="260" width="16" height="170" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
