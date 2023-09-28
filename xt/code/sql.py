@@ -1,4 +1,5 @@
 import sqlite3 as sql
+import sys
 
 
 class XTDataBase:
@@ -145,10 +146,10 @@ class XTDataBase:
         self.connection.commit()
 
     """
-        name:表名
-        parent:外部键表名
+    name:表名
+    parent:外部键表名
 
-        func:创建一张bom-line表
+    func:创建一张bom-line表
     """
 
     def xt_bl_create_table(self, name, bom, line):
@@ -163,9 +164,9 @@ class XTDataBase:
         self.connection.commit()
 
     """
-        name:表名
+    name:表名
 
-        func:创建一张工艺路线表
+    func:创建一张工艺路线表
     """
 
     def xt_line_create_table(self, name):
@@ -179,12 +180,11 @@ class XTDataBase:
         self.connection.commit()
 
     """
-        name:表名
-        parent:外部键表名
+    name:表名
+    parent:外部键表名
 
-        func:创建一张工序表
+    func:创建一张工序表
     """
-
     def xt_work_create_table(self, name, parent):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
@@ -197,12 +197,10 @@ class XTDataBase:
         self.connection.commit()
 
     """
-            name:表名
-            parent:外部键表名
+    name:表名
 
-            func:创建组织结构表
+    func:创建组织结构表
     """
-
     def xt_group_create_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
@@ -214,22 +212,62 @@ class XTDataBase:
         self.connection.commit()
 
     """
-                name:表名
-                parent:外部键表名
+    name:表名
+    worker:外部键表名
+    group:外部键表名
 
-                func:创建人员组织表
-        """
-
+    func:创建人员组织表
+    """
     def xt_wg_create_table(self, name, worker, group):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-                        ID INTEGER NOT NULL,
-                        LINE_ID INTEGER NOT NULL,
-                        FOREIGN KEY (ID) REFERENCES {}(ID) ON DELETE CASCADE ON UPDATE CASCADE,
-                        FOREIGN KEY (LINE_ID) REFERENCES {}(LINE_ID) ON DELETE CASCADE ON UPDATE CASCADE
-                        );
-                        """.format(name, worker, group))
+                ID INTEGER NOT NULL,
+                ORG TEXT NOT NULL,
+                FOREIGN KEY (ID) REFERENCES {}(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+                FOREIGN KEY (ORG) REFERENCES {}(NAME) ON DELETE CASCADE ON UPDATE CASCADE
+                );
+                """.format(name, worker, group))
         self.connection.commit()
+
+    """
+    name:表名
+    character:角色表
+
+    func:创建人员信息表
+    """
+    def xt_woker_create_table(self, name,character):
+        cursor = self.connection.cursor()
+        cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
+                        ID INTEGER PRIMARY KEY ,
+                        NAME TEXT NOT NULL,
+                        AGE INTEGER NOT NULL,
+                        SEX TEXT NOT NULL,
+                        PLACE TEXT NOT NULL,
+                        USER_NAME TEXT NOT NULL,
+                        PASSWORD TEXT NOT NULL,
+                        CHARACTER TEXT,
+                        DES TEXT,
+                        FOREIGN KEY (CHARACTER) REFERENCES {}(CHARACTER) ON DELETE SET NULL ON UPDATE CASCADE
+                        );
+                        """.format(name,character))
+        self.connection.commit()
+
+    """
+    name:表名
+
+    func:创建角色权限表
+    """
+    def xt_character_create_table(self, name):
+        cursor = self.connection.cursor()
+        cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
+                        CHARACTER TEXT PRIMARY KEY,
+                        AUTHORITY INTEGER NOT NULL
+                        );
+                        """.format(name))
+        self.connection.commit()
+
+
+
 
     def close(self):
         self.connection.commit()
@@ -240,10 +278,16 @@ if __name__ == "__main__":
     db = XTDataBase("test.db")
     # print(db.sql_cmd("SELECT name FROM sqlite_master WHERE type='table'"))
     # print(db.sql_cmd("PRAGMA table_info(sqlite_master)"))
+
     # db.xt_bom_create_table("bom1")
     # db.xt_bl_create_table("bl1","bom1","line1")
     # db.xt_line_create_table("line1")
     # db.xt_work_create_table("work1","line1")
+    # db.xt_group_create_table("group1")
+    # db.xt_character_create_table("character1")
+    # db.xt_woker_create_table("worker1","character1")
+    # db.xt_wg_create_table("wg1","worker1","group1")
+
     # db.insert_table("bom1",["LAYER","NAME","NUM","DESC","COST","CYCLE"],[1,"BOM1_TEST",2,"This is a test!!!",4.5,3.4])
     # db.insert_table("bom1", ["LAYER", "NAME", "NUM", "DESC", "COST", "CYCLE"],[1, "BOM1_TEST", 3, "This is a test!!!", 4.5, 3.4])
     # db.insert_table("line1", ["DESC", "WC"], ["TEST", "WC TEST"])
@@ -252,12 +296,29 @@ if __name__ == "__main__":
     # db.insert_table("work1", ["DESC", "LINE_ID"], ["TEST", 1])
     # db.insert_table("work1", ["DESC", "LINE_ID"], ["TEST", 1])
     # db.insert_table("work1", ["DESC", "LINE_ID"], ["TEST", 1])
+    # db.insert_table("group1",["NAME","CHILD","DES"],["TEST","CTEST","111"])
+    # db.insert_table("group1", ["NAME", "CHILD", "DES"], ["CTEST", "CCTEST", "222"])
+    # db.insert_table("character1",["CHARACTER","AUTHORITY"],["admin",8])
+    # db.insert_table("worker1",["ID","NAME","AGE","SEX","PLACE","USER_NAME","PASSWORD","CHARACTER","DES"],[1,"jdy",88,"男","asd","dddd","123456","admin","test"])
+    # db.insert_table("worker1",["ID","NAME","AGE","SEX","PLACE","USER_NAME","PASSWORD","CHARACTER","DES"],[2,"jdy",88,"男","asd","dddd","123456","admin","test"])
+    # db.insert_table("wg1",["ID","ORG"],[1,"TEST"])
+    # db.insert_table("wg1", ["ID", "ORG"], [2, "CTEST"])
+
     # db.delete("bom1",ID=1)
     # db.delete("line1",LINE_ID=1)
-    print(db.find_info("bom1", []))
-    print(db.find_info("bl1", []))
-    print(db.find_info("line1", []))
-    print(db.find_info("work1", []))
+    # db.delete("character1",CHARACTER="admin")
+    # db.delete("worker1",ID=1)
+    # db.delete("group1",NAME="CTEST")
+
+    # print(db.find_info("bom1", []))
+    # print(db.find_info("bl1", []))
+    # print(db.find_info("line1", []))
+    # print(db.find_info("work1", []))
+    print(db.find_info("group1", []))
+    print(db.find_info("character1", []))
+    print(db.find_info("worker1", []))
+    print(db.find_info("wg1", []))
+
     # db.find_info("test",["FILE_PATH"])
     # db.where("test",FORMAT="step")
     # db.where("test","FILE_PATH","NAME",FORMAT="step")
