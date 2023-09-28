@@ -1,24 +1,25 @@
 import sqlite3 as sql
 
+
 class XTDataBase:
-    def __init__(self,file_path):
+    def __init__(self, file_path):
         self.connection = sql.connect(file_path)
         self.sql_cmd("PRAGMA foreign_keys=ON")
 
     ## 数据库操作方法
-    def insert_table(self,table_name,col_name:list,values:list):
+    def insert_table(self, table_name, col_name: list, values: list):
 
         cursor = self.connection.cursor()
         cmd = f"INSERT INTO {table_name} (" + ",".join(col_name) + \
               f") VALUES ("
         for i in range(len(values)):
             cmd += f"'{values[i]}',"
-        cmd = cmd[:-1]+");"
+        cmd = cmd[:-1] + ");"
         # print(cmd)
         cursor.execute(cmd)
         self.connection.commit()
 
-    def find_info(self,table_name,args):
+    def find_info(self, table_name, args):
         cursor = self.connection.cursor()
         cmd = None
         # print(args)
@@ -39,7 +40,7 @@ class XTDataBase:
             # print(" | ".join(each))
         return result
 
-    def sql_cmd(self,cmd):
+    def sql_cmd(self, cmd):
         cursor = self.connection.cursor()
         cursor.execute(cmd)
         self.connection.commit()
@@ -49,21 +50,21 @@ class XTDataBase:
             # print(each)
         return result
 
-    def where(self,table_name,col,**dicts):
+    def where(self, table_name, col, **dicts):
         cursor = self.connection.cursor()
         cmd = None
         # print(args)
         if not len(col):
             cmd = "SELECT * FROM {} WHERE ".format(table_name)
-            for k,v in dicts.items():
-                cmd += "{} = '{}' ".format(k,v)
+            for k, v in dicts.items():
+                cmd += "{} = '{}' ".format(k, v)
             # print(cmd)
             cursor.execute(cmd)
             # print(" | ".join(self.params))
         else:
             cmd = "SELECT " + ", ".join(col) + " FROM {} WHERE ".format(table_name)
-            for k,v in dicts.items():
-                cmd += "{} = '{}' ".format(k,v)
+            for k, v in dicts.items():
+                cmd += "{} = '{}' ".format(k, v)
             # print(cmd)
             cursor.execute(cmd)
             # print(" | ".join(col))
@@ -74,16 +75,16 @@ class XTDataBase:
             # print(" | ".join(each))
         return result
 
-    def delete(self,table_name,**kwargs):
+    def delete(self, table_name, **kwargs):
         cursor = self.connection.cursor()
         cmd = "DELETE FROM {} WHERE ".format(table_name)
-        for k,v in kwargs.items():
-            cmd += "{} = '{}' ".format(k,v)
+        for k, v in kwargs.items():
+            cmd += "{} = '{}' ".format(k, v)
         # print(cmd)
         cursor.execute(cmd[:-1])
         self.connection.commit()
 
-    def update(self,table_name,dicts,**condition):
+    def update(self, table_name, dicts, **condition):
         cursor = self.connection.cursor()
         cmd = None
         # print(args)
@@ -108,12 +109,27 @@ class XTDataBase:
             cursor.execute(cmd[:-1])
             # print(" | ".join(col))
 
+    def add_column(self, table_name, col_name, col_type):
+        cursor = self.connection.cursor()
+        cmd = "ALTER TABLE {} ADD COLUMN {} {};".format(table_name, col_name, col_type)
+        # print(cmd)
+        cursor.execute(cmd[:-1])
+        self.connection.commit()
+
+    def drop(self, table_name):
+        cursor = self.connection.cursor()
+        cmd = "DROP TABLE {} ;".format(table_name)
+        # print(cmd)
+        cursor.execute(cmd[:-1])
+        self.connection.commit()
+
     """
     name:表名
-    
+
     func:创建一张bom表
     """
-    def xt_bom_create_table(self,name):
+
+    def xt_bom_create_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -134,7 +150,8 @@ class XTDataBase:
 
         func:创建一张bom-line表
     """
-    def xt_bl_create_table(self,name,bom,line):
+
+    def xt_bl_create_table(self, name, bom, line):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
                 ID INTEGER NOT NULL,
@@ -142,15 +159,16 @@ class XTDataBase:
                 FOREIGN KEY (ID) REFERENCES {}(ID) ON DELETE CASCADE ON UPDATE CASCADE,
                 FOREIGN KEY (LINE_ID) REFERENCES {}(LINE_ID) ON DELETE CASCADE ON UPDATE CASCADE
                 );
-                """.format(name,bom,line))
+                """.format(name, bom, line))
         self.connection.commit()
 
     """
         name:表名
-        
+
         func:创建一张工艺路线表
     """
-    def xt_line_create_table(self,name):
+
+    def xt_line_create_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
                 LINE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -166,7 +184,8 @@ class XTDataBase:
 
         func:创建一张工序表
     """
-    def xt_work_create_table(self,name,parent):
+
+    def xt_work_create_table(self, name, parent):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
                 WORK_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -174,12 +193,43 @@ class XTDataBase:
                 LINE_ID INTEGER NOT NULL,
                 FOREIGN KEY (LINE_ID) REFERENCES {}(LINE_ID) ON DELETE CASCADE ON UPDATE CASCADE
                 );
-                """.format(name,parent))
+                """.format(name, parent))
         self.connection.commit()
 
+    """
+            name:表名
+            parent:外部键表名
 
+            func:创建组织结构表
+    """
 
+    def xt_group_create_table(self, name):
+        cursor = self.connection.cursor()
+        cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
+                        NAME TEXT PRIMARY KEY ,
+                        CHILD TEXT,
+                        DES TEXT
+                        );
+                        """.format(name))
+        self.connection.commit()
 
+    """
+                name:表名
+                parent:外部键表名
+
+                func:创建人员组织表
+        """
+
+    def xt_wg_create_table(self, name, worker, group):
+        cursor = self.connection.cursor()
+        cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
+                        ID INTEGER NOT NULL,
+                        LINE_ID INTEGER NOT NULL,
+                        FOREIGN KEY (ID) REFERENCES {}(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+                        FOREIGN KEY (LINE_ID) REFERENCES {}(LINE_ID) ON DELETE CASCADE ON UPDATE CASCADE
+                        );
+                        """.format(name, worker, group))
+        self.connection.commit()
 
     def close(self):
         self.connection.commit()
@@ -188,6 +238,8 @@ class XTDataBase:
 
 if __name__ == "__main__":
     db = XTDataBase("test.db")
+    # print(db.sql_cmd("SELECT name FROM sqlite_master WHERE type='table'"))
+    # print(db.sql_cmd("PRAGMA table_info(sqlite_master)"))
     # db.xt_bom_create_table("bom1")
     # db.xt_bl_create_table("bl1","bom1","line1")
     # db.xt_line_create_table("line1")
@@ -202,8 +254,8 @@ if __name__ == "__main__":
     # db.insert_table("work1", ["DESC", "LINE_ID"], ["TEST", 1])
     # db.delete("bom1",ID=1)
     # db.delete("line1",LINE_ID=1)
-    print(db.find_info("bom1",[]))
-    print(db.find_info("bl1",[]))
+    print(db.find_info("bom1", []))
+    print(db.find_info("bl1", []))
     print(db.find_info("line1", []))
     print(db.find_info("work1", []))
     # db.find_info("test",["FILE_PATH"])
