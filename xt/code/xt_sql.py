@@ -1,5 +1,6 @@
 import sqlite3 as sql
 import sys
+import time
 
 
 class XTDataBase:
@@ -140,6 +141,7 @@ class XTDataBase:
         DESC TEXT NOT NULL,
         COST REAL NOT NULL,
         CYCLE REAL NOT NULL,
+        BUY INTEGER NOT NULL,
         ANNOTATION TEXT
         );
         """.format(name))
@@ -273,9 +275,104 @@ class XTDataBase:
         self.connection.commit()
         self.connection.close()
 
+class Logger(XTDataBase):
+    def __init__(self,file_path):
+        import time
+        super().__init__(file_path)
+        self.xt_log_create_table()
+
+    def xt_log_create_table(self):
+        cursor = self.connection.cursor()
+        cursor.execute("""CREATE TABLE IF NOT EXISTS LOG (
+                            DATE TEXT NOT NULL,
+                            USER TEXT NOT NULL,
+                            OPERATION TEXT NOT NULL
+                            );
+                            """)
+        self.connection.commit()
+
+
+    ## 日志生成
+    def generate(self,user_name,operation):
+        operation_time = time.strftime("%Y-%m-%d|%H:%M:%S")
+        self.insert_table("LOG",["DATE","USER","OPERATION"],[operation_time,user_name,operation])
+
+    ## 通过日期查询
+    def search_by_date(self,*params):
+
+        if len(params)<=3:
+            date = ""
+            for each in params:
+                date += "{:02}".format(each)
+                date += "-"
+            if len(params)==3:
+                date = date[:-1]
+            date += "*"
+        else:
+            date = "{}-{:02}-{}|".format(params[0],params[1],params[2])
+            for i in range(3,len(params)):
+                date += "{:02}".format(params[i])
+                date += ":"
+            if len(params)<6:
+                date += "*"
+            elif len(params)==6:
+                date = date[:-1]
+        cmd = "SELECT * FROM LOG WHERE DATE GLOB '{}' ;".format(date)
+        return self.sql_cmd(cmd)
+
+    ## 通过操作用户查询
+    def search_by_user(self,user):
+        cmd = "SELECT * FROM LOG WHERE USER='{}';".format(user)
+        return self.sql_cmd(cmd)
+
+    def delete_by_user(self,user):
+        cmd = "DELETE FROM LOG WHERE USER='{}';".format(user)
+        return self.sql_cmd(cmd)
+
+    def delete_by_date(self,*params):
+
+        if len(params)<=3:
+            date = ""
+            for each in params:
+                date += "{:02}".format(each)
+                date += "-"
+            if len(params)==3:
+                date = date[:-1]
+            date += "*"
+        else:
+            date = "{}-{:02}-{}|".format(params[0],params[1],params[2])
+            for i in range(3,len(params)):
+                date += "{:02}".format(params[i])
+                date += ":"
+            if len(params)<6:
+                date += "*"
+            elif len(params)==6:
+                date = date[:-1]
+        cmd = "DELETE FROM LOG WHERE DATE GLOB '{}' ;".format(date)
+        return self.sql_cmd(cmd)
+
+    def export_log(self):
+        log = self.sql_cmd("SELECT * FROM LOG")
+        with open("log.txt","w+") as f:
+            for each in log:
+                f.write("   ".join(each))
+                f.write("\n")
+
+
+
 
 if __name__ == "__main__":
     db = XTDataBase("test.db")
+    logger = Logger("test.db")
+    # logger.generate("jdy","test operation")
+    # print(logger.search_by_date(2023,9,28,13,54,52))
+    # print(logger.search_by_user("jdy"))
+    # logger.export_log()
+    # logger.delete_by_date(2023,9,28,13,55)
+    # logger.delete_by_user("jdy")
+    print(logger.find_info("LOG",[]))
+
+
     # print(db.sql_cmd("SELECT name FROM sqlite_master WHERE type='table'"))
     # print(db.sql_cmd("PRAGMA table_info(sqlite_master)"))
 
@@ -288,8 +385,8 @@ if __name__ == "__main__":
     # db.xt_woker_create_table("worker1","character1")
     # db.xt_wg_create_table("wg1","worker1","group1")
 
-    # db.insert_table("bom1",["LAYER","NAME","NUM","DESC","COST","CYCLE"],[1,"BOM1_TEST",2,"This is a test!!!",4.5,3.4])
-    # db.insert_table("bom1", ["LAYER", "NAME", "NUM", "DESC", "COST", "CYCLE"],[1, "BOM1_TEST", 3, "This is a test!!!", 4.5, 3.4])
+    # db.insert_table("bom1",["LAYER","NAME","NUM","DESC","COST","CYCLE","BUY"],[1,"BOM1_TEST",2,"This is a test!!!",4.5,3.4,True])
+    # db.insert_table("bom1", ["LAYER", "NAME", "NUM", "DESC", "COST", "CYCLE","BUY"],[1, "BOM1_TEST", 3, "This is a test!!!", 4.5, 3.4,False])
     # db.insert_table("line1", ["DESC", "WC"], ["TEST", "WC TEST"])
     # db.insert_table("bl1", ["ID", "LINE_ID"],[1,1])
     # db.insert_table("bl1", ["ID", "LINE_ID"], [2, 1])
@@ -314,10 +411,10 @@ if __name__ == "__main__":
     # print(db.find_info("bl1", []))
     # print(db.find_info("line1", []))
     # print(db.find_info("work1", []))
-    print(db.find_info("group1", []))
-    print(db.find_info("character1", []))
-    print(db.find_info("worker1", []))
-    print(db.find_info("wg1", []))
+    # print(db.find_info("group1", []))
+    # print(db.find_info("character1", []))
+    # print(db.find_info("worker1", []))
+    # print(db.find_info("wg1", []))
 
     # db.find_info("test",["FILE_PATH"])
     # db.where("test",FORMAT="step")
