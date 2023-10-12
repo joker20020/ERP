@@ -175,6 +175,7 @@ class XTDataBase:
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
                 LINE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                NAME TEXT NOT NULL,
                 DESC TEXT,
                 WC TEXT NOT NULL
                 );
@@ -299,7 +300,6 @@ class Logger(XTDataBase):
 
     ## 通过日期查询
     def search_by_date(self,*params):
-
         if len(params)<=3:
             date = ""
             for each in params:
@@ -387,7 +387,7 @@ if __name__ == "__main__":
 
     # db.insert_table("bom1",["LAYER","NAME","NUM","DESC","COST","CYCLE","BUY"],[1,"BOM1_TEST",2,"This is a test!!!",4.5,3.4,True])
     # db.insert_table("bom1", ["LAYER", "NAME", "NUM", "DESC", "COST", "CYCLE","BUY"],[1, "BOM1_TEST", 3, "This is a test!!!", 4.5, 3.4,False])
-    # db.insert_table("line1", ["DESC", "WC"], ["TEST", "WC TEST"])
+    # db.insert_table("line1", ["NAME","DESC", "WC"], ["test1","TEST", "WC TEST"])
     # db.insert_table("bl1", ["ID", "LINE_ID"],[1,1])
     # db.insert_table("bl1", ["ID", "LINE_ID"], [2, 1])
     # db.insert_table("work1", ["DESC", "LINE_ID"], ["TEST", 1])
