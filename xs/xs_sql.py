@@ -1,9 +1,11 @@
 import sqlite3 as sql
 import sys
 import time
+from PySide6.QtWidgets import QApplication, QWidget,QLineEdit,QVBoxLayout
+# PySide6-uic demo.ui -o ui_demo.py
+from xs2 import Ui_Form
 
-
-class XTDataBase:
+class XSDataBase:
     def __init__(self, file_path):
         self.connection = sql.connect(file_path)
         self.sql_cmd("PRAGMA foreign_keys=ON")
@@ -131,31 +133,31 @@ class XTDataBase:
     func:客户信息管理
     """
 
-    def xs_customers_create_table(self, name):
+    def xs_customer_create_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-        cust_id      INT       NOT NULL,
-	    cust_name    VARCHAR(50)  NOT NULL,
-	    cust_address VARCHAR(50)  NULL,
-	    cust_zip     VARCHAR(10)  NULL,
-	    cust_contact VARCHAR(50)  NULL,
-	    cust_email   VARCHAR(255) NULL,
-	    PRIMARY KEY(cust_id)
+            cust_id      INT       NOT NULL,
+	        cust_name    VARCHAR(50)  NOT NULL,
+	        cust_address VARCHAR(50)  NULL,
+	        cust_email   VARCHAR(255) NULL,
+	        cust_points  VARCHAR(50)  NULL,
+	        PRIMARY KEY(cust_id)
         );
         """.format(name))
         self.connection.commit()
 
     """
+    
     name:表名
     销售产品管理
     """
 
-    def xc_products_create_table(self, name):
+    def xs_products_create_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-                product_id INTEGER PRIMARY KEY,
+                product_id TEXT PRIMARY KEY NOT NULL,
                 product_name TEXT,
-                price REAL
+                price TEXT
                 );
                 """.format(name))
         self.connection.commit()
@@ -166,7 +168,7 @@ class XTDataBase:
     func:销售员管理
     """
 
-    def xc_salespersons_create_table(self, name):
+    def xs_salespersons_create_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
                 salesperson_id INTEGER PRIMARY KEY   NOT NULL,
@@ -181,7 +183,7 @@ class XTDataBase:
     name:表名
     销售业务管理
     """
-    def xc_sales_activities_create_table(self, name):
+    def xs_sales_activities_create_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
                 activity_id INTEGER PRIMARY KEY   NOT NULL,
@@ -196,7 +198,7 @@ class XTDataBase:
            name:表名
            销售订单管理
            """
-    def xc_sales_orders_create_table(self, name):
+    def xs_sales_orders_create_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
                 order_id INTEGER PRIMARY KEY    NOT NULL,
@@ -211,3 +213,91 @@ class XTDataBase:
                 );
                 """.format(name))
         self.connection.commit()
+
+class MyWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_Form()  # UI类的实例化()
+        self.ui.setupUi(self)
+        self.db = XSDataBase("lk.db")
+        self.bind()
+
+    def bind(self):
+        # self.ui.pushButton_3.clicked.connect(self.get_btn_text)
+        self.ui.pushButton.clicked.connect(self.get_btn2_text)
+
+    #按键获取客户
+    # def get_btn_text(self):
+    #     if self.ui.radioButton.isChecked():
+    #         cid = self.ui.lineEdit.text()
+    #         cname = self.ui.lineEdit_2.text()
+    #         caddress = self.ui.lineEdit_3.text()
+    #         cemail = self.ui.lineEdit_4.text()
+    #         cpoints = self.ui.lineEdit_5.text()
+    #         # self.db.insert_table('cust',['cust_id','cust_name','cust_address','cust_email','cust_points'],[cid,'cname','caddress','cemail''cpoints'])
+    #     if self.ui.radioButton_2.isChecked():
+    #         sid = self.ui.lineEdit_6.text()
+
+    # 按键获取销售员
+    def get_btn2_text(self):
+        if self.ui.radioButton_5.isChecked():
+            sid = self.ui.lineEdit_7.text()
+            sname = self.ui.lineEdit_8.text()
+            sregion= self.ui.lineEdit_9.text()
+            password = self.ui.lineEdit_10.text()
+            self.db.insert_table('sale',['salesperson_id','name','region','password'],[sid,sname,sregion,password])
+            self.ui.lineEdit_10.clear()
+            self.ui.lineEdit_7.clear()
+            self.ui.lineEdit_8.clear()
+            self.ui.lineEdit_9.clear()
+        if self.ui.radioButton_6.isChecked():
+            w_sid = self.ui.lineEdit_7.text()
+            slist = self.db.where('sale',['salesperson_id','name','region','password'],salesperson_id=w_sid)
+            print(slist)
+            sstr = ' '.join(map(str,slist))
+            self.ui.lineEdit_7.clear()
+            if len(slist) == 0:
+                self.ui.lineEdit_11.setText("查询失败")
+            else:
+                self.ui.lineEdit_11.setText(sstr)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    app = QApplication([])  # 启动一个应用
+    window = MyWindow()  # 实例化主窗口
+    window.show()  # 展示主窗口
+    app.exec()  # 避免程序执行到这一行后直接退出"""
+
+    salespersons = XSDataBase('lk.db')
+    salespersons.xs_salespersons_create_table('sale')
+    # salespersons.insert_table('sale',['salesperson_id','name'],[20374105,'舒琛'])
+    # salespersons.insert_table('sale', ['salesperson_id', 'name'], [20374103, '吴哥'])
+    # print(salespersons.find_info('sale',[]))
+    # salespersons.delete('sale',salesperson_id = 20374103)
+    # print(salespersons.find_info('sale',[]))
+    # customer = XSDataBase('lk.db')
+    # customer.xs_customer_create_table('cust')
+    # customer.insert_table('cust', ['cust_id', 'name'], [20374105, '舒琛'])
+    # customer.insert_table('cust', ['cust_id', 'name'], [20374103, '吴哥'])
+    # print(customer.find_info('cust', []))
+
+
+
+
+
+
+
+
