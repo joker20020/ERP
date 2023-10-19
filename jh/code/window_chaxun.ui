@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>614</width>
+    <height>548</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="styleSheet">
+        <string notr="true">font: 700 18pt &quot;STHeiti&quot;;</string>
+       </property>
+       <property name="text">
+        <string>主生产计划时间：</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="TIME">
+       <property name="styleSheet">
+        <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>第一季度</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>第二季度</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>第三季度</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>第四季度</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <family>STHeiti</family>
+         <pointsize>18</pointsize>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 700 18pt &quot;STHeiti&quot;;</string>
+       </property>
+       <property name="text">
+        <string>查询目标：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="target">
+       <property name="styleSheet">
+        <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>MPS主生产计划</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>MRP物料需求计划</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>车间工作采购单</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>车间工作作业计划</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>派工单</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>领料单</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="styleSheet">
+        <string notr="true">font: 700 18pt &quot;STHeiti&quot;;</string>
+       </property>
+       <property name="text">
+        <string>起始时间：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDateEdit" name="start">
+       <property name="styleSheet">
+        <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="styleSheet">
+        <string notr="true">font: 700 18pt &quot;STHeiti&quot;;</string>
+       </property>
+       <property name="text">
+        <string>截止时间：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDateEdit" name="ddl">
+       <property name="styleSheet">
+        <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="styleSheet">
+        <string notr="true">font: 700 18pt &quot;Heiti SC&quot;;</string>
+       </property>
+       <property name="text">
+        <string>工作中心ID：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="workID">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton">
+     <property name="styleSheet">
+      <string notr="true">font: 24pt &quot;STKaiti&quot;;</string>
+     </property>
+     <property name="text">
+      <string>查询</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
