@@ -140,7 +140,6 @@ class XTDataBase:
         ID INTEGER PRIMARY KEY ,
         LAYER INTEGER NOT NULL,
         NAME TEXT NOT NULL,
-        NUM INTEGER NOT NULL,
         DESC TEXT NOT NULL,
         COST REAL NOT NULL,
         CYCLE REAL NOT NULL,
@@ -246,7 +245,7 @@ class XTDataBase:
     def xt_worker_create_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-                        ID INTEGER PRIMARY KEY ,
+                        ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         NAME TEXT NOT NULL,
                         AGE INTEGER NOT NULL,
                         GENDER TEXT NOT NULL,

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'Bom.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.3
+## Created by: Qt User Interface Compiler version 6.5.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -113,8 +113,8 @@ class Ui_Bom(object):
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.bomTable = QTableWidget(Bom)
-        if (self.bomTable.columnCount() < 9):
-            self.bomTable.setColumnCount(9)
+        if (self.bomTable.columnCount() < 8):
+            self.bomTable.setColumnCount(8)
         __qtablewidgetitem = QTableWidgetItem()
         self.bomTable.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
@@ -131,19 +131,15 @@ class Ui_Bom(object):
         self.bomTable.setHorizontalHeaderItem(6, __qtablewidgetitem6)
         __qtablewidgetitem7 = QTableWidgetItem()
         self.bomTable.setHorizontalHeaderItem(7, __qtablewidgetitem7)
+        if (self.bomTable.rowCount() < 1):
+            self.bomTable.setRowCount(1)
         __qtablewidgetitem8 = QTableWidgetItem()
-        self.bomTable.setHorizontalHeaderItem(8, __qtablewidgetitem8)
-        if (self.bomTable.rowCount() < 2):
-            self.bomTable.setRowCount(2)
+        self.bomTable.setItem(0, 0, __qtablewidgetitem8)
         __qtablewidgetitem9 = QTableWidgetItem()
-        self.bomTable.setVerticalHeaderItem(0, __qtablewidgetitem9)
-        __qtablewidgetitem10 = QTableWidgetItem()
-        self.bomTable.setItem(1, 0, __qtablewidgetitem10)
-        __qtablewidgetitem11 = QTableWidgetItem()
-        self.bomTable.setItem(1, 1, __qtablewidgetitem11)
+        self.bomTable.setItem(0, 1, __qtablewidgetitem9)
         self.bomTable.setObjectName(u"bomTable")
         self.bomTable.setContextMenuPolicy(Qt.ActionsContextMenu)
-        self.bomTable.setRowCount(0)
+        self.bomTable.setRowCount(1)
         self.bomTable.horizontalHeader().setDefaultSectionSize(200)
         self.bomTable.verticalHeader().setVisible(False)
 
@@ -154,12 +150,11 @@ class Ui_Bom(object):
 
         self.horizontalLayout.setStretch(0, 1)
         self.horizontalLayout.setStretch(1, 4)
-
-        self.retranslateUi(Bom)
-
         self.bomTable.addAction(self.partNew)
         self.bomTable.addAction(self.partRemove)
         self.bomTable.addAction(self.openLine)
+
+        self.retranslateUi(Bom)
 
         QMetaObject.connectSlotsByName(Bom)
     # setupUi
@@ -190,17 +185,15 @@ class Ui_Bom(object):
         ___qtablewidgetitem2 = self.bomTable.horizontalHeaderItem(2)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("Bom", u"\u96f6\u4ef6\u540d\u79f0", None));
         ___qtablewidgetitem3 = self.bomTable.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("Bom", u"\u96f6\u4ef6\u6570\u91cf", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Bom", u"\u96f6\u4ef6\u63cf\u8ff0", None));
         ___qtablewidgetitem4 = self.bomTable.horizontalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("Bom", u"\u96f6\u4ef6\u63cf\u8ff0", None));
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("Bom", u"\u96f6\u4ef6\u6210\u672c", None));
         ___qtablewidgetitem5 = self.bomTable.horizontalHeaderItem(5)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("Bom", u"\u96f6\u4ef6\u6210\u672c", None));
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("Bom", u"\u96f6\u4ef6\u751f\u4ea7\u5468\u671f", None));
         ___qtablewidgetitem6 = self.bomTable.horizontalHeaderItem(6)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("Bom", u"\u96f6\u4ef6\u751f\u4ea7\u5468\u671f", None));
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("Bom", u"\u662f\u5426\u5916\u8d2d", None));
         ___qtablewidgetitem7 = self.bomTable.horizontalHeaderItem(7)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("Bom", u"\u662f\u5426\u5916\u8d2d", None));
-        ___qtablewidgetitem8 = self.bomTable.horizontalHeaderItem(8)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("Bom", u"\u6ce8\u91ca", None));
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("Bom", u"\u6ce8\u91ca", None));
 
         __sortingEnabled = self.bomTable.isSortingEnabled()
         self.bomTable.setSortingEnabled(False)

@@ -150,16 +150,38 @@ class XtMemberModule(BaseModule):
     def add_group(self,col,data,name="sysgroup"):
         return self.db.insert_table(name,col,data)
 
-    def add_worker(self,worker_id,group,character,col,data,name="worker"):
+    def add_worker(self,group,character,col,data,name="worker"):
+        self.db.insert_table(name, col, data)
+        worker_id = self.db.find_info(name,["ID"])[-1][0]
         self.bind_gw(worker_id,group)
         self.bind_wc(worker_id,character)
-        return self.db.insert_table(name,col,data)
 
     def add_character(self,col,data,name="character"):
         return self.db.insert_table(name,col,data)
 
+    def delete_group(self,group_name,name="sysgroup"):
+        self.db.delete(name,NAME=group_name)
+
+    def delete_character(self,character,name="character"):
+        self.db.delete(name,CHARACTER=character)
+
+    def delete_worker(self,worker_id,name="worker"):
+        self.db.delete(name,ID=worker_id)
+
     def get_groups(self,name="sysgroup"):
         return self.db.find_info(name,[])
+
+    def get_characters(self,user_id=None,name="character"):
+        if user_id:
+            return self.db.sql_cmd(f"SELECT CHARACTER FROM {name} WHERE CHARACTER IN (SELECT CHARACTER FROM worker_character WHERE ID={user_id})")
+        else:
+            return self.db.find_info(name,[])
+
+    def get_worker_group(self,group_name):
+        return self.db.sql_cmd(f"SELECT ID,NAME FROM worker WHERE ID IN (SELECT ID FROM worker_sysgroup WHERE ORG='{group_name}') ")
+
+    def get_worker(self,worker_id,name="worker"):
+        return self.db.where(name,[],ID=worker_id)
 
     def bind_gw(self,worker_id,group,worker_name="worker",group_name="sysgroup"):
         name = worker_name + "_" + group_name

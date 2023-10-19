@@ -1,3 +1,4 @@
+import copy
 import os
 import sys
 
@@ -12,6 +13,8 @@ from ui.AdminUI import Ui_Admin
 from ui.MainUI import Ui_MainWindow
 from ui.BomCreateUI import Ui_BomCreate
 from ui.AddGroupUI import Ui_AddGroup
+from ui.AddCharacterUI import Ui_AddCharacter
+from ui.AddWorkerUI import Ui_AddWorker
 
 from xt_container import XtContainer
 
@@ -50,7 +53,7 @@ class BomWindow(QWidget):
         self.xt = XtContainer(7,"test.db")
         self.bcw = BomCreateWindow(self.xt)
         self.lineWindow = LineWindow(self.xt)
-        self.head = ["ID","bom层级","零件名称","零件数量","零件描述","零件成本","零件生产周期","是否外购","注释"]
+        self.head = ["ID","bom层级","零件名称","零件描述","零件成本","零件生产周期","是否外购","注释"]
 
         self.data_type = [int,int,str,int,str,float,float,bool,str]
         # self.refresh_boms()
@@ -267,6 +270,7 @@ class LineWindow(QWidget):
 
 
 class AddGroupWindow(QWidget):
+    success = Signal()
     def __init__(self,container:XtContainer):
         super().__init__()
         self.ui = Ui_AddGroup()
@@ -279,18 +283,98 @@ class AddGroupWindow(QWidget):
 
     def add(self):
         # print([self.ui.groupName.text(),self.ui.groupFather.currentText(),self.ui.groupDes.toPlainText()])
-        self.container.add_group([self.ui.groupName.text(),self.ui.groupFather.currentText(),self.ui.groupDes.toPlainText()])
-        self.close()
+        try:
+            self.container.add_group([self.ui.groupName.text(),self.ui.groupFather.currentText(),self.ui.groupDes.toPlainText()])
+            self.success.emit()
+            self.clear_all()
+            self.close()
+        except ValueError as e:
+            QMessageBox.information(self, "数据错误", "非空检验失败，请填写非空列后再同步")
+
+    def clear_all(self):
+        self.ui.groupName.clear()
+        self.ui.groupFather.setCurrentIndex(0)
+        self.ui.groupDes.clear()
 
     def refresh_combo(self):
         groups = self.container.get_groups()
         fathers = ["root"]
         for group in groups:
-            if group[1] not in fathers:
-                print(group[1])
-                fathers.append(group[1])
+            if group[0] not in fathers:
+                fathers.append(group[0])
+        self.ui.groupFather.clear()
         self.ui.groupFather.addItems(fathers)
 
+class AddCharacterWindow(QWidget):
+    success = Signal()
+    def __init__(self,container:XtContainer):
+        super().__init__()
+        self.ui = Ui_AddCharacter()
+        self.ui.setupUi(self)
+        self.container = container
+        self.bind()
+
+    def bind(self):
+        self.ui.ok.clicked.connect(self.add)
+
+    def add(self):
+        # print([self.ui.groupName.text(),self.ui.groupFather.currentText(),self.ui.groupDes.toPlainText()])
+        try:
+            self.container.add_character([self.ui.characterName.text(),int(self.ui.characterAuthority.text())])
+            self.success.emit()
+            self.clear_all()
+            self.close()
+        except ValueError as e:
+            QMessageBox.information(self, "数据错误", "非空检验失败，请填写非空列后再同步")
+
+    def clear_all(self):
+        self.ui.characterName.clear()
+        self.ui.characterAuthority.setValue(0)
+
+class AddWorkerWindow(QWidget):
+    success = Signal()
+    def __init__(self,container:XtContainer):
+        super().__init__()
+        self.ui = Ui_AddWorker()
+        self.ui.setupUi(self)
+        self.container = container
+        self.bind()
+
+    def bind(self):
+        self.ui.ok.clicked.connect(self.add)
+
+    def add(self):
+        # print([self.ui.groupName.text(),self.ui.groupFather.currentText(),self.ui.groupDes.toPlainText()])
+        try:
+            self.container.add_worker(self.ui.workerGroup.currentText(),self.ui.workerCharacter.currentText(),[self.ui.workerName.text(),int(self.ui.workerAge.text()),self.ui.workerGender.text(),self.ui.workerPlace.text(),self.ui.workerUserName.text(),self.ui.workerPassword.text()])
+            self.success.emit()
+            self.clear_all()
+            self.close()
+        except ValueError as e:
+            QMessageBox.information(self, "数据错误", "非空检验失败，请填写非空列后再同步")
+
+    def clear_all(self):
+        self.ui.workerName.clear()
+        self.ui.workerAge.clear()
+        self.ui.workerGender.clear()
+        self.ui.workerPlace.clear()
+        self.ui.workerUserName.clear()
+        self.ui.workerPassword.clear()
+        self.ui.workerGroup.setCurrentIndex(0)
+        self.ui.workerCharacter.setCurrentIndex(0)
+
+    def refresh_combo(self):
+        self.ui.workerGroup.clear()
+        groups = self.container.get_groups()
+        for i in range(len(groups)):
+            groups[i] = groups[i][0]
+        self.ui.workerGroup.addItems(groups)
+
+        self.ui.workerCharacter.clear()
+        characters = self.container.get_characters()
+        for i in range(len(characters)):
+            characters[i] = characters[i][0]
+        self.ui.workerCharacter.addItems(characters)
 
 
 
@@ -302,11 +386,23 @@ class AdminWindow(QWidget):
         self.ui.setupUi(self)
         self.xt = XtContainer(7,"test.db")
         self.add_group = AddGroupWindow(self.xt)
-        # self.refresh_group()
+        self.add_character = AddCharacterWindow(self.xt)
+        self.add_worker = AddWorkerWindow(self.xt)
+        self.refresh_group()
+        self.refresh_character()
         self.bind()
 
     def bind(self):
         self.ui.groupNew.clicked.connect(self.open_group_window)
+        self.ui.groupRemove.clicked.connect(self.del_group)
+        self.ui.characterNew.clicked.connect(self.open_character_window)
+        self.ui.characterRemove.clicked.connect(self.del_character)
+        self.ui.workerNew.clicked.connect(self.open_worker_window)
+        self.ui.groupTree.currentItemChanged.connect(self.show_worker)
+        self.add_group.success.connect(self.refresh_group)
+        self.add_character.success.connect(self.refresh_character)
+        self.add_worker.success.connect(self.refresh_character)
+        self.add_worker.success.connect(self.refresh_group)
 
     """
     以下为组织关系树操作
@@ -315,20 +411,102 @@ class AdminWindow(QWidget):
         self.add_group.refresh_combo()
         self.add_group.show()
 
+    def open_character_window(self):
+        self.add_character.show()
+
+    def open_worker_window(self):
+        self.add_worker.refresh_combo()
+        self.add_worker.show()
+
+    def show_worker(self):
+        worker_id = int(self.ui.groupTree.currentItem().text(2))
+        worker = self.xt.get_worker(worker_id)
+        print(worker)
+
     def refresh_group(self):
+        self.ui.groupTree.clear()
         groups = self.xt.get_groups()
         root = ["root"]
-
+        temp = copy.deepcopy(groups)
         while root != []:
             finish = len(root)
             for group in groups:
-                if group[1] == "root":
-                    root.append(group[0])
-                    self.ui.groupTree.addTopLevelItem(QTreeWidgetItem(group[0]))
-                elif group[1] in root:
-                    root.append(group[0])
-                    father = self.ui.groupTree.findItems(group[1])
-                    print(father)
+                if group[1] in root:
+                    if group[1] == "root":
+                        root.append(group[0])
+                        item = QTreeWidgetItem(self.ui.groupTree)
+                        item.setText(0,group[0])
+                        item.setText(1, "组织")
+                        self.ui.groupTree.addTopLevelItem(item)
+                        workers = self.xt.get_worker_group(group[0])
+                        for worker in workers:
+                            witem = QTreeWidgetItem(item)
+                            witem.setText(0, worker[1])
+                            witem.setText(1, "人员")
+                            witem.setText(2, str(worker[0]))
+                            item.addChild(witem)
+                        temp.remove(group)
+                    else:
+                        root.append(group[0])
+                        items = [self.ui.groupTree.topLevelItem(i) for i in range(self.ui.groupTree.topLevelItemCount())]
+                        father = None
+                        for item in items:
+                            father = self.__get_tree_item__(group[1],item)
+                            if father:
+                                break
+                        if not father:
+                            continue
+                        item = QTreeWidgetItem(father)
+                        item.setText(0, group[0])
+                        item.setText(1, "组织")
+                        father.addChild(item)
+                        workers = self.xt.get_worker_group(group[0])
+                        for worker in workers:
+                            witem = QTreeWidgetItem(item)
+                            witem.setText(0, worker[1])
+                            witem.setText(1, "人员")
+                            witem.setText(2, str(worker[0]))
+                            item.addChild(witem)
+                        temp.remove(group)
+                        # print(father.text(0))
+            root = root[finish:]
+            groups = copy.deepcopy(temp)
+
+    def refresh_character(self):
+        self.ui.characterList.clear()
+        user_id = self.ui.workerID.text()
+        if user_id == "":
+            characters = self.xt.get_characters()
+        else:
+            characters = self.xt.get_characters(user_id)
+            print(characters)
+        for each in characters:
+            self.ui.characterList.addItem(each[0])
+
+    def del_group(self):
+        name = self.ui.groupTree.currentItem().text(0)
+        self.xt.del_group(name)
+        self.refresh_group()
+
+    def del_character(self):
+        character = self.ui.characterList.currentItem().text()
+        self.xt.del_character(character)
+        self.refresh_character()
+
+    def del_worker(self):
+        worker_id = int(self.ui.workerID.text())
+        self.xt.del_worker(worker_id)
+
+
+    def __get_tree_item__(self,text:str,root:QTreeWidgetItem):
+        if root.text(0) == text:
+            return root
+        for each in [root.child(i) for i in range(root.childCount())]:
+            return self.__get_tree_item__(text,each)
+        return None
+
+
+
 
 
 
