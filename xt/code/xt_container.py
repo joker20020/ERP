@@ -199,6 +199,8 @@ class XtContainer(BaseContainer):
         str_null(data,[None,None,""])
         self.member.add_group(["NAME","FATHER","DES"],data)
 
+
+
     def del_group(self,name):
         if not self.member.is_activity():
             raise AuthorityError("受限制的访问权限")
@@ -212,18 +214,27 @@ class XtContainer(BaseContainer):
             raise AuthorityError("受限制的访问权限")
         return self.member.get_characters(user_id)
 
-
-
     def add_character(self,data):
         if not self.member.is_activity():
             raise AuthorityError("受限制的访问权限")
-        str_null(data,[None,None])
-        self.member.add_character(["CHARACTER","AUTHORITY"],data)
+        return self.member.add_character(["ID","CHARACTER"],data)
 
-    def del_character(self,name):
+
+    def new_character(self,data):
         if not self.member.is_activity():
             raise AuthorityError("受限制的访问权限")
-        self.member.delete_character(name)
+        str_null(data,[None,None])
+        self.member.new_character(["CHARACTER","AUTHORITY"],data)
+
+    def rem_character(self,name):
+        if not self.member.is_activity():
+            raise AuthorityError("受限制的访问权限")
+        self.member.remove_character(name)
+
+    def del_character(self,worker_id,character):
+        if not self.member.is_activity():
+            raise AuthorityError("受限制的访问权限")
+        self.member.delete_character(worker_id,character)
 
     """
     以下为用户管理操作
@@ -250,6 +261,30 @@ class XtContainer(BaseContainer):
         if not self.member.is_activity():
             raise AuthorityError("受限制的访问权限")
         self.member.delete_worker(worker_id)
+
+    def update_worker(self,worker_id,data):
+        if not self.member.is_activity():
+            raise AuthorityError("受限制的访问权限")
+        head = ["NAME","AGE","GENDER","PLACE","USER_NAME","PASSWORD","DES"]
+        dicts = {}
+        for i in range(len(data)):
+            str_null(data, [None, None, None,None,None,None,""])
+            dicts[head[i]] = data[i]
+        self.member.update_worker(worker_id,dicts)
+        return True
+
+    def update_worker_root(self,worker_id):
+        if not self.member.is_activity():
+            raise AuthorityError("受限制的访问权限")
+        self.member.update_worker_root(worker_id)
+
+    def update_worker_group(self,worker_id,group):
+        if not self.member.is_activity():
+            raise AuthorityError("受限制的访问权限")
+        self.member.update_worker_root(worker_id,group)
+
+
+
 
 
 

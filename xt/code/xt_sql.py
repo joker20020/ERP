@@ -83,9 +83,9 @@ class XTDataBase:
         cursor = self.connection.cursor()
         cmd = "DELETE FROM {} WHERE ".format(table_name)
         for k, v in kwargs.items():
-            cmd += "{} = '{}' ".format(k, v)
+            cmd += "{} = '{}' AND ".format(k, v)
         # print(cmd)
-        cursor.execute(cmd[:-1])
+        cursor.execute(cmd[:-4])
         self.connection.commit()
 
     def update(self, table_name, dicts, **condition):

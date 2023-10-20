@@ -41,7 +41,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="2,0,0,0,1,1">
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="2,0,0,0,0,0,0,0,0,1">
      <item>
       <layout class="QFormLayout" name="formLayout_2">
        <property name="sizeConstraint">
@@ -51,6 +51,16 @@
         <set>Qt::AlignCenter</set>
        </property>
        <item row="1" column="0">
+        <widget class="QLabel" name="workerIDL">
+         <property name="text">
+          <string>员工编号</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="workerID"/>
+       </item>
+       <item row="2" column="0">
         <widget class="QLabel" name="workerNameL">
          <property name="font">
           <font>
@@ -65,10 +75,10 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="wokerName"/>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="workerName"/>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="workerAgeL">
          <property name="font">
           <font>
@@ -80,10 +90,10 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="workerAge_2"/>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="workerAge"/>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="workerGenderL">
          <property name="font">
           <font>
@@ -95,10 +105,10 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QLineEdit" name="workerGender"/>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="workerPlaceL">
          <property name="font">
           <font>
@@ -110,10 +120,20 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QLineEdit" name="workerPlace"/>
        </item>
        <item row="6" column="0">
+        <widget class="QLabel" name="workerGroupL">
+         <property name="text">
+          <string>所属组织</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QComboBox" name="workerGroup"/>
+       </item>
+       <item row="7" column="0">
         <widget class="QLabel" name="workerUserNameL">
          <property name="font">
           <font>
@@ -125,10 +145,10 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="7" column="1">
         <widget class="QLineEdit" name="workerUserName"/>
        </item>
-       <item row="7" column="0">
+       <item row="9" column="0">
         <widget class="QLabel" name="workerPasswordL">
          <property name="font">
           <font>
@@ -140,10 +160,21 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
+       <item row="9" column="1">
         <widget class="QLineEdit" name="workerPassword"/>
        </item>
-       <item row="8" column="0">
+      </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
         <widget class="QLabel" name="workerCharacterL">
          <property name="font">
           <font>
@@ -151,32 +182,15 @@
           </font>
          </property>
          <property name="text">
-          <string>角色</string>
+          <string>角色操作框</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item>
         <widget class="QComboBox" name="workerCharacter"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="workerGroupL">
-         <property name="text">
-          <string>所属组织</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QComboBox" name="workerGroup"/>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="workerIDL">
-         <property name="text">
-          <string>员工编号</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="workerID"/>
        </item>
       </layout>
      </item>
@@ -190,13 +204,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="characteradd">
-         <property name="text">
-          <string>为员工添加角色</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="characterRemove">
          <property name="text">
           <string>删除角色</string>
@@ -206,22 +213,79 @@
       </layout>
      </item>
      <item>
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <pointsize>14</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>员工角色</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
      <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QPushButton" name="characterDelete">
+         <property name="text">
+          <string>为员工删除角色</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>员工角色</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="characterAdd">
+         <property name="text">
+          <string>为员工添加角色</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
       <widget class="QListWidget" name="characterList"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="workerNew">
+         <property name="text">
+          <string>新建员工</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="workerUpdate">
+         <property name="text">
+          <string>修改员工信息</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="workerRemove">
+         <property name="text">
+          <string>删除员工</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -249,31 +313,6 @@
         <widget class="QPushButton" name="groupRemove">
          <property name="text">
           <string>删除组织</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QPushButton" name="workerNew">
-         <property name="text">
-          <string>新建员工</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="workerUpdate">
-         <property name="text">
-          <string>修改员工信息</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="workerRemove">
-         <property name="text">
-          <string>删除员工</string>
          </property>
         </widget>
        </item>

@@ -135,6 +135,9 @@ class XtMemberModule(BaseModule):
         self.db.xt_wg_create_table("worker_sysgroup", "worker", "sysgroup")
         self.db.xt_wc_create_table("worker_character", "worker", "character")
 
+        if self.db.where("sysgroup",[],NAME="root") == []:
+            self.db.insert_table("sysgroup",["NAME","FATHER","DES"],["root","HIDDEN CAN NOT BE USED",""])
+
     def create_group(self,name="sysgroup"):
         self.db.xt_group_create_table(name)
 
@@ -156,14 +159,21 @@ class XtMemberModule(BaseModule):
         self.bind_gw(worker_id,group)
         self.bind_wc(worker_id,character)
 
-    def add_character(self,col,data,name="character"):
+    def add_character(self,col,data,name="worker_character"):
         return self.db.insert_table(name,col,data)
+
+    def new_character(self,col,data,name="character"):
+        return self.db.insert_table(name,col,data)
+
 
     def delete_group(self,group_name,name="sysgroup"):
         self.db.delete(name,NAME=group_name)
 
-    def delete_character(self,character,name="character"):
+    def remove_character(self,character,name="character"):
         self.db.delete(name,CHARACTER=character)
+
+    def delete_character(self,worker_id,character,name="worker_character"):
+        self.db.delete(name,ID=worker_id,CHARACTER=character)
 
     def delete_worker(self,worker_id,name="worker"):
         self.db.delete(name,ID=worker_id)
@@ -182,6 +192,13 @@ class XtMemberModule(BaseModule):
 
     def get_worker(self,worker_id,name="worker"):
         return self.db.where(name,[],ID=worker_id)
+
+    def update_worker(self,worker_id,dicts,name="worker"):
+        return self.db.update(name,dicts,ID=worker_id)
+
+    def update_worker_root(self,worker_id,group="root",name="worker_sysgroup"):
+        return self.db.update(name,{"ORG":group},ID=worker_id)
+
 
     def bind_gw(self,worker_id,group,worker_name="worker",group_name="sysgroup"):
         name = worker_name + "_" + group_name
