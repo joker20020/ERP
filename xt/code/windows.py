@@ -1,20 +1,25 @@
 import copy
-import os
 import sys
+import os
 
-from PySide6.QtWidgets import QApplication,QMainWindow, QWidget,QMessageBox,QFileDialog,QTreeWidgetItem,QLineEdit,QListWidgetItem,QTableWidgetItem
-from PySide6.QtGui import QIcon
-from PySide6.QtCore import Qt,QUrl,Signal
-from qt_material import apply_stylesheet
+sys.path.append(os.path.abspath("./cg"))
+sys.path.append(os.path.abspath("./jg/code"))
+
+
+from PySide6.QtWidgets import QApplication, QWidget,QMessageBox, QTreeWidgetItem, QTableWidgetItem,QHeaderView
+from PySide6.QtCore import Qt,Signal
+from PySide6.QtGui import QIcon,QPixmap
+from qfluentwidgets import RoundMenu,FluentWindow,FluentIcon,Action,NavigationItemPosition,NavigationPushButton,NavigationTreeWidget,SplitTitleBar,MessageBox
+from qframelesswindow import AcrylicWindow
 
 from ui.BomUI import Ui_Bom
 from ui.LineUI import Ui_Line
 from ui.AdminUI import Ui_Admin
-from ui.MainUI import Ui_MainWindow
 from ui.BomCreateUI import Ui_BomCreate
 from ui.AddGroupUI import Ui_AddGroup
 from ui.AddCharacterUI import Ui_AddCharacter
 from ui.AddWorkerUI import Ui_AddWorker
+from ui.LoginUI import Ui_Login
 
 from xt_container import XtContainer
 
@@ -24,7 +29,6 @@ def BOOL(data):
     if data.upper() == "YES" or data == "是" or data == "1" or data.upper() == "TRUE":
         return True
     return False
-
 
 class BomCreateWindow(QWidget):
     closed = Signal()
@@ -52,21 +56,25 @@ class BomCreateWindow(QWidget):
             self.close()
 
 class BomWindow(QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,authority,parent=None,file_path="test.db"):
+        super().__init__(parent=parent)
         # 设置界面为我们生成的界面
         self.ui = Ui_Bom()
         self.ui.setupUi(self)
-        self.xt = XtContainer(7,"test.db")
+        self.xt = XtContainer(authority,file_path)
         self.bcw = BomCreateWindow(self.xt)
         self.lineWindow = LineWindow(self.xt)
         self.head = ["ID","bom层级","零件名称","零件描述","零件成本","零件生产周期","是否外购","注释"]
+
+        self.ui.bomTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Custom)
 
         self.data_type = [int,int,str,str,float,float,BOOL,str]
         # self.refresh_boms()
         self.bind()
 
     def bind(self):
+
+        self.ui.bomTable.customContextMenuRequested.connect(self.show_menu)
         self.ui.bomNew.clicked.connect(self.create_bom)
         self.ui.bomRefresh.clicked.connect(self.refresh_boms)
         self.ui.bomRemove.clicked.connect(self.remove_bom)
@@ -75,11 +83,15 @@ class BomWindow(QWidget):
         self.ui.openLine.triggered.connect(self.open_line)
         self.ui.bomList.currentItemChanged.connect(self.show_bom)
         self.ui.bomUpdate.clicked.connect(self.sync_bom)
-        # self.bomTable.addAction(self.partNew)
-        # self.bomTable.addAction(self.partRemove)
-        # self.bomTable.addAction(self.openLine)
         self.bcw.closed.connect(self.refresh_boms)
+        self.ui.bomInput.searchSignal.connect(self.find_bom)
 
+    def show_menu(self,pos):
+        menu = RoundMenu(self.ui.bomTable)
+        menu.addAction(self.ui.partNew)
+        menu.addAction(self.ui.partRemove)
+        menu.addAction(self.ui.openLine)
+        menu.exec(self.ui.bomTable.mapToGlobal(pos))
 
     """
     以下为对BOM表的操作
@@ -99,8 +111,17 @@ class BomWindow(QWidget):
             bom = bom[0][7:]
             self.ui.bomList.addItem(bom)
 
+    def find_bom(self,text):
+        self.ui.bomList.clear()
+        boms = self.xt.find_bom(text)
+        for bom in boms:
+            bom = bom[0][7:]
+            self.ui.bomList.addItem(bom)
+
     def add_bom(self):
         self.ui.bomTable.setRowCount(self.ui.bomTable.rowCount()+1)
+        for i in range(self.ui.bomTable.columnCount()):
+            self.ui.bomTable.setItem(self.ui.bomTable.rowCount() - 1,i,QTableWidgetItem(""))
         if self.ui.bomTable.rowCount() == 1:
             self.ui.bomTable.setItem(self.ui.bomTable.rowCount() - 1, 0, QTableWidgetItem("1"))
             return
@@ -144,7 +165,7 @@ class BomWindow(QWidget):
             self.xt.update_bom(name,data)
             self.show_bom(self.ui.bomList.currentItem(),None)
         except ValueError as e:
-            QMessageBox.information(self,"数据错误","非空检验失败，请填写非空列后再同步")
+            MessageBox("数据错误","非空检验失败，请填写非空列后再同步",self).exec()
 
     """
     以下为对工艺路线表操作
@@ -171,6 +192,12 @@ class LineWindow(QWidget):
         self.bom_id = ""
         self.Ldata_type = [int,str,str,str]
         self.Wdata_type = [int,str,int]
+
+        self.ui.lineTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        self.ui.workTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+
+
+
         self.bind()
         self.setWindowModality(Qt.WindowModality.WindowModal.ApplicationModal)
 
@@ -183,6 +210,7 @@ class LineWindow(QWidget):
         self.ui.workRemove.clicked.connect(self.del_work)
         self.ui.workUpdate.clicked.connect(self.sync_work)
         self.ui.lineTable.itemClicked.connect(self.refresh_work)
+        self.ui.lineEdit.searchSignal.connect(self.find_lines)
 
     """
     以下为对工艺路线操作
@@ -200,8 +228,22 @@ class LineWindow(QWidget):
                 else:
                     self.ui.lineTable.setItem(i, j, QTableWidgetItem(""))
 
+    def find_lines(self,text):
+        lines = self.container.find_lines(self.bom_name,self.bom_id,text)
+        self.ui.lineTable.clearContents()
+        rows = len(lines)
+        self.ui.lineTable.setRowCount(rows)
+        for i in range(rows):
+            for j in range(len(lines[i])):
+                if lines[i][j]:
+                    self.ui.lineTable.setItem(i, j, QTableWidgetItem(str(self.Ldata_type[j](lines[i][j]))))
+                else:
+                    self.ui.lineTable.setItem(i, j, QTableWidgetItem(""))
+
     def add_line(self):
         self.ui.lineTable.setRowCount(self.ui.lineTable.rowCount() + 1)
+        for i in range(self.ui.lineTable.columnCount()):
+            self.ui.lineTable.setItem(self.ui.lineTable.rowCount() - 1,i,QTableWidgetItem(""))
         if self.ui.lineTable.rowCount() == 1:
             self.ui.lineTable.setItem(self.ui.lineTable.rowCount() - 1, 0, QTableWidgetItem("1"))
             return
@@ -226,14 +268,16 @@ class LineWindow(QWidget):
                      j in range(self.ui.lineTable.columnCount())])
             self.container.update_line(self.bom_name,self.bom_id, data)
             self.refresh_line()
-        except Exception as e:
-            QMessageBox.information(self, "数据错误", "非空检验失败，请填写非空列后再同步")
+        except ValueError as e:
+            MessageBox("数据错误","非空检验失败，请填写非空列后再同步",self).exec()
 
     """
     以下为对工序操作
     """
     def refresh_work(self,item):
-        if item == None or (item.row() == self.ui.lineTable.currentRow()and item.row()!=0) :
+        a = item.row()
+        b = self.ui.lineTable.currentRow()
+        if item == None :  # or (item.row() == self.ui.lineTable.currentRow()and item.row()!=0)
             return
         works = self.container.get_works(self.ui.lineTable.item(self.ui.lineTable.currentRow(), 0).text())
         self.ui.workTable.clearContents()
@@ -248,6 +292,8 @@ class LineWindow(QWidget):
 
     def add_work(self):
         self.ui.workTable.setRowCount(self.ui.workTable.rowCount() + 1)
+        for i in range(self.ui.workTable.columnCount()):
+            self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1,i,QTableWidgetItem(""))
         if self.ui.workTable.rowCount() == 1:
             self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1, 0, QTableWidgetItem("1"))
             self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1, 2, QTableWidgetItem(
@@ -273,8 +319,8 @@ class LineWindow(QWidget):
                     [self.Wdata_type[j](self.ui.workTable.item(i, j).text()) if self.ui.workTable.item(i, j).text() else "" for
                      j in range(self.ui.workTable.columnCount())])
             self.container.update_work(self.ui.lineTable.item(self.ui.lineTable.currentRow(), 0).text(),data)
-        except Exception as e :
-            QMessageBox.information(self, "数据错误", "非空检验失败，请填写非空列后再同步")
+        except ValueError as e :
+            MessageBox("数据错误","非空检验失败，请填写非空列后再同步",self).exec()
 
 
 class AddGroupWindow(QWidget):
@@ -297,7 +343,7 @@ class AddGroupWindow(QWidget):
             self.clear_all()
             self.close()
         except ValueError as e:
-            QMessageBox.information(self, "数据错误", "非空检验失败，请填写非空列后再同步")
+            MessageBox("数据错误","非空检验失败，请填写非空列后再同步",self).exec()
 
     def clear_all(self):
         self.ui.groupName.clear()
@@ -333,7 +379,7 @@ class AddCharacterWindow(QWidget):
             self.clear_all()
             self.close()
         except ValueError as e:
-            QMessageBox.information(self, "数据错误", "非空检验失败，请填写非空列后再同步")
+            MessageBox("数据错误","非空检验失败，请填写非空列后再同步",self).exec()
 
     def clear_all(self):
         self.ui.characterName.clear()
@@ -359,7 +405,7 @@ class AddWorkerWindow(QWidget):
             self.clear_all()
             self.close()
         except ValueError as e:
-            QMessageBox.information(self, "数据错误", "非空检验失败，请填写非空列后再同步")
+            MessageBox("数据错误","非空检验失败，请填写非空列后再同步",self).exec()
 
     def clear_all(self):
         self.ui.workerName.clear()
@@ -384,15 +430,13 @@ class AddWorkerWindow(QWidget):
             characters[i] = characters[i][0]
         self.ui.workerCharacter.addItems(characters)
 
-
-
 class AdminWindow(QWidget):
-    def __init__(self):
+    def __init__(self,authority,file_path="test.db"):
         super().__init__()
         # 设置界面为我们生成的界面
         self.ui = Ui_Admin()
         self.ui.setupUi(self)
-        self.xt = XtContainer(7,"test.db")
+        self.xt = XtContainer(authority,file_path)
         self.add_group = AddGroupWindow(self.xt)
         self.new_character = AddCharacterWindow(self.xt)
         self.add_worker = AddWorkerWindow(self.xt)
@@ -597,38 +641,101 @@ class AdminWindow(QWidget):
         elif root.text(1) == "人员":
             self.xt.update_worker_root(root.text(2))
 
+class LogOut(NavigationPushButton):
+
+    def __init__(self, parent=None):
+        super().__init__(FluentIcon.SETTING,"用户设置",isSelectable=False, parent=parent)
+        self.out = Action("退出登录")
 
 
+    def show_info(self) -> None:
 
+        menu = RoundMenu()
+        menu.addAction(self.out)
+        menu.exec(self.parent().mapToGlobal(self.pos()))
 
-
-
-class MainWindow(QMainWindow):
-    def __init__(self):
+class XTMainWindow(FluentWindow):
+    def __init__(self,authority,file_path):
         super().__init__()
-        # 设置界面为我们生成的界面
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-        self.bomWind = BomWindow()
-        self.adminWind = AdminWindow()
-        self.ui.bomLayout.addWidget(self.bomWind)
-        self.ui.adminLayout.addWidget(self.adminWind)
-        self.bind()
 
-    def change_stack(self):
-        id = self.ui.btn_group.checkedId()
-        self.ui.stack.setCurrentIndex(id)
+        self.resize(800,600)
+
+        self.bomWind = BomWindow(authority,self,file_path)
+        self.bomWind.setObjectName("bom_wind")
+
+        self.adminWind = AdminWindow(authority,file_path)
+        self.adminWind.setObjectName("admin_wind")
+
+        self.logOut = LogOut(self)
+        self.logOut.setObjectName("log_out")
+
+        self.xtMain = NavigationTreeWidget(FluentIcon.VPN,"系统管理",isSelectable=False)
+        self.xtMain.setObjectName("xt_main")
+
+        self.navigationInterface.addWidget(
+            routeKey="xt_main",
+            widget=self.xtMain,
+            onClick=lambda:self.stackedWidget.setCurrentWidget(self.bomWind),
+            position=NavigationItemPosition.SCROLL,
+        )
+        self.addSubInterface(self.bomWind, FluentIcon.FOLDER, "工艺信息管理",parent=self.xtMain)
+        self.addSubInterface(self.adminWind, FluentIcon.PEOPLE, "人员信息管理",parent=self.xtMain)
+
+        self.navigationInterface.addWidget(
+            routeKey="log_out",
+            widget=self.logOut,
+            onClick=self.logOut.show_info,
+            position=NavigationItemPosition.BOTTOM,
+        )
+
+        # self.navigationInterface.setCurrentItem("admin_wind")
+        # self.stackedWidget.setCurrentIndex(0)
+
+class XTLoginWindow(AcrylicWindow):
+
+    def __init__(self,icon,background,file_path,title="login window"):
+        super().__init__()
+        self.ui = Ui_Login()
+        self.ui.setupUi(self)
+        self.background = background
+        self.xt = XtContainer(4,file_path)
+        self.mainWindow = None
+
+
+        self.setTitleBar(SplitTitleBar(self))
+        self.titleBar.raise_()
+
+        self.ui.logo.setPixmap(QPixmap(icon).scaled(self.ui.logo.size(), Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation))
+        self.ui.imageLabel.setScaledContents(False)
+
+        self.setWindowTitle(title)
+        self.setWindowIcon(QIcon(icon))
+
+        self.resize(1000, 650)
+
+        self.windowEffect.setMicaEffect(self.winId(), isDarkMode=False)
+        self.titleBar.titleLabel.setStyleSheet("""
+            QLabel{
+                background: transparent;
+                font: 13px 'Segoe UI';
+                padding: 0 4px;
+                color: white
+            }
+        """)
+
+        desktop = QApplication.screens()[0].availableGeometry()
+        w, h = desktop.width(), desktop.height()
+        self.move(w//2 - self.width()//2, h//2 - self.height()//2)
+
+    def resizeEvent(self, e):
+        super().resizeEvent(e)
+        pixmap = QPixmap(self.background).scaled(
+            self.ui.imageLabel.size(), Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation)
+        self.ui.imageLabel.setPixmap(pixmap)
 
     def bind(self):
-        # self.btn_group = QButtonGroup()
-        # self.btn_group.addButton(self.cg, 0)
-        # self.btn_group.addButton(self.jh, 1)
-        # self.btn_group.addButton(self.kc, 2)
-        # self.btn_group.addButton(self .xs, 3)
-        # self.btn_group.addButton(self.xt, 4)
-        # print(self.btn_group)
-        ## 以上代码复制到UI文件中设置按钮组
-        self.ui.btn_group.buttonToggled.connect(self.change_stack)
+        pass
+
 
 if __name__ == "__main__":
     app = QApplication()
@@ -639,6 +746,8 @@ if __name__ == "__main__":
     # lw.show()
     # aw = AdminWindow()
     # aw.show()
-    m = MainWindow()
+    m = XTMainWindow(7,"test.db")
     m.show()
+    # l = XTLoginWindow("../../res/logo.png","../../res/background.jpg","test.db")
+    # l.show()
     app.exec()

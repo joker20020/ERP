@@ -56,6 +56,12 @@ class XtContainer(BaseContainer):
         result = self.production.db.sql_cmd('SELECT name FROM sqlite_master WHERE type="table" AND name LIKE "xt_bom_%"')
         return result
 
+    def find_bom(self,text):
+        if not self.production.is_activity():
+            raise AuthorityError("受限制的访问权限")
+        result = self.production.db.sql_cmd(f'SELECT name FROM sqlite_master WHERE type="table" AND name LIKE "xt_bom_%{text}%"')
+        return result
+
     def remove_boms(self,name):
         if not self.production.is_activity():
             raise AuthorityError("受限制的访问权限")
@@ -132,6 +138,13 @@ class XtContainer(BaseContainer):
             raise AuthorityError("受限制的访问权限")
         bl_name = "line"+"_"+"xt_bom_"+bom_name
         lines = self.production.get_line(bl_name,bom_id)
+        return lines
+
+    def find_lines(self,bom_name,bom_id,text):
+        if not self.production.is_activity():
+            raise AuthorityError("受限制的访问权限")
+        bl_name = "line" + "_" + "xt_bom_" + bom_name
+        lines = self.production.db.sql_cmd(f'SELECT * FROM line WHERE NAME LIKE "%{text}%" AND LINE_ID IN (SELECT LINE_ID FROM {bl_name} WHERE ID={bom_id})')
         return lines
 
     def get_line_ids(self,bom_name,bom_id):
@@ -249,6 +262,16 @@ class XtContainer(BaseContainer):
         if not self.member.is_activity():
             raise AuthorityError("受限制的访问权限")
         return self.member.get_worker(worker_id)
+
+    def get_pwd(self,user_name):
+        if not self.member.is_activity():
+            raise AuthorityError("受限制的访问权限")
+        return self.member.get_pwd(user_name)
+
+    def get_authority(self,user_name):
+        if not self.member.is_activity():
+            raise AuthorityError("受限制的访问权限")
+        return self.member.get_authority(user_name)
 
 
     def add_worker(self,group,character,data):

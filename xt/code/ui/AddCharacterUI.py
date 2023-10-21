@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'AddCharacter.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.1
+## Created by: Qt User Interface Compiler version 6.4.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,9 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QLineEdit,
-    QPlainTextEdit, QPushButton, QSizePolicy, QSpinBox,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QGridLayout, QSizePolicy, QVBoxLayout,
+    QWidget)
+
+from qfluentwidgets import (BodyLabel, LineEdit, PlainTextEdit, PrimaryPushButton,
+    SpinBox)
 
 class Ui_AddCharacter(object):
     def setupUi(self, AddCharacter):
@@ -28,32 +30,32 @@ class Ui_AddCharacter(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
-        self.characterAuthorityL = QLabel(AddCharacter)
+        self.characterAuthorityL = BodyLabel(AddCharacter)
         self.characterAuthorityL.setObjectName(u"characterAuthorityL")
 
         self.gridLayout.addWidget(self.characterAuthorityL, 1, 0, 1, 1)
 
-        self.characterName = QLineEdit(AddCharacter)
+        self.characterName = LineEdit(AddCharacter)
         self.characterName.setObjectName(u"characterName")
 
         self.gridLayout.addWidget(self.characterName, 0, 1, 1, 1)
 
-        self.characterDesL = QLabel(AddCharacter)
+        self.characterDesL = BodyLabel(AddCharacter)
         self.characterDesL.setObjectName(u"characterDesL")
 
         self.gridLayout.addWidget(self.characterDesL, 2, 0, 1, 1)
 
-        self.groupDes = QPlainTextEdit(AddCharacter)
+        self.groupDes = PlainTextEdit(AddCharacter)
         self.groupDes.setObjectName(u"groupDes")
 
         self.gridLayout.addWidget(self.groupDes, 2, 1, 1, 1)
 
-        self.characterNameL = QLabel(AddCharacter)
+        self.characterNameL = BodyLabel(AddCharacter)
         self.characterNameL.setObjectName(u"characterNameL")
 
         self.gridLayout.addWidget(self.characterNameL, 0, 0, 1, 1)
 
-        self.characterAuthority = QSpinBox(AddCharacter)
+        self.characterAuthority = SpinBox(AddCharacter)
         self.characterAuthority.setObjectName(u"characterAuthority")
 
         self.gridLayout.addWidget(self.characterAuthority, 1, 1, 1, 1)
@@ -61,7 +63,7 @@ class Ui_AddCharacter(object):
 
         self.verticalLayout.addLayout(self.gridLayout)
 
-        self.ok = QPushButton(AddCharacter)
+        self.ok = PrimaryPushButton(AddCharacter)
         self.ok.setObjectName(u"ok")
 
         self.verticalLayout.addWidget(self.ok)

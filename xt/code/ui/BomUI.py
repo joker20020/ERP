@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'Bom.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.1
+## Created by: Qt User Interface Compiler version 6.4.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -17,15 +17,17 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QHeaderView, QLayout,
-    QLineEdit, QListWidget, QListWidgetItem, QPushButton,
-    QSizePolicy, QTableWidget, QTableWidgetItem, QVBoxLayout,
+    QListWidgetItem, QSizePolicy, QTableWidgetItem, QVBoxLayout,
     QWidget)
+
+from qfluentwidgets import (ListWidget, PrimaryPushButton, PushButton, SearchLineEdit,
+    TableWidget, VerticalSeparator)
 
 class Ui_Bom(object):
     def setupUi(self, Bom):
         if not Bom.objectName():
             Bom.setObjectName(u"Bom")
-        Bom.resize(854, 644)
+        Bom.resize(856, 630)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -47,7 +49,7 @@ class Ui_Bom(object):
         self.verticalLayout_2.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.bomInput = QLineEdit(Bom)
+        self.bomInput = SearchLineEdit(Bom)
         self.bomInput.setObjectName(u"bomInput")
         sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
@@ -57,20 +59,11 @@ class Ui_Bom(object):
 
         self.horizontalLayout_2.addWidget(self.bomInput)
 
-        self.bomSearch = QPushButton(Bom)
-        self.bomSearch.setObjectName(u"bomSearch")
+        self.bomRefresh = PushButton(Bom)
+        self.bomRefresh.setObjectName(u"bomRefresh")
         sizePolicy2 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.bomSearch.sizePolicy().hasHeightForWidth())
-        self.bomSearch.setSizePolicy(sizePolicy2)
-        self.bomSearch.setSizeIncrement(QSize(0, 0))
-        self.bomSearch.setCursor(QCursor(Qt.ArrowCursor))
-
-        self.horizontalLayout_2.addWidget(self.bomSearch)
-
-        self.bomRefresh = QPushButton(Bom)
-        self.bomRefresh.setObjectName(u"bomRefresh")
         sizePolicy2.setHeightForWidth(self.bomRefresh.sizePolicy().hasHeightForWidth())
         self.bomRefresh.setSizePolicy(sizePolicy2)
 
@@ -78,28 +71,27 @@ class Ui_Bom(object):
 
         self.horizontalLayout_2.setStretch(0, 4)
         self.horizontalLayout_2.setStretch(1, 1)
-        self.horizontalLayout_2.setStretch(2, 1)
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
 
-        self.bomList = QListWidget(Bom)
+        self.bomList = ListWidget(Bom)
         self.bomList.setObjectName(u"bomList")
 
         self.verticalLayout_2.addWidget(self.bomList)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.bomNew = QPushButton(Bom)
+        self.bomNew = PushButton(Bom)
         self.bomNew.setObjectName(u"bomNew")
 
         self.horizontalLayout_3.addWidget(self.bomNew)
 
-        self.bomRemove = QPushButton(Bom)
+        self.bomRemove = PushButton(Bom)
         self.bomRemove.setObjectName(u"bomRemove")
 
         self.horizontalLayout_3.addWidget(self.bomRemove)
 
-        self.bomUpdate = QPushButton(Bom)
+        self.bomUpdate = PrimaryPushButton(Bom)
         self.bomUpdate.setObjectName(u"bomUpdate")
 
         self.horizontalLayout_3.addWidget(self.bomUpdate)
@@ -110,9 +102,14 @@ class Ui_Bom(object):
 
         self.horizontalLayout.addLayout(self.verticalLayout_2)
 
+        self.VerticalSeparator = VerticalSeparator(Bom)
+        self.VerticalSeparator.setObjectName(u"VerticalSeparator")
+
+        self.horizontalLayout.addWidget(self.VerticalSeparator)
+
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.bomTable = QTableWidget(Bom)
+        self.bomTable = TableWidget(Bom)
         if (self.bomTable.columnCount() < 8):
             self.bomTable.setColumnCount(8)
         __qtablewidgetitem = QTableWidgetItem()
@@ -138,7 +135,7 @@ class Ui_Bom(object):
         __qtablewidgetitem9 = QTableWidgetItem()
         self.bomTable.setItem(0, 1, __qtablewidgetitem9)
         self.bomTable.setObjectName(u"bomTable")
-        self.bomTable.setContextMenuPolicy(Qt.ActionsContextMenu)
+        self.bomTable.setContextMenuPolicy(Qt.CustomContextMenu)
         self.bomTable.setRowCount(1)
         self.bomTable.horizontalHeader().setDefaultSectionSize(200)
         self.bomTable.verticalHeader().setVisible(False)
@@ -149,10 +146,7 @@ class Ui_Bom(object):
         self.horizontalLayout.addLayout(self.verticalLayout)
 
         self.horizontalLayout.setStretch(0, 1)
-        self.horizontalLayout.setStretch(1, 4)
-        self.bomTable.addAction(self.partNew)
-        self.bomTable.addAction(self.partRemove)
-        self.bomTable.addAction(self.openLine)
+        self.horizontalLayout.setStretch(2, 4)
 
         self.retranslateUi(Bom)
 
@@ -173,11 +167,10 @@ class Ui_Bom(object):
 #if QT_CONFIG(shortcut)
         self.openLine.setShortcut(QCoreApplication.translate("Bom", u"Ctrl+L", None))
 #endif // QT_CONFIG(shortcut)
-        self.bomSearch.setText(QCoreApplication.translate("Bom", u"\u641c\u7d22", None))
         self.bomRefresh.setText(QCoreApplication.translate("Bom", u"\u5237\u65b0", None))
         self.bomNew.setText(QCoreApplication.translate("Bom", u"\u65b0\u5efa", None))
         self.bomRemove.setText(QCoreApplication.translate("Bom", u"\u5220\u9664", None))
-        self.bomUpdate.setText(QCoreApplication.translate("Bom", u"\u4fee\u6539", None))
+        self.bomUpdate.setText(QCoreApplication.translate("Bom", u"\u540c\u6b65", None))
         ___qtablewidgetitem = self.bomTable.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("Bom", u"ID", None));
         ___qtablewidgetitem1 = self.bomTable.horizontalHeaderItem(1)

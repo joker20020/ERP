@@ -82,6 +82,7 @@ class XtProductionModule(BaseModule):
 
     def delete_line(self,id):
         self.db.delete("line",LINE_ID=id)
+        self.db.drop("work"+str(id))
 
     def delete_work(self,name,id):
         self.db.delete(name, WORK_ID=id)
@@ -180,6 +181,13 @@ class XtMemberModule(BaseModule):
 
     def get_groups(self,name="sysgroup"):
         return self.db.find_info(name,[])
+
+    def get_pwd(self,user_name,name="worker"):
+        return self.db.where(name,["PASSWORD"],USER_NAME=user_name)
+
+    def get_authority(self,user_name,name="character"):
+        worker_id = self.db.where("worker",["ID"],USER_NAME=user_name)[0][0]
+        return self.db.sql_cmd(f"SELECT AUTHORITY FROM {name} WHERE CHARACTER IN (SELECT CHARACTER FROM worker_character WHERE ID={worker_id})")
 
     def get_characters(self,user_id=None,name="character"):
         if user_id:
