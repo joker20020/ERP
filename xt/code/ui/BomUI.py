@@ -178,7 +178,7 @@ class Ui_Bom(object):
         ___qtablewidgetitem2 = self.bomTable.horizontalHeaderItem(2)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("Bom", u"\u96f6\u4ef6\u540d\u79f0", None));
         ___qtablewidgetitem3 = self.bomTable.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("Bom", u"\u96f6\u4ef6\u63cf\u8ff0", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Bom", u"\u7236\u96f6\u4ef6ID", None));
         ___qtablewidgetitem4 = self.bomTable.horizontalHeaderItem(4)
         ___qtablewidgetitem4.setText(QCoreApplication.translate("Bom", u"\u96f6\u4ef6\u6210\u672c", None));
         ___qtablewidgetitem5 = self.bomTable.horizontalHeaderItem(5)

@@ -74,7 +74,7 @@ class BomWindow(QWidget):
 
         self.ui.bomTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Custom)
 
-        self.data_type = [int,int,str,str,float,float,BOOL,str]
+        self.data_type = [int,int,str,int,float,float,BOOL,str]
         # self.refresh_boms()
         self.bind()
 

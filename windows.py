@@ -16,7 +16,7 @@ from qfluentwidgets import RoundMenu,FluentIcon,Action,setTheme, Theme,InfoBar,I
 
 from xt.code.windows import XTMainWindow,XTLoginWindow
 
-from cg.cg_widget import MyWindow as cgUI
+# from cg.cg_widget import MyWindow as cgUI
 
 from jh.code.main_ui import MyWidget as jhUI
 
@@ -28,10 +28,10 @@ class MainWindow(XTMainWindow):
 
         # setTheme(Theme.DARK)
 
-        self.cg = cgUI("cg/cg_db/Purchase List.db")
+        # self.cg = cgUI("cg/cg_db/Purchase List.db")
         self.jh = jhUI("jh/code/JHdatabase.db")
 
-        self.addSubInterface(self.cg, FluentIcon.ALBUM, "采购管理")
+        # self.addSubInterface(self.cg, FluentIcon.ALBUM, "采购管理")
         self.addSubInterface(self.jh, FluentIcon.ACCEPT, "计划管理")
 
 
