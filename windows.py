@@ -22,10 +22,10 @@ from jh.code.main_ui import MyWidget as jhUI
 
 
 class MainWindow(XTMainWindow):
-    def __init__(self,authority,file_path):
-        super().__init__(authority,file_path)
+    def __init__(self,authority,file_path,avatar,user_name,password,parent=None):
+        super().__init__(authority,file_path,avatar,user_name,password,parent=parent)
 
-        self.resize(800,600)
+
         # setTheme(Theme.DARK)
 
         self.cg = cgUI("cg/cg_db/Purchase List.db")
@@ -38,19 +38,15 @@ class MainWindow(XTMainWindow):
         # self.navigationInterface.setCurrentItem("admin_wind")
         # self.stackedWidget.setCurrentIndex(0)
 
+
 class LoginWindow(XTLoginWindow):
     def __init__(self,icon,background,file_path,title="login window"):
         super().__init__(icon,background,file_path,title)
-        self.file_path = file_path
-        self.bind()
-
-
-    def bind(self):
-        self.ui.login.clicked.connect(self.check)
+        self.icon = icon
 
     def check(self):
         user = self.ui.userName.text()
-        if user=="":
+        if user == "":
             InfoBar.error(
                 title='登录失败',
                 content="用户名不能为空",
@@ -62,7 +58,7 @@ class LoginWindow(XTLoginWindow):
             )
             return
         password = self.xt.get_pwd(user)
-        if password==[]:
+        if password == []:
             InfoBar.error(
                 title='登录失败',
                 content="用户名不存在",
@@ -79,13 +75,17 @@ class LoginWindow(XTLoginWindow):
         if pwd == password:
             self.ui.userName.clear()
             self.ui.password.clear()
-            self.close()
+            self.hide()
             authorities = self.xt.get_authority(user)
             authority = authorities[0][0]
             for each in authorities:
-                authority &= each[0]
-                print(authority)
-            self.mainWindow = MainWindow(authority,self.file_path)
+                authority |= each[0]
+                # print(authority)
+            self.mainWindow = MainWindow(authority, self.file_path,self.icon,user,password)
+            self.user_name = user
+            self.pwd = password
+            self.mainWindow.logOut.out.triggered.connect(self.back)
+            self.mainWindow.home.show_user(self.user_name,self.pwd)
             self.mainWindow.show()
         else:
             InfoBar.error(
@@ -103,8 +103,6 @@ class LoginWindow(XTLoginWindow):
 
 if __name__ == "__main__":
     app = QApplication()
-    login = LoginWindow("res/logo.png","res/background.jpg","test.db")
+    login = LoginWindow("res/logo.png","res/background.png","test.db",title="星言ERP")
     login.show()
-    # main = MainWindow(7,"test.db")
-    # main.show()
     app.exec()

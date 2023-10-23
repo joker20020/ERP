@@ -207,6 +207,10 @@ class XtMemberModule(BaseModule):
     def update_worker_root(self,worker_id,group="root",name="worker_sysgroup"):
         return self.db.update(name,{"ORG":group},ID=worker_id)
 
+    def change_pwd(self,user_name,pwd):
+        self.db.update("worker", {"PASSWORD": pwd}, USER_NAME=user_name)
+        return
+
 
     def bind_gw(self,worker_id,group,worker_name="worker",group_name="sysgroup"):
         name = worker_name + "_" + group_name

@@ -21,7 +21,7 @@ from PySide6.QtWidgets import (QApplication, QFormLayout, QFrame, QHBoxLayout,
 
 from qfluentwidgets import (BodyLabel, ComboBox, LineEdit, ListWidget,
     PasswordLineEdit, PrimaryPushButton, PushButton, StrongBodyLabel,
-    TitleLabel, TreeWidget, VerticalSeparator)
+    TitleLabel, ToolButton, TreeWidget, VerticalSeparator)
 
 class Ui_Admin(object):
     def setupUi(self, Admin):
@@ -32,6 +32,40 @@ class Ui_Admin(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.workerCharacterL = StrongBodyLabel(Admin)
+        self.workerCharacterL.setObjectName(u"workerCharacterL")
+        font = QFont()
+        font.setPointSize(10)
+        self.workerCharacterL.setFont(font)
+        self.workerCharacterL.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_6.addWidget(self.workerCharacterL)
+
+        self.workerCharacter = ComboBox(Admin)
+        self.workerCharacter.setObjectName(u"workerCharacter")
+
+        self.horizontalLayout_6.addWidget(self.workerCharacter)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_6)
+
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.characterNew = PushButton(Admin)
+        self.characterNew.setObjectName(u"characterNew")
+
+        self.horizontalLayout_4.addWidget(self.characterNew)
+
+        self.characterRemove = PrimaryPushButton(Admin)
+        self.characterRemove.setObjectName(u"characterRemove")
+
+        self.horizontalLayout_4.addWidget(self.characterRemove)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
+
         self.formLayout_2 = QFormLayout()
         self.formLayout_2.setObjectName(u"formLayout_2")
         self.formLayout_2.setSizeConstraint(QLayout.SetDefaultConstraint)
@@ -48,8 +82,6 @@ class Ui_Admin(object):
 
         self.workerNameL = BodyLabel(Admin)
         self.workerNameL.setObjectName(u"workerNameL")
-        font = QFont()
-        font.setPointSize(10)
         self.workerNameL.setFont(font)
         self.workerNameL.setAlignment(Qt.AlignCenter)
 
@@ -93,10 +125,21 @@ class Ui_Admin(object):
 
         self.formLayout_2.setWidget(5, QFormLayout.FieldRole, self.workerPlace)
 
+        self.workerGroupL = BodyLabel(Admin)
+        self.workerGroupL.setObjectName(u"workerGroupL")
+
+        self.formLayout_2.setWidget(6, QFormLayout.LabelRole, self.workerGroupL)
+
         self.workerGroup = ComboBox(Admin)
         self.workerGroup.setObjectName(u"workerGroup")
 
         self.formLayout_2.setWidget(6, QFormLayout.FieldRole, self.workerGroup)
+
+        self.workerUserNameL = BodyLabel(Admin)
+        self.workerUserNameL.setObjectName(u"workerUserNameL")
+        self.workerUserNameL.setFont(font)
+
+        self.formLayout_2.setWidget(7, QFormLayout.LabelRole, self.workerUserNameL)
 
         self.workerUserName = LineEdit(Admin)
         self.workerUserName.setObjectName(u"workerUserName")
@@ -114,17 +157,6 @@ class Ui_Admin(object):
 
         self.formLayout_2.setWidget(9, QFormLayout.FieldRole, self.workerPassword)
 
-        self.workerGroupL = BodyLabel(Admin)
-        self.workerGroupL.setObjectName(u"workerGroupL")
-
-        self.formLayout_2.setWidget(6, QFormLayout.LabelRole, self.workerGroupL)
-
-        self.workerUserNameL = BodyLabel(Admin)
-        self.workerUserNameL.setObjectName(u"workerUserNameL")
-        self.workerUserNameL.setFont(font)
-
-        self.formLayout_2.setWidget(7, QFormLayout.LabelRole, self.workerUserNameL)
-
 
         self.verticalLayout_2.addLayout(self.formLayout_2)
 
@@ -134,38 +166,6 @@ class Ui_Admin(object):
         self.line_3.setFrameShadow(QFrame.Sunken)
 
         self.verticalLayout_2.addWidget(self.line_3)
-
-        self.horizontalLayout_6 = QHBoxLayout()
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.workerCharacterL = StrongBodyLabel(Admin)
-        self.workerCharacterL.setObjectName(u"workerCharacterL")
-        self.workerCharacterL.setFont(font)
-        self.workerCharacterL.setAlignment(Qt.AlignCenter)
-
-        self.horizontalLayout_6.addWidget(self.workerCharacterL)
-
-        self.workerCharacter = ComboBox(Admin)
-        self.workerCharacter.setObjectName(u"workerCharacter")
-
-        self.horizontalLayout_6.addWidget(self.workerCharacter)
-
-
-        self.verticalLayout_2.addLayout(self.horizontalLayout_6)
-
-        self.horizontalLayout_4 = QHBoxLayout()
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.characterNew = PushButton(Admin)
-        self.characterNew.setObjectName(u"characterNew")
-
-        self.horizontalLayout_4.addWidget(self.characterNew)
-
-        self.characterRemove = PrimaryPushButton(Admin)
-        self.characterRemove.setObjectName(u"characterRemove")
-
-        self.horizontalLayout_4.addWidget(self.characterRemove)
-
-
-        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
 
         self.line = QFrame(Admin)
         self.line.setObjectName(u"line")
@@ -232,14 +232,19 @@ class Ui_Admin(object):
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.groupNew = PushButton(Admin)
-        self.groupNew.setObjectName(u"groupNew")
+        self.refresh = ToolButton(Admin)
+        self.refresh.setObjectName(u"refresh")
 
-        self.horizontalLayout_2.addWidget(self.groupNew)
+        self.horizontalLayout_2.addWidget(self.refresh)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
+
+        self.groupNew = PushButton(Admin)
+        self.groupNew.setObjectName(u"groupNew")
+
+        self.horizontalLayout_2.addWidget(self.groupNew)
 
         self.groupRemove = PrimaryPushButton(Admin)
         self.groupRemove.setObjectName(u"groupRemove")
@@ -249,7 +254,7 @@ class Ui_Admin(object):
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
 
-        self.verticalLayout_2.setStretch(0, 2)
+        self.verticalLayout_2.setStretch(2, 2)
         self.verticalLayout_2.setStretch(9, 1)
 
         self.horizontalLayout.addLayout(self.verticalLayout_2)
@@ -270,7 +275,6 @@ class Ui_Admin(object):
 
         self.horizontalLayout.addLayout(self.verticalLayout)
 
-        self.horizontalLayout.setStretch(0, 1)
         self.horizontalLayout.setStretch(2, 4)
 
         self.retranslateUi(Admin)
@@ -280,23 +284,24 @@ class Ui_Admin(object):
 
     def retranslateUi(self, Admin):
         Admin.setWindowTitle(QCoreApplication.translate("Admin", u"Form", None))
+        self.workerCharacterL.setText(QCoreApplication.translate("Admin", u"\u89d2\u8272\u64cd\u4f5c\u6846", None))
+        self.characterNew.setText(QCoreApplication.translate("Admin", u"\u65b0\u5efa\u89d2\u8272", None))
+        self.characterRemove.setText(QCoreApplication.translate("Admin", u"\u5220\u9664\u89d2\u8272", None))
         self.workerIDL.setText(QCoreApplication.translate("Admin", u"\u5458\u5de5\u7f16\u53f7", None))
         self.workerNameL.setText(QCoreApplication.translate("Admin", u"\u59d3\u540d", None))
         self.workerAgeL.setText(QCoreApplication.translate("Admin", u"\u5e74\u9f84", None))
         self.workerGenderL.setText(QCoreApplication.translate("Admin", u"\u6027\u522b", None))
         self.workerPlaceL.setText(QCoreApplication.translate("Admin", u"\u5de5\u4f5c\u5730\u70b9", None))
-        self.workerPasswordL.setText(QCoreApplication.translate("Admin", u"\u5bc6\u7801", None))
         self.workerGroupL.setText(QCoreApplication.translate("Admin", u"\u6240\u5c5e\u7ec4\u7ec7", None))
         self.workerUserNameL.setText(QCoreApplication.translate("Admin", u"\u7528\u6237\u540d", None))
-        self.workerCharacterL.setText(QCoreApplication.translate("Admin", u"\u89d2\u8272\u64cd\u4f5c\u6846", None))
-        self.characterNew.setText(QCoreApplication.translate("Admin", u"\u65b0\u5efa\u89d2\u8272", None))
-        self.characterRemove.setText(QCoreApplication.translate("Admin", u"\u5220\u9664\u89d2\u8272", None))
+        self.workerPasswordL.setText(QCoreApplication.translate("Admin", u"\u5bc6\u7801", None))
         self.label.setText(QCoreApplication.translate("Admin", u"\u5458\u5de5\u89d2\u8272", None))
         self.characterAdd.setText(QCoreApplication.translate("Admin", u"\u4e3a\u5458\u5de5\u6dfb\u52a0\u89d2\u8272", None))
         self.characterDelete.setText(QCoreApplication.translate("Admin", u"\u4e3a\u5458\u5de5\u5220\u9664\u89d2\u8272", None))
         self.workerNew.setText(QCoreApplication.translate("Admin", u"\u65b0\u5efa\u5458\u5de5", None))
         self.workerUpdate.setText(QCoreApplication.translate("Admin", u"\u4fee\u6539\u5458\u5de5\u4fe1\u606f", None))
         self.workerRemove.setText(QCoreApplication.translate("Admin", u"\u5220\u9664\u5458\u5de5", None))
+        self.refresh.setText("")
         self.groupNew.setText(QCoreApplication.translate("Admin", u"\u65b0\u5efa\u7ec4\u7ec7", None))
         self.groupRemove.setText(QCoreApplication.translate("Admin", u"\u5220\u9664\u7ec4\u7ec7", None))
         ___qtreewidgetitem = self.groupTree.headerItem()

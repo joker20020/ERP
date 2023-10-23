@@ -18,7 +18,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFormLayout, QHBoxLayout, QLabel,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
-from qfluentwidgets import (BodyLabel, LineEdit, PasswordLineEdit, PrimaryPushButton)
+from qfluentwidgets import (BodyLabel, LineEdit, PasswordLineEdit, PrimaryPushButton,
+    TitleLabel)
 
 class Ui_Login(object):
     def setupUi(self, Login):
@@ -46,13 +47,23 @@ class Ui_Login(object):
 
         self.verticalLayout.addItem(self.verticalSpacer_4)
 
+        self.label = TitleLabel(self.verticalWidget)
+        self.label.setObjectName(u"label")
+        self.label.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout.addWidget(self.label)
+
+        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Fixed)
+
+        self.verticalLayout.addItem(self.verticalSpacer_5)
+
         self.logo = QLabel(self.verticalWidget)
         self.logo.setObjectName(u"logo")
         self.logo.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout.addWidget(self.logo)
 
-        self.verticalSpacer = QSpacerItem(20, 50, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.verticalSpacer = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Fixed)
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
@@ -86,7 +97,7 @@ class Ui_Login(object):
 
         self.verticalLayout.addLayout(self.formLayout)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 5, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.verticalSpacer_3 = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Fixed)
 
         self.verticalLayout.addItem(self.verticalSpacer_3)
 
@@ -111,6 +122,7 @@ class Ui_Login(object):
     def retranslateUi(self, Login):
         Login.setWindowTitle(QCoreApplication.translate("Login", u"Form", None))
         self.imageLabel.setText("")
+        self.label.setText(QCoreApplication.translate("Login", u"\u661f\u8a00 ERP\u7cfb\u7edf", None))
         self.logo.setText("")
         self.userNameL.setText(QCoreApplication.translate("Login", u"\u7528\u6237\u540d", None))
         self.passwordL.setText(QCoreApplication.translate("Login", u"\u5bc6\u7801", None))
