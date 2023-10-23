@@ -28,7 +28,7 @@ QGraphicsView, QGraphicsScene, QGraphicsPixmapItem)
 from PySide6.QtUiTools import QUiLoader
 
 from PySide6.QtCore import Qt, QThread, Signal, Slot,QFile
-from PySide6.QtGui import QIcon, QStandardItem
+from PySide6.QtGui import QIcon, QStandardItem,QPixmap
 
 from PySide6.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
 from PySide6 import QtCore
@@ -47,7 +47,7 @@ class cg_widget(QWidget):
         # 定义窗体大小
         self.resize(800, 480)
         # 执行初始化方法
-        self.init_ui(file_path)
+        self.init_ui("cg_ui/version2.ui")
         # 设定左上角标题
         self.setWindowTitle("采购模块")
         # 设定左上角图标，图标png文件使用绝对路径
@@ -56,12 +56,12 @@ class cg_widget(QWidget):
 
 
     # 一些初始化操作
-    def init_ui(self,file_path):
+    def init_ui(self,file_path="cg_ui/version2.ui"):
 
-        # 实例化QUiloader，并加载相对路径下的.ui文件
+        # 实例化QUilo ader，并加载相对路径下的.ui文件
         loader = QUiLoader()
-        ui_file = "cg_ui/version2.ui"
-        self.ui = loader.load(ui_file)
+        file = QFile(file_path)
+        self.ui = loader.load(file)
 
 
         # 从ui文件中取出一些需要用到的控件名称，并定义为类的属性
@@ -396,7 +396,7 @@ if __name__ == '__main__':
     # 创建一个名为app的实例，代表应用本身，用于设置GUI并处理事件
     app = QApplication(sys.argv)
     # 实例化MyWindow
-    w = cg_widget()
+    w = cg_widget(1)
     # 在屏幕上显示QWiget窗口
     w.show()
     # 启动QApplication的循环，直到用户关闭窗口

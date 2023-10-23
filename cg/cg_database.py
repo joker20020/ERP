@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-from ..xt.code.xt_module import BaseModule
+# from ..xt.code.xt_module import BaseModule
 
 # 定义数据库文件夹名称为 cg_db
 db_folder = 'cg_db'
