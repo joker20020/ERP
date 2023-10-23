@@ -1,5 +1,6 @@
 # 采购模块
 这是ERP系统的采购模块，本模块的文件结构如下所示
+采购部分的widget类就在cg_widget.py里
 ``` Python
 ERPProject #采购文件
 ├── cg_ui # 储存PyQt design设计的所有采购模块.ui文件
