@@ -82,6 +82,7 @@ class XtProductionModule(BaseModule):
 
     def delete_line(self,id):
         self.db.delete("line",LINE_ID=id)
+        self.db.drop("work"+str(id))
 
     def delete_work(self,name,id):
         self.db.delete(name, WORK_ID=id)
@@ -135,6 +136,9 @@ class XtMemberModule(BaseModule):
         self.db.xt_wg_create_table("worker_sysgroup", "worker", "sysgroup")
         self.db.xt_wc_create_table("worker_character", "worker", "character")
 
+        if self.db.where("sysgroup",[],NAME="root") == []:
+            self.db.insert_table("sysgroup",["NAME","FATHER","DES"],["root","HIDDEN CAN NOT BE USED",""])
+
     def create_group(self,name="sysgroup"):
         self.db.xt_group_create_table(name)
 
@@ -150,16 +154,63 @@ class XtMemberModule(BaseModule):
     def add_group(self,col,data,name="sysgroup"):
         return self.db.insert_table(name,col,data)
 
-    def add_worker(self,worker_id,group,character,col,data,name="worker"):
+    def add_worker(self,group,character,col,data,name="worker"):
+        self.db.insert_table(name, col, data)
+        worker_id = self.db.find_info(name,["ID"])[-1][0]
         self.bind_gw(worker_id,group)
         self.bind_wc(worker_id,character)
+
+    def add_character(self,col,data,name="worker_character"):
         return self.db.insert_table(name,col,data)
 
-    def add_character(self,col,data,name="character"):
+    def new_character(self,col,data,name="character"):
         return self.db.insert_table(name,col,data)
+
+
+    def delete_group(self,group_name,name="sysgroup"):
+        self.db.delete(name,NAME=group_name)
+
+    def remove_character(self,character,name="character"):
+        self.db.delete(name,CHARACTER=character)
+
+    def delete_character(self,worker_id,character,name="worker_character"):
+        self.db.delete(name,ID=worker_id,CHARACTER=character)
+
+    def delete_worker(self,worker_id,name="worker"):
+        self.db.delete(name,ID=worker_id)
 
     def get_groups(self,name="sysgroup"):
         return self.db.find_info(name,[])
+
+    def get_pwd(self,user_name,name="worker"):
+        return self.db.where(name,["PASSWORD"],USER_NAME=user_name)
+
+    def get_authority(self,user_name,name="character"):
+        worker_id = self.db.where("worker",["ID"],USER_NAME=user_name)[0][0]
+        return self.db.sql_cmd(f"SELECT AUTHORITY FROM {name} WHERE CHARACTER IN (SELECT CHARACTER FROM worker_character WHERE ID={worker_id})")
+
+    def get_characters(self,user_id=None,name="character"):
+        if user_id:
+            return self.db.sql_cmd(f"SELECT CHARACTER FROM {name} WHERE CHARACTER IN (SELECT CHARACTER FROM worker_character WHERE ID={user_id})")
+        else:
+            return self.db.find_info(name,[])
+
+    def get_worker_group(self,group_name):
+        return self.db.sql_cmd(f"SELECT ID,NAME FROM worker WHERE ID IN (SELECT ID FROM worker_sysgroup WHERE ORG='{group_name}') ")
+
+    def get_worker(self,worker_id,name="worker"):
+        return self.db.where(name,[],ID=worker_id)
+
+    def update_worker(self,worker_id,dicts,name="worker"):
+        return self.db.update(name,dicts,ID=worker_id)
+
+    def update_worker_root(self,worker_id,group="root",name="worker_sysgroup"):
+        return self.db.update(name,{"ORG":group},ID=worker_id)
+
+    def change_pwd(self,user_name,pwd):
+        self.db.update("worker", {"PASSWORD": pwd}, USER_NAME=user_name)
+        return
+
 
     def bind_gw(self,worker_id,group,worker_name="worker",group_name="sysgroup"):
         name = worker_name + "_" + group_name

@@ -83,9 +83,9 @@ class XTDataBase:
         cursor = self.connection.cursor()
         cmd = "DELETE FROM {} WHERE ".format(table_name)
         for k, v in kwargs.items():
-            cmd += "{} = '{}' ".format(k, v)
+            cmd += "{} = '{}' AND ".format(k, v)
         # print(cmd)
-        cursor.execute(cmd[:-1])
+        cursor.execute(cmd[:-4])
         self.connection.commit()
 
     def update(self, table_name, dicts, **condition):
@@ -112,6 +112,7 @@ class XTDataBase:
             # print(cmd)
             cursor.execute(cmd[:-1])
             # print(" | ".join(col))
+        self.connection.commit()
 
     def add_column(self, table_name, col_name, col_type):
         cursor = self.connection.cursor()
@@ -140,8 +141,7 @@ class XTDataBase:
         ID INTEGER PRIMARY KEY ,
         LAYER INTEGER NOT NULL,
         NAME TEXT NOT NULL,
-        NUM INTEGER NOT NULL,
-        DESC TEXT NOT NULL,
+        PARENT INTEGER NOT NULL,
         COST REAL NOT NULL,
         CYCLE REAL NOT NULL,
         BUY INTEGER NOT NULL,
@@ -246,7 +246,7 @@ class XTDataBase:
     def xt_worker_create_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-                        ID INTEGER PRIMARY KEY ,
+                        ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         NAME TEXT NOT NULL,
                         AGE INTEGER NOT NULL,
                         GENDER TEXT NOT NULL,
@@ -387,15 +387,15 @@ if __name__ == "__main__":
     db = XTDataBase("test.db")
     logger = Logger("test.db")
     logger.generate("jdy","test operation")
-    print(db.sql_cmd("SELECT name FROM sqlite_master"))
+    # print(db.sql_cmd("SELECT name FROM sqlite_master"))
     # print(db.sql_cmd('PRAGMA table_info(bom1)'))
     # db.insert_table("xt_bom_1",["LAYER","NAME","NUM","DESC","COST","CYCLE","BUY"],[1,"BOM1_TEST",2,"This is a test!!!",4.5,3.4,True])
-    # print(logger.search_by_date(2023,9,28,13,54,52))
+    # print(logger.search_by_date(2023,10,22,18,1,4))
     # print(logger.search_by_user("jdy"))
     # logger.export_log()
     # logger.delete_by_date(2023,9,28,13,55)
     # logger.delete_by_user("jdy")
-    print(logger.find_info("LOG",[]))
+    # print(logger.find_info("LOG",[]))
 
 
     # print(db.sql_cmd("SELECT name FROM sqlite_master WHERE type='table'"))

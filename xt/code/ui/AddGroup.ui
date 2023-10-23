@@ -17,34 +17,34 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="1" column="1">
-      <widget class="QComboBox" name="groupFather"/>
+      <widget class="ComboBox" name="groupFather"/>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="groupNameL">
+      <widget class="BodyLabel" name="groupNameL">
        <property name="text">
         <string>组织名称</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="groupFatherL">
+      <widget class="BodyLabel" name="groupFatherL">
        <property name="text">
         <string>父组织</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="groupName"/>
+      <widget class="LineEdit" name="groupName"/>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="groupDesL">
+      <widget class="BodyLabel" name="groupDesL">
        <property name="text">
         <string>描述</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QPlainTextEdit" name="groupDes"/>
+      <widget class="PlainTextEdit" name="groupDes"/>
      </item>
     </layout>
    </item>
@@ -57,6 +57,28 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>BodyLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PlainTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

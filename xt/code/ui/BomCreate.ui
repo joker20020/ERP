@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>394</width>
-    <height>295</height>
+    <height>92</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,5">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="TitleLabel" name="label">
      <property name="font">
       <font>
        <pointsize>12</pointsize>
@@ -32,10 +32,10 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLineEdit" name="bomCreateName"/>
+      <widget class="LineEdit" name="bomCreateName"/>
      </item>
      <item>
-      <widget class="QPushButton" name="bomCreate">
+      <widget class="PushButton" name="bomCreate">
        <property name="text">
         <string>确认</string>
        </property>
@@ -45,6 +45,23 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TitleLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

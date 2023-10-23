@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'AddGroup.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.3
+## Created by: Qt User Interface Compiler version 6.4.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,9 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QLabel,
-    QLineEdit, QPlainTextEdit, QPushButton, QSizePolicy,
+from PySide6.QtWidgets import (QApplication, QGridLayout, QPushButton, QSizePolicy,
     QVBoxLayout, QWidget)
+
+from qfluentwidgets import (BodyLabel, ComboBox, LineEdit, PlainTextEdit)
 
 class Ui_AddGroup(object):
     def setupUi(self, AddGroup):
@@ -28,32 +29,32 @@ class Ui_AddGroup(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
-        self.groupFather = QComboBox(AddGroup)
+        self.groupFather = ComboBox(AddGroup)
         self.groupFather.setObjectName(u"groupFather")
 
         self.gridLayout.addWidget(self.groupFather, 1, 1, 1, 1)
 
-        self.groupNameL = QLabel(AddGroup)
+        self.groupNameL = BodyLabel(AddGroup)
         self.groupNameL.setObjectName(u"groupNameL")
 
         self.gridLayout.addWidget(self.groupNameL, 0, 0, 1, 1)
 
-        self.groupFatherL = QLabel(AddGroup)
+        self.groupFatherL = BodyLabel(AddGroup)
         self.groupFatherL.setObjectName(u"groupFatherL")
 
         self.gridLayout.addWidget(self.groupFatherL, 1, 0, 1, 1)
 
-        self.groupName = QLineEdit(AddGroup)
+        self.groupName = LineEdit(AddGroup)
         self.groupName.setObjectName(u"groupName")
 
         self.gridLayout.addWidget(self.groupName, 0, 1, 1, 1)
 
-        self.groupDesL = QLabel(AddGroup)
+        self.groupDesL = BodyLabel(AddGroup)
         self.groupDesL.setObjectName(u"groupDesL")
 
         self.gridLayout.addWidget(self.groupDesL, 2, 0, 1, 1)
 
-        self.groupDes = QPlainTextEdit(AddGroup)
+        self.groupDes = PlainTextEdit(AddGroup)
         self.groupDes.setObjectName(u"groupDes")
 
         self.gridLayout.addWidget(self.groupDes, 2, 1, 1, 1)

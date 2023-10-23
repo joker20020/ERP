@@ -1,4 +1,5 @@
 # 导入sys
+import os
 import sys
 # 任何一个PySide界面程序都需要使用QApplication
 # 我们要展示一个普通的窗口，所以需要导入QWidget，用来让我们自己的类继承
@@ -23,12 +24,12 @@ from PySide6 import QtCore
 
 # 继承QWidget类，以获取其属性和方法
 class MyWidget(QWidget):
-    def __init__(self):
+    def __init__(self,file_path="JHdatabase.db"):
         super().__init__()
         # 设置界面为我们生成的界面
         self.ui = Ui_Form()
         self.ui.setupUi(self)
-        self.jh_db = JHDataBase("JHdatabase.db")
+        self.jh_db = JHDataBase(file_path)
 
         self.MPS = table_MPS1()
         self.MRP = table_MRP1()

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>854</width>
-    <height>644</height>
+    <width>856</width>
+    <height>630</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,16 +19,16 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,4">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="4,1,1">
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="4,1">
        <item>
-        <widget class="QLineEdit" name="bomInput">
+        <widget class="SearchLineEdit" name="bomInput">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -38,29 +38,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="bomSearch">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="sizeIncrement">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>ArrowCursor</cursorShape>
-         </property>
-         <property name="text">
-          <string>搜索</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="bomRefresh">
+        <widget class="PushButton" name="bomRefresh">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -75,28 +53,28 @@
       </layout>
      </item>
      <item>
-      <widget class="QListWidget" name="bomList"/>
+      <widget class="ListWidget" name="bomList"/>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0">
        <item>
-        <widget class="QPushButton" name="bomNew">
+        <widget class="PushButton" name="bomNew">
          <property name="text">
           <string>新建</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="bomRemove">
+        <widget class="PushButton" name="bomRemove">
          <property name="text">
           <string>删除</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="bomUpdate">
+        <widget class="PrimaryPushButton" name="bomUpdate">
          <property name="text">
-          <string>修改</string>
+          <string>同步</string>
          </property>
         </widget>
        </item>
@@ -105,11 +83,14 @@
     </layout>
    </item>
    <item>
+    <widget class="VerticalSeparator" name="VerticalSeparator"/>
+   </item>
+   <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QTableWidget" name="bomTable">
+      <widget class="TableWidget" name="bomTable">
        <property name="contextMenuPolicy">
-        <enum>Qt::ActionsContextMenu</enum>
+        <enum>Qt::CustomContextMenu</enum>
        </property>
        <property name="rowCount">
         <number>1</number>
@@ -138,12 +119,7 @@
        </column>
        <column>
         <property name="text">
-         <string>零件数量</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>零件描述</string>
+         <string>父零件ID</string>
         </property>
        </column>
        <column>
@@ -215,6 +191,39 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SearchLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>ListWidget</class>
+   <extends>QListWidget</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>VerticalSeparator</class>
+   <extends>QFrame</extends>
+   <header>qfluentwidgets</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PrimaryPushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
