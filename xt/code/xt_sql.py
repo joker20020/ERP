@@ -112,6 +112,7 @@ class XTDataBase:
             # print(cmd)
             cursor.execute(cmd[:-1])
             # print(" | ".join(col))
+        self.connection.commit()
 
     def add_column(self, table_name, col_name, col_type):
         cursor = self.connection.cursor()
@@ -386,15 +387,15 @@ if __name__ == "__main__":
     db = XTDataBase("test.db")
     logger = Logger("test.db")
     logger.generate("jdy","test operation")
-    print(db.sql_cmd("SELECT name FROM sqlite_master"))
+    # print(db.sql_cmd("SELECT name FROM sqlite_master"))
     # print(db.sql_cmd('PRAGMA table_info(bom1)'))
     # db.insert_table("xt_bom_1",["LAYER","NAME","NUM","DESC","COST","CYCLE","BUY"],[1,"BOM1_TEST",2,"This is a test!!!",4.5,3.4,True])
-    # print(logger.search_by_date(2023,9,28,13,54,52))
+    # print(logger.search_by_date(2023,10,22,18,1,4))
     # print(logger.search_by_user("jdy"))
     # logger.export_log()
     # logger.delete_by_date(2023,9,28,13,55)
     # logger.delete_by_user("jdy")
-    print(logger.find_info("LOG",[]))
+    # print(logger.find_info("LOG",[]))
 
 
     # print(db.sql_cmd("SELECT name FROM sqlite_master WHERE type='table'"))

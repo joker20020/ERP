@@ -17,39 +17,39 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="1" column="0">
-      <widget class="QLabel" name="characterAuthorityL">
+      <widget class="BodyLabel" name="characterAuthorityL">
        <property name="text">
         <string>权限代码</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="characterName"/>
+      <widget class="LineEdit" name="characterName"/>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="characterDesL">
+      <widget class="BodyLabel" name="characterDesL">
        <property name="text">
         <string>权限代码含义</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QPlainTextEdit" name="groupDes"/>
+      <widget class="PlainTextEdit" name="groupDes"/>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="characterNameL">
+      <widget class="BodyLabel" name="characterNameL">
        <property name="text">
         <string>角色名称</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QSpinBox" name="characterAuthority"/>
+      <widget class="SpinBox" name="characterAuthority"/>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QPushButton" name="ok">
+    <widget class="PrimaryPushButton" name="ok">
      <property name="text">
       <string>确认</string>
      </property>
@@ -57,6 +57,33 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>BodyLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PrimaryPushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PlainTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>SpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -23,7 +23,7 @@
       <set>Qt::AlignCenter</set>
      </property>
      <item row="0" column="0">
-      <widget class="QLabel" name="workerNameL">
+      <widget class="BodyLabel" name="workerNameL">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -38,10 +38,10 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="workerName"/>
+      <widget class="LineEdit" name="workerName"/>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="workerAgeL">
+      <widget class="BodyLabel" name="workerAgeL">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -53,10 +53,10 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="workerAge"/>
+      <widget class="LineEdit" name="workerAge"/>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="workerGenderL">
+      <widget class="BodyLabel" name="workerGenderL">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -68,10 +68,10 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="workerGender"/>
+      <widget class="LineEdit" name="workerGender"/>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="workerPlaceL">
+      <widget class="BodyLabel" name="workerPlaceL">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -83,20 +83,20 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="workerPlace"/>
+      <widget class="LineEdit" name="workerPlace"/>
      </item>
      <item row="4" column="0">
-      <widget class="QLabel" name="workerGroupL">
+      <widget class="BodyLabel" name="workerGroupL">
        <property name="text">
         <string>所属组织</string>
        </property>
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QComboBox" name="workerGroup"/>
+      <widget class="ComboBox" name="workerGroup"/>
      </item>
      <item row="5" column="0">
-      <widget class="QLabel" name="workerUserNameL">
+      <widget class="BodyLabel" name="workerUserNameL">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -107,11 +107,8 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="workerUserName"/>
-     </item>
      <item row="6" column="0">
-      <widget class="QLabel" name="workerPasswordL">
+      <widget class="BodyLabel" name="workerPasswordL">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -123,10 +120,10 @@
       </widget>
      </item>
      <item row="6" column="1">
-      <widget class="QLineEdit" name="workerPassword"/>
+      <widget class="LineEdit" name="workerPassword"/>
      </item>
      <item row="7" column="0">
-      <widget class="QLabel" name="workerCharacterL">
+      <widget class="BodyLabel" name="workerCharacterL">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -138,7 +135,7 @@
       </widget>
      </item>
      <item row="7" column="1">
-      <widget class="QComboBox" name="workerCharacter"/>
+      <widget class="ComboBox" name="workerCharacter"/>
      </item>
      <item row="8" column="0">
       <spacer name="horizontalSpacer">
@@ -154,16 +151,41 @@
       </spacer>
      </item>
      <item row="8" column="1">
-      <widget class="QPushButton" name="ok">
+      <widget class="PrimaryPushButton" name="ok">
        <property name="text">
         <string>确认</string>
        </property>
       </widget>
      </item>
+     <item row="5" column="1">
+      <widget class="LineEdit" name="workerUserName"/>
+     </item>
     </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>BodyLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PrimaryPushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

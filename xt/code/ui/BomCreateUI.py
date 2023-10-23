@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'BomCreate.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.3
+## Created by: Qt User Interface Compiler version 6.4.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,17 +15,19 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
-    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QSizePolicy, QVBoxLayout,
+    QWidget)
+
+from qfluentwidgets import (LineEdit, PushButton, TitleLabel)
 
 class Ui_BomCreate(object):
     def setupUi(self, BomCreate):
         if not BomCreate.objectName():
             BomCreate.setObjectName(u"BomCreate")
-        BomCreate.resize(394, 295)
+        BomCreate.resize(394, 92)
         self.verticalLayout = QVBoxLayout(BomCreate)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.label = QLabel(BomCreate)
+        self.label = TitleLabel(BomCreate)
         self.label.setObjectName(u"label")
         font = QFont()
         font.setPointSize(12)
@@ -36,12 +38,12 @@ class Ui_BomCreate(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.bomCreateName = QLineEdit(BomCreate)
+        self.bomCreateName = LineEdit(BomCreate)
         self.bomCreateName.setObjectName(u"bomCreateName")
 
         self.horizontalLayout.addWidget(self.bomCreateName)
 
-        self.bomCreate = QPushButton(BomCreate)
+        self.bomCreate = PushButton(BomCreate)
         self.bomCreate.setObjectName(u"bomCreate")
 
         self.horizontalLayout.addWidget(self.bomCreate)

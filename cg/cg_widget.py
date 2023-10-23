@@ -16,43 +16,53 @@ import sys
 import os
 import time
 
-from PySide6.QtWidgets import (QApplication, QWidget, QComboBox,
-QPushButton, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout,
+
+
+
+from PySide6.QtWidgets import (QApplication, QWidget,
+QPushButton, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, 
+
 QGroupBox, QMainWindow, QRadioButton, QGridLayout, QTableView,
 QFormLayout, QStackedLayout, QScrollArea, QFileDialog, 
 QGraphicsView, QGraphicsScene, QGraphicsPixmapItem)
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtCore import Qt, QThread, Signal, Slot, QModelIndex
-from PySide6.QtGui import QIcon, QStandardItem, QStandardItemModel, QPixmap, QPainter, QImage
+
+from PySide6.QtCore import Qt, QThread, Signal, Slot,QFile
+from PySide6.QtGui import QIcon, QStandardItem
+
 from PySide6.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
 from PySide6 import QtCore
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+
 
 import cg_database
 
 # 这是生成采购部门模块的类
 class cg_widget(QWidget):
     # 继承父类，并执行类的方法，一些基础的设定
-    def __init__(self, authority, file_path):
+    def __init__(self, authority, file_path="cg_db/Purchase List.db"):
+
         super().__init__()
         # 定义窗体大小
         self.resize(800, 480)
         # 执行初始化方法
-        self.init_ui()
+        self.init_ui(file_path)
         # 设定左上角标题
-        self.ui.setWindowTitle("采购模块")
+        self.setWindowTitle("采购模块")
         # 设定左上角图标，图标png文件使用绝对路径
         icon = QIcon('cg_ui/u102.png')
         self.ui.setWindowIcon(icon)
 
+
     # 一些初始化操作
-    def init_ui(self):
+    def init_ui(self,file_path):
 
         # 实例化QUiloader，并加载相对路径下的.ui文件
         loader = QUiLoader()
         ui_file = "cg_ui/version2.ui"
         self.ui = loader.load(ui_file)
+
 
         # 从ui文件中取出一些需要用到的控件名称，并定义为类的属性
         # 0.取出一些嵌套外层的部件
@@ -248,7 +258,6 @@ class cg_widget(QWidget):
         supplier_query.prepare("SELECT * FROM cg_supplier_info WHERE cg_supplier_name = :supplier_name")
         supplier_query.bindValue(":supplier_name", selected_supplier_name)
         supplier_query.exec()
-
         # 对当前的供应商信息进行提取，从数据库取出来的数据与各控件对应
         if supplier_query.next():
             company_id = supplier_query.value(0)
@@ -289,6 +298,12 @@ class cg_widget(QWidget):
         # 一个错误处理
         if not self.database.open():
             print("Error: Could not open the database")
+
+        self.purchase_receipt_btn.clicked.connect(self.view_list)
+    
+    def view_list(self):
+
+
         
         # TODO: 写这个代码块的注释
         # 设置tableView的模型以及表的名称
@@ -383,6 +398,6 @@ if __name__ == '__main__':
     # 实例化MyWindow
     w = cg_widget()
     # 在屏幕上显示QWiget窗口
-    w.ui.show()
+    w.show()
     # 启动QApplication的循环，直到用户关闭窗口
     app.exec()
