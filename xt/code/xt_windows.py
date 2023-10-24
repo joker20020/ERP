@@ -1010,8 +1010,8 @@ class XTMainWindow(FluentWindow):
         )
 
 
-        self.addSubInterface(self.bomWind, FluentIcon.FOLDER, "工艺信息管理",parent=self.xtMain)
-        self.addSubInterface(self.adminWind, FluentIcon.PEOPLE, "人员信息管理",parent=self.xtMain)
+        self.addSubInterface(self.bomWind, FluentIcon.FOLDER, "工艺信息管理",parent=self.xtMain,position=NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.adminWind, FluentIcon.PEOPLE, "人员信息管理",parent=self.xtMain,position=NavigationItemPosition.SCROLL)
 
 
         self.navigationInterface.addWidget(

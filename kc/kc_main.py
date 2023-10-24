@@ -12,27 +12,24 @@ import sqlite3
 
 # 继承QWidget类，以获取其属性和方法
 class MykcWidget(QWidget):
-    def __init__(self):
+    def __init__(self,file_path):
         super().__init__()
         # 设置界面为我们生成的界面
         self.ui = Ui_kcwidget()
         self.ui.setupUi(self)
+        self.file_path = file_path
 
-<<<<<<< HEAD:kc/kc_main.py
         # self.chaxun()
-=======
->>>>>>> 45a9b04bef2dd33035d8e1ac39e70c6137552606:kc/main.py
         self.bindkc()
 
     def chaxun(self):
         mode = self.ui.comboBox_chaxun.currentText()
         if mode == "大众自动钳":
-<<<<<<< HEAD:kc/kc_main.py
-            conn = sqlite3.connect(os.path.abspath('./inventory.db'))
-=======
+
+            conn = sqlite3.connect(self.file_path)
+
             self.ui.lineEdit_chaxunid.setText("1")
-            conn = sqlite3.connect('inventory.db')
->>>>>>> 45a9b04bef2dd33035d8e1ac39e70c6137552606:kc/main.py
+
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -279,7 +276,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # 初始化并展示我们的界面组件
-    window = MykcWidget()
+    window = MykcWidget('./inventory.db')
     window.show()
 
     # 结束QApplication

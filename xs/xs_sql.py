@@ -222,11 +222,11 @@ class XSDataBase:
                 # FOREIGN KEY(salesperson_id) REFERENCES salespersons(salesperson_id),
                 # FOREIGN KEY(product_id) REFERENCES products(product_id)
 class MyWindow(QWidget):
-    def __init__(self):
+    def __init__(self,file_path="lk.db"):
         super().__init__()
         self.ui = Ui_Form()  # UI类的实例化()
         self.ui.setupUi(self)
-        self.db = XSDataBase("lk.db")
+        self.db = XSDataBase(file_path)
         self.bind()
 
     def bind(self):
