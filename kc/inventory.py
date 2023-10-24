@@ -10,6 +10,35 @@ class InventoryManager:
         self.c.execute('''CREATE TABLE IF NOT EXISTS products
                      (product_id INTEGER PRIMARY KEY, name TEXT, quantity INTEGER,  ID INTEGER, safe_inventory INTEGER)''')
         # self.c.execute('''DROP TABLE IF EXISTS products''')
+
+        # 检查表是否为空
+        self.c.execute("SELECT COUNT(*) FROM products")
+        if self.c.fetchone()[0] == 0:
+            self._initialize_products()
+
+    def _initialize_products(self):
+        """初始化商品列表"""
+        products = [
+            ("大众自动钳", 101, 1, 41),
+            ("壳体2", 102, 2, 42),
+            ("支架1", 103, 3, 43),
+            ("配件", 104, 4, 44),
+            ("左壳体1", 105, 5, 45),
+            ("右壳体1", 106, 6, 46),
+            ("密封圈2", 107, 7, 47),
+            ("活塞1", 108, 8, 48),
+            ("塑料套1", 109, 9, 49),
+            ("橡胶套1", 110, 10, 50),
+            ("放气螺栓1", 111, 11, 51),
+            ("防尘帽1", 112, 12, 52),
+            ("内六角螺栓1", 113, 13, 53),
+            ("摩擦片2", 114, 14, 54),
+            ("隔垫1", 115, 15, 55),
+            ("开口导向套管2", 116, 16, 56)
+        ]
+        self.c.executemany("INSERT INTO products (name, quantity, ID, safe_inventory) VALUES (?, ?, ?, ?)", products)
+        self.conn.commit()
+
     def add_product(self, name, quantity, ID, safe_inventory):
         """添加商品"""
         self.c.execute("INSERT INTO products (name, quantity, ID, safe_inventory) VALUES (?, ?, ?, ?)", (name, quantity, ID, safe_inventory))
@@ -34,27 +63,24 @@ class InventoryManager:
         """关闭数据库连接"""
         self.conn.close()
 
+    def query_by_id(self, search_id):
+        # 使用参数化查询来提高安全性
+        self.c.execute('SELECT quantity, safe_inventory FROM products WHERE ID=?', (search_id,))
+        result = self.c.fetchone()
+        if result:
+            return result
+        else:
+            return "No product found with the given ID"
+
+
 # 示例用法
 if __name__ == "__main__":
     manager = InventoryManager()
 
-    # 添加商品
-    manager.add_product("大众自动钳", 101, 1, 41)
-    manager.add_product("壳体2", 102, 2, 42)
-    manager.add_product("支架1", 103, 3, 43)
-    manager.add_product("配件", 104, 4, 44)
-    manager.add_product("左壳体1", 105,  5, 45)
-    manager.add_product("右壳体1", 106,  6, 46)
-    manager.add_product("密封圈2", 107, 7, 47)
-    manager.add_product("活塞1", 108, 8, 48)
-    manager.add_product("塑料套1", 109,  9, 49)
-    manager.add_product("橡胶套1", 110,  10, 50)
-    manager.add_product("放气螺栓1", 111, 11, 51)
-    manager.add_product("防尘帽1", 112, 12, 52)
-    manager.add_product("内六角螺栓1", 113, 13, 53)
-    manager.add_product("摩擦片2", 114,  14, 54)
-    manager.add_product("隔垫1", 115,  15, 55)
-    manager.add_product("开口导向套管2", 116, 16, 56)
+    # 查询使用方法：
+    db = InventoryManager()
+    product_id = 5  # 可以替换为您要查询的ID
+    print(db.query_by_id(product_id))
 
     # 列出所有商品
     print(manager.list_products())
@@ -72,3 +98,21 @@ if __name__ == "__main__":
     # print(manager.list_products())
 
     manager.close()
+
+    # 添加商品
+    # manager.add_product("大众自动钳", 101, 1, 41)
+    # manager.add_product("壳体2", 102, 2, 42)
+    # manager.add_product("支架1", 103, 3, 43)
+    # manager.add_product("配件", 104, 4, 44)
+    # manager.add_product("左壳体1", 105,  5, 45)
+    # manager.add_product("右壳体1", 106,  6, 46)
+    # manager.add_product("密封圈2", 107, 7, 47)
+    # manager.add_product("活塞1", 108, 8, 48)
+    # manager.add_product("塑料套1", 109,  9, 49)
+    # manager.add_product("橡胶套1", 110,  10, 50)
+    # manager.add_product("放气螺栓1", 111, 11, 51)
+    # manager.add_product("防尘帽1", 112, 12, 52)
+    # manager.add_product("内六角螺栓1", 113, 13, 53)
+    # manager.add_product("摩擦片2", 114,  14, 54)
+    # manager.add_product("隔垫1", 115,  15, 55)
+    # manager.add_product("开口导向套管2", 116, 16, 56)
