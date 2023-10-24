@@ -17,12 +17,12 @@ class MykcWidget(QWidget):
         self.ui = Ui_kcwidget()
         self.ui.setupUi(self)
 
-        self.chaxun()
         self.bindkc()
 
     def chaxun(self):
         mode = self.ui.comboBox_chaxun.currentText()
         if mode == "大众自动钳":
+            # self.ui.lineEdit_chaxunid.setText(1)
             conn = sqlite3.connect('inventory.db')
             cursor = conn.cursor()
 
