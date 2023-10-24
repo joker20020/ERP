@@ -62,40 +62,7 @@ CREATE TABLE IF NOT EXISTS sales_orders (
     FOREIGN KEY(product_id) REFERENCES products(product_id)
 )
 ''')
-"""print("选择您的操作","1:客户信息管理","2:销售产品管理","3:销售产品管理","4:销售员管理","5:销售业务管理","6:销售订单管理")
-flag = input()
-if flag=='1':
-    print("选择您的操作：","1：增加客户","2:删除客户","3:客户积分变动","4:查看客户信息")
-    if input()=='1':
-        print("请输入客户信息")
-        ls = []
-        ls.append([18, "杨洋"])
-        ls.append([19, "张艺兴"])
-        ls.append([17, "彭昱畅"])
-        cursor = conn.cursor()
-        sql = "insert into  tb_customers(cust_id,cust_name) values({0},'{1}')"
-        try:
-            for line in ls:
-                cursor.execute(sql.format(*line))
-                conn.commit()
-        finally:
-            pass
-elif flag=='2':
-    print("选择您的操作：", "1：增加商品", "2:删除商品", "3:更改商品信息", "4:查看商品信息")
-    """
 
-"""ls = []
-ls.append([18,"杨洋"])
-ls.append([19,"张艺兴"])
-ls.append([17,"彭昱畅"])
-cursor = conn.cursor()
-sql = "insert into  tb_customers(cust_id,cust_name) values({0},'{1}')"
-try:
-    for line in ls:
-        cursor.execute(sql.format(*line))
-        conn.commit()
-finally:
-    pass"""
 # 查询特定客户的信息
 def query_customer_info(customer_id):
     cursor.execute('SELECT * FROM tb_customers WHERE cust_id=?', (customer_id,))
