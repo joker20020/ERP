@@ -15,25 +15,30 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
-    QPushButton, QRadioButton, QSizePolicy, QSpacerItem,
-    QTabWidget, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFormLayout, QHBoxLayout, QHeaderView,
+    QLabel, QLineEdit, QPushButton, QRadioButton,
+    QSizePolicy, QSpacerItem, QTabWidget, QTableWidget,
+    QTableWidgetItem, QTextBrowser, QVBoxLayout, QWidget)
 
 class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(528, 508)
-        self.verticalLayout_7 = QVBoxLayout(Form)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        Form.resize(604, 349)
+        self.formLayout_4 = QFormLayout(Form)
+        self.formLayout_4.setObjectName(u"formLayout_4")
         self.tabWidget = QTabWidget(Form)
         self.tabWidget.setObjectName(u"tabWidget")
         self.tab = QWidget()
         self.tab.setObjectName(u"tab")
-        self.verticalLayout_4 = QVBoxLayout(self.tab)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.formLayout_3 = QFormLayout(self.tab)
+        self.formLayout_3.setObjectName(u"formLayout_3")
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer_2)
+
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_2 = QHBoxLayout()
@@ -101,11 +106,12 @@ class Ui_Form(object):
 
         self.horizontalLayout_3.addLayout(self.horizontalLayout_2)
 
-        self.lineEdit_6 = QLineEdit(self.tab)
-        self.lineEdit_6.setObjectName(u"lineEdit_6")
-        self.lineEdit_6.setMinimumSize(QSize(0, 120))
+        self.textBrowser = QTextBrowser(self.tab)
+        self.textBrowser.setObjectName(u"textBrowser")
+        self.textBrowser.setMinimumSize(QSize(100, 100))
+        self.textBrowser.setMaximumSize(QSize(16500, 150))
 
-        self.horizontalLayout_3.addWidget(self.lineEdit_6)
+        self.horizontalLayout_3.addWidget(self.textBrowser)
 
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
@@ -135,9 +141,6 @@ class Ui_Form(object):
 
         self.verticalLayout_3.addLayout(self.horizontalLayout)
 
-
-        self.verticalLayout_4.addLayout(self.verticalLayout_3)
-
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
@@ -163,13 +166,28 @@ class Ui_Form(object):
         self.horizontalLayout_4.addItem(self.horizontalSpacer_2)
 
 
-        self.verticalLayout_4.addLayout(self.horizontalLayout_4)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_4)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer)
+
+
+        self.formLayout_3.setLayout(0, QFormLayout.FieldRole, self.verticalLayout_3)
 
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QWidget()
         self.tab_2.setObjectName(u"tab_2")
-        self.verticalLayout_8 = QVBoxLayout(self.tab_2)
-        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.formLayout_5 = QFormLayout(self.tab_2)
+        self.formLayout_5.setObjectName(u"formLayout_5")
+        self.verticalLayout_4 = QVBoxLayout()
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_4.addItem(self.verticalSpacer_3)
+
+        self.horizontalLayout_16 = QHBoxLayout()
+        self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.horizontalLayout_5 = QHBoxLayout()
@@ -227,14 +245,17 @@ class Ui_Form(object):
 
         self.horizontalLayout_7.addLayout(self.horizontalLayout_5)
 
-        self.lineEdit_11 = QLineEdit(self.tab_2)
-        self.lineEdit_11.setObjectName(u"lineEdit_11")
-        self.lineEdit_11.setMinimumSize(QSize(0, 130))
 
-        self.horizontalLayout_7.addWidget(self.lineEdit_11)
+        self.horizontalLayout_16.addLayout(self.horizontalLayout_7)
+
+        self.textBrowser_3 = QTextBrowser(self.tab_2)
+        self.textBrowser_3.setObjectName(u"textBrowser_3")
+        self.textBrowser_3.setMaximumSize(QSize(16500, 150))
+
+        self.horizontalLayout_16.addWidget(self.textBrowser_3)
 
 
-        self.verticalLayout_8.addLayout(self.horizontalLayout_7)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_16)
 
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
@@ -259,7 +280,7 @@ class Ui_Form(object):
         self.horizontalLayout_6.addWidget(self.radioButton_8)
 
 
-        self.verticalLayout_8.addLayout(self.horizontalLayout_6)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_6)
 
         self.horizontalLayout_8 = QHBoxLayout()
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
@@ -286,13 +307,34 @@ class Ui_Form(object):
         self.horizontalLayout_8.addItem(self.horizontalSpacer_5)
 
 
-        self.verticalLayout_8.addLayout(self.horizontalLayout_8)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_8)
+
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_4.addItem(self.verticalSpacer_4)
+
+
+        self.formLayout_5.setLayout(0, QFormLayout.FieldRole, self.verticalLayout_4)
 
         self.tabWidget.addTab(self.tab_2, "")
         self.tab_3 = QWidget()
         self.tab_3.setObjectName(u"tab_3")
-        self.verticalLayout_11 = QVBoxLayout(self.tab_3)
+        self.formLayout = QFormLayout(self.tab_3)
+        self.formLayout.setObjectName(u"formLayout")
+        self.verticalLayout_20 = QVBoxLayout()
+        self.verticalLayout_20.setObjectName(u"verticalLayout_20")
+        self.verticalLayout_11 = QVBoxLayout()
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+
+        self.verticalLayout_20.addLayout(self.verticalLayout_11)
+
+
+        self.formLayout.setLayout(1, QFormLayout.LabelRole, self.verticalLayout_20)
+
+        self.verticalLayout_19 = QVBoxLayout()
+        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
+        self.verticalLayout_18 = QVBoxLayout()
+        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.verticalLayout_9 = QVBoxLayout()
@@ -301,11 +343,6 @@ class Ui_Form(object):
         self.label_13.setObjectName(u"label_13")
 
         self.verticalLayout_9.addWidget(self.label_13)
-
-        self.label_14 = QLabel(self.tab_3)
-        self.label_14.setObjectName(u"label_14")
-
-        self.verticalLayout_9.addWidget(self.label_14)
 
         self.label_15 = QLabel(self.tab_3)
         self.label_15.setObjectName(u"label_15")
@@ -327,11 +364,6 @@ class Ui_Form(object):
 
         self.verticalLayout_10.addWidget(self.lineEdit_12)
 
-        self.lineEdit_13 = QLineEdit(self.tab_3)
-        self.lineEdit_13.setObjectName(u"lineEdit_13")
-
-        self.verticalLayout_10.addWidget(self.lineEdit_13)
-
         self.lineEdit_14 = QLineEdit(self.tab_3)
         self.lineEdit_14.setObjectName(u"lineEdit_14")
 
@@ -346,24 +378,80 @@ class Ui_Form(object):
         self.horizontalLayout_9.addLayout(self.verticalLayout_10)
 
 
-        self.verticalLayout_11.addLayout(self.horizontalLayout_9)
+        self.verticalLayout_18.addLayout(self.horizontalLayout_9)
 
-        self.lineEdit_16 = QLineEdit(self.tab_3)
-        self.lineEdit_16.setObjectName(u"lineEdit_16")
-        self.lineEdit_16.setMinimumSize(QSize(0, 80))
-        self.lineEdit_16.setSizeIncrement(QSize(0, 0))
+        self.lineEdit_13 = QLineEdit(self.tab_3)
+        self.lineEdit_13.setObjectName(u"lineEdit_13")
 
-        self.verticalLayout_11.addWidget(self.lineEdit_16)
+        self.verticalLayout_18.addWidget(self.lineEdit_13)
+
+
+        self.verticalLayout_19.addLayout(self.verticalLayout_18)
+
+        self.horizontalLayout_15 = QHBoxLayout()
+        self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
+        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_15.addItem(self.horizontalSpacer_7)
+
+        self.pushButton_5 = QPushButton(self.tab_3)
+        self.pushButton_5.setObjectName(u"pushButton_5")
+
+        self.horizontalLayout_15.addWidget(self.pushButton_5)
+
+        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_15.addItem(self.horizontalSpacer_8)
+
+        self.pushButton_6 = QPushButton(self.tab_3)
+        self.pushButton_6.setObjectName(u"pushButton_6")
+
+        self.horizontalLayout_15.addWidget(self.pushButton_6)
+
+        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_15.addItem(self.horizontalSpacer_9)
+
+
+        self.verticalLayout_19.addLayout(self.horizontalLayout_15)
+
+
+        self.formLayout.setLayout(0, QFormLayout.FieldRole, self.verticalLayout_19)
+
+        self.tableWidget = QTableWidget(self.tab_3)
+        if (self.tableWidget.columnCount() < 5):
+            self.tableWidget.setColumnCount(5)
+        __qtablewidgetitem = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
+        __qtablewidgetitem3 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
+        if (self.tableWidget.rowCount() < 15):
+            self.tableWidget.setRowCount(15)
+        self.tableWidget.setObjectName(u"tableWidget")
+        self.tableWidget.setRowCount(15)
+        self.tableWidget.setColumnCount(5)
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.tableWidget)
 
         self.tabWidget.addTab(self.tab_3, "")
         self.tab_5 = QWidget()
         self.tab_5.setObjectName(u"tab_5")
-        self.verticalLayout_16 = QVBoxLayout(self.tab_5)
-        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
-        self.verticalLayout_15 = QVBoxLayout()
-        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
-        self.verticalLayout_14 = QVBoxLayout()
-        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.formLayout_6 = QFormLayout(self.tab_5)
+        self.formLayout_6.setObjectName(u"formLayout_6")
+        self.verticalLayout_7 = QVBoxLayout()
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_7.addItem(self.verticalSpacer_5)
+
+        self.horizontalLayout_17 = QHBoxLayout()
+        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
         self.horizontalLayout_12 = QHBoxLayout()
         self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
         self.horizontalLayout_10 = QHBoxLayout()
@@ -380,6 +468,21 @@ class Ui_Form(object):
 
         self.verticalLayout_12.addWidget(self.label_11)
 
+        self.label_18 = QLabel(self.tab_5)
+        self.label_18.setObjectName(u"label_18")
+
+        self.verticalLayout_12.addWidget(self.label_18)
+
+        self.label_14 = QLabel(self.tab_5)
+        self.label_14.setObjectName(u"label_14")
+
+        self.verticalLayout_12.addWidget(self.label_14)
+
+        self.label_22 = QLabel(self.tab_5)
+        self.label_22.setObjectName(u"label_22")
+
+        self.verticalLayout_12.addWidget(self.label_22)
+
         self.label_12 = QLabel(self.tab_5)
         self.label_12.setObjectName(u"label_12")
 
@@ -390,15 +493,10 @@ class Ui_Form(object):
 
         self.verticalLayout_12.addWidget(self.label_17)
 
-        self.label_18 = QLabel(self.tab_5)
-        self.label_18.setObjectName(u"label_18")
+        self.label_19 = QLabel(self.tab_5)
+        self.label_19.setObjectName(u"label_19")
 
-        self.verticalLayout_12.addWidget(self.label_18)
-
-        self.label_22 = QLabel(self.tab_5)
-        self.label_22.setObjectName(u"label_22")
-
-        self.verticalLayout_12.addWidget(self.label_22)
+        self.verticalLayout_12.addWidget(self.label_19)
 
 
         self.horizontalLayout_10.addLayout(self.verticalLayout_12)
@@ -420,6 +518,11 @@ class Ui_Form(object):
 
         self.verticalLayout_13.addWidget(self.lineEdit_19)
 
+        self.lineEdit_11 = QLineEdit(self.tab_5)
+        self.lineEdit_11.setObjectName(u"lineEdit_11")
+
+        self.verticalLayout_13.addWidget(self.lineEdit_11)
+
         self.lineEdit_20 = QLineEdit(self.tab_5)
         self.lineEdit_20.setObjectName(u"lineEdit_20")
 
@@ -429,6 +532,11 @@ class Ui_Form(object):
         self.lineEdit_21.setObjectName(u"lineEdit_21")
 
         self.verticalLayout_13.addWidget(self.lineEdit_21)
+
+        self.lineEdit_6 = QLineEdit(self.tab_5)
+        self.lineEdit_6.setObjectName(u"lineEdit_6")
+
+        self.verticalLayout_13.addWidget(self.lineEdit_6)
 
         self.lineEdit_26 = QLineEdit(self.tab_5)
         self.lineEdit_26.setObjectName(u"lineEdit_26")
@@ -441,42 +549,17 @@ class Ui_Form(object):
 
         self.horizontalLayout_12.addLayout(self.horizontalLayout_10)
 
-        self.lineEdit_23 = QLineEdit(self.tab_5)
-        self.lineEdit_23.setObjectName(u"lineEdit_23")
-        self.lineEdit_23.setMinimumSize(QSize(0, 150))
 
-        self.horizontalLayout_12.addWidget(self.lineEdit_23)
+        self.horizontalLayout_17.addLayout(self.horizontalLayout_12)
 
+        self.textBrowser_2 = QTextBrowser(self.tab_5)
+        self.textBrowser_2.setObjectName(u"textBrowser_2")
+        self.textBrowser_2.setMaximumSize(QSize(200, 150))
 
-        self.verticalLayout_14.addLayout(self.horizontalLayout_12)
-
-        self.horizontalLayout_11 = QHBoxLayout()
-        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
-        self.radioButton_9 = QRadioButton(self.tab_5)
-        self.radioButton_9.setObjectName(u"radioButton_9")
-
-        self.horizontalLayout_11.addWidget(self.radioButton_9)
-
-        self.radioButton_10 = QRadioButton(self.tab_5)
-        self.radioButton_10.setObjectName(u"radioButton_10")
-
-        self.horizontalLayout_11.addWidget(self.radioButton_10)
-
-        self.radioButton_11 = QRadioButton(self.tab_5)
-        self.radioButton_11.setObjectName(u"radioButton_11")
-
-        self.horizontalLayout_11.addWidget(self.radioButton_11)
-
-        self.radioButton_12 = QRadioButton(self.tab_5)
-        self.radioButton_12.setObjectName(u"radioButton_12")
-
-        self.horizontalLayout_11.addWidget(self.radioButton_12)
+        self.horizontalLayout_17.addWidget(self.textBrowser_2)
 
 
-        self.verticalLayout_14.addLayout(self.horizontalLayout_11)
-
-
-        self.verticalLayout_15.addLayout(self.verticalLayout_14)
+        self.verticalLayout_7.addLayout(self.horizontalLayout_17)
 
         self.horizontalLayout_14 = QHBoxLayout()
         self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
@@ -503,155 +586,104 @@ class Ui_Form(object):
         self.horizontalLayout_14.addItem(self.horizontalSpacer_12)
 
 
-        self.verticalLayout_15.addLayout(self.horizontalLayout_14)
+        self.verticalLayout_7.addLayout(self.horizontalLayout_14)
+
+        self.horizontalLayout_11 = QHBoxLayout()
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
+        self.radioButton_9 = QRadioButton(self.tab_5)
+        self.radioButton_9.setObjectName(u"radioButton_9")
+
+        self.horizontalLayout_11.addWidget(self.radioButton_9)
+
+        self.radioButton_12 = QRadioButton(self.tab_5)
+        self.radioButton_12.setObjectName(u"radioButton_12")
+
+        self.horizontalLayout_11.addWidget(self.radioButton_12)
+
+        self.radioButton_10 = QRadioButton(self.tab_5)
+        self.radioButton_10.setObjectName(u"radioButton_10")
+
+        self.horizontalLayout_11.addWidget(self.radioButton_10)
+
+        self.radioButton_11 = QRadioButton(self.tab_5)
+        self.radioButton_11.setObjectName(u"radioButton_11")
+
+        self.horizontalLayout_11.addWidget(self.radioButton_11)
 
 
-        self.verticalLayout_16.addLayout(self.verticalLayout_15)
+        self.verticalLayout_7.addLayout(self.horizontalLayout_11)
+
+        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_7.addItem(self.verticalSpacer_6)
+
+
+        self.formLayout_6.setLayout(0, QFormLayout.FieldRole, self.verticalLayout_7)
 
         self.tabWidget.addTab(self.tab_5, "")
         self.tab_6 = QWidget()
         self.tab_6.setObjectName(u"tab_6")
-        self.verticalLayout_21 = QVBoxLayout(self.tab_6)
-        self.verticalLayout_21.setObjectName(u"verticalLayout_21")
-        self.verticalLayout_20 = QVBoxLayout()
-        self.verticalLayout_20.setObjectName(u"verticalLayout_20")
-        self.verticalLayout_19 = QVBoxLayout()
-        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
-        self.horizontalLayout_15 = QHBoxLayout()
-        self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
-        self.horizontalLayout_13 = QHBoxLayout()
-        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
+        self.formLayout_2 = QFormLayout(self.tab_6)
+        self.formLayout_2.setObjectName(u"formLayout_2")
         self.verticalLayout_17 = QVBoxLayout()
         self.verticalLayout_17.setObjectName(u"verticalLayout_17")
-        self.label_20 = QLabel(self.tab_6)
-        self.label_20.setObjectName(u"label_20")
-
-        self.verticalLayout_17.addWidget(self.label_20)
-
         self.label_21 = QLabel(self.tab_6)
         self.label_21.setObjectName(u"label_21")
 
         self.verticalLayout_17.addWidget(self.label_21)
 
-        self.label_23 = QLabel(self.tab_6)
-        self.label_23.setObjectName(u"label_23")
 
-        self.verticalLayout_17.addWidget(self.label_23)
+        self.formLayout_2.setLayout(1, QFormLayout.LabelRole, self.verticalLayout_17)
 
-        self.label_24 = QLabel(self.tab_6)
-        self.label_24.setObjectName(u"label_24")
+        self.tableWidget_2 = QTableWidget(self.tab_6)
+        if (self.tableWidget_2.columnCount() < 4):
+            self.tableWidget_2.setColumnCount(4)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.tableWidget_2.setHorizontalHeaderItem(0, __qtablewidgetitem5)
+        __qtablewidgetitem6 = QTableWidgetItem()
+        self.tableWidget_2.setHorizontalHeaderItem(1, __qtablewidgetitem6)
+        __qtablewidgetitem7 = QTableWidgetItem()
+        self.tableWidget_2.setHorizontalHeaderItem(2, __qtablewidgetitem7)
+        __qtablewidgetitem8 = QTableWidgetItem()
+        self.tableWidget_2.setHorizontalHeaderItem(3, __qtablewidgetitem8)
+        if (self.tableWidget_2.rowCount() < 15):
+            self.tableWidget_2.setRowCount(15)
+        self.tableWidget_2.setObjectName(u"tableWidget_2")
+        self.tableWidget_2.setRowCount(15)
+        self.tableWidget_2.setColumnCount(4)
 
-        self.verticalLayout_17.addWidget(self.label_24)
+        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.tableWidget_2)
 
-
-        self.horizontalLayout_13.addLayout(self.verticalLayout_17)
-
-        self.verticalLayout_18 = QVBoxLayout()
-        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
-        self.lineEdit_24 = QLineEdit(self.tab_6)
-        self.lineEdit_24.setObjectName(u"lineEdit_24")
-
-        self.verticalLayout_18.addWidget(self.lineEdit_24)
-
-        self.lineEdit_25 = QLineEdit(self.tab_6)
-        self.lineEdit_25.setObjectName(u"lineEdit_25")
-
-        self.verticalLayout_18.addWidget(self.lineEdit_25)
-
-        self.lineEdit_27 = QLineEdit(self.tab_6)
-        self.lineEdit_27.setObjectName(u"lineEdit_27")
-
-        self.verticalLayout_18.addWidget(self.lineEdit_27)
-
-        self.lineEdit_28 = QLineEdit(self.tab_6)
-        self.lineEdit_28.setObjectName(u"lineEdit_28")
-
-        self.verticalLayout_18.addWidget(self.lineEdit_28)
-
-
-        self.horizontalLayout_13.addLayout(self.verticalLayout_18)
-
-
-        self.horizontalLayout_15.addLayout(self.horizontalLayout_13)
-
-        self.lineEdit_30 = QLineEdit(self.tab_6)
-        self.lineEdit_30.setObjectName(u"lineEdit_30")
-        self.lineEdit_30.setMinimumSize(QSize(0, 150))
-
-        self.horizontalLayout_15.addWidget(self.lineEdit_30)
-
-
-        self.verticalLayout_19.addLayout(self.horizontalLayout_15)
-
-        self.horizontalLayout_16 = QHBoxLayout()
-        self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
-        self.radioButton_13 = QRadioButton(self.tab_6)
-        self.radioButton_13.setObjectName(u"radioButton_13")
-
-        self.horizontalLayout_16.addWidget(self.radioButton_13)
-
-        self.radioButton_14 = QRadioButton(self.tab_6)
-        self.radioButton_14.setObjectName(u"radioButton_14")
-
-        self.horizontalLayout_16.addWidget(self.radioButton_14)
-
-        self.radioButton_15 = QRadioButton(self.tab_6)
-        self.radioButton_15.setObjectName(u"radioButton_15")
-
-        self.horizontalLayout_16.addWidget(self.radioButton_15)
-
-        self.radioButton_16 = QRadioButton(self.tab_6)
-        self.radioButton_16.setObjectName(u"radioButton_16")
-
-        self.horizontalLayout_16.addWidget(self.radioButton_16)
-
-
-        self.verticalLayout_19.addLayout(self.horizontalLayout_16)
-
-
-        self.verticalLayout_20.addLayout(self.verticalLayout_19)
-
-        self.horizontalLayout_17 = QHBoxLayout()
-        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+        self.horizontalLayout_13 = QHBoxLayout()
+        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
         self.horizontalSpacer_13 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_17.addItem(self.horizontalSpacer_13)
+        self.horizontalLayout_13.addItem(self.horizontalSpacer_13)
 
         self.pushButton_9 = QPushButton(self.tab_6)
         self.pushButton_9.setObjectName(u"pushButton_9")
+        self.pushButton_9.setMinimumSize(QSize(60, 30))
 
-        self.horizontalLayout_17.addWidget(self.pushButton_9)
+        self.horizontalLayout_13.addWidget(self.pushButton_9)
 
         self.horizontalSpacer_14 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_17.addItem(self.horizontalSpacer_14)
-
-        self.pushButton_10 = QPushButton(self.tab_6)
-        self.pushButton_10.setObjectName(u"pushButton_10")
-
-        self.horizontalLayout_17.addWidget(self.pushButton_10)
-
-        self.horizontalSpacer_15 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_17.addItem(self.horizontalSpacer_15)
+        self.horizontalLayout_13.addItem(self.horizontalSpacer_14)
 
 
-        self.verticalLayout_20.addLayout(self.horizontalLayout_17)
-
-
-        self.verticalLayout_21.addLayout(self.verticalLayout_20)
+        self.formLayout_2.setLayout(0, QFormLayout.FieldRole, self.horizontalLayout_13)
 
         self.tabWidget.addTab(self.tab_6, "")
         self.tab_4 = QWidget()
         self.tab_4.setObjectName(u"tab_4")
         self.tabWidget.addTab(self.tab_4, "")
 
-        self.verticalLayout_7.addWidget(self.tabWidget)
+        self.formLayout_4.setWidget(0, QFormLayout.FieldRole, self.tabWidget)
 
 
         self.retranslateUi(Form)
 
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(4)
 
 
         QMetaObject.connectSlotsByName(Form)
@@ -683,34 +715,47 @@ class Ui_Form(object):
         self.pushButton_2.setText(QCoreApplication.translate("Form", u"\u53d6\u6d88", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("Form", u"\u9500\u552e\u5458\u4fe1\u606f\u7ba1\u7406", None))
         self.label_13.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1ID", None))
-        self.label_14.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u540d\u79f0", None))
         self.label_15.setText(QCoreApplication.translate("Form", u"\u64cd\u4f5c\u5458ID", None))
         self.label_16.setText(QCoreApplication.translate("Form", u"\u5bc6\u5319", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("Form", u"\u9500\u552e\u4ea7\u54c1\u7ba1\u7406", None))
+        self.pushButton_5.setText(QCoreApplication.translate("Form", u"\u786e\u5b9a", None))
+        self.pushButton_6.setText(QCoreApplication.translate("Form", u"\u53d6\u6d88", None))
+        ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
+        ___qtablewidgetitem.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1ID", None));
+        ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u540d\u79f0", None));
+        ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("Form", u"\u751f\u4ea7\u65e5\u671f", None));
+        ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u5b9a\u4ef7", None));
+        ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u5e93\u5b58", None));
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("Form", u"\u4ea7\u54c1\u4fe1\u606f\u67e5\u8be2", None))
         self.label_10.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355ID", None))
         self.label_11.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u65e5\u671f", None))
+        self.label_18.setText(QCoreApplication.translate("Form", u"\u5546\u54c1ID", None))
+        self.label_14.setText(QCoreApplication.translate("Form", u"\u5546\u54c1\u540d\u79f0", None))
+        self.label_22.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u6570\u91cf", None))
         self.label_12.setText(QCoreApplication.translate("Form", u"\u5ba2\u6237ID", None))
         self.label_17.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458ID", None))
-        self.label_18.setText(QCoreApplication.translate("Form", u"\u5546\u54c1ID", None))
-        self.label_22.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u6570\u91cf", None))
-        self.radioButton_9.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u5f55\u5165", None))
-        self.radioButton_10.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u4fe1\u606f\u67e5\u8be2", None))
-        self.radioButton_11.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u4fe1\u606f\u5220\u9664", None))
-        self.radioButton_12.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u4fe1\u606f\u66f4\u65b0", None))
+        self.label_19.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458\u5bc6\u5319", None))
         self.pushButton_7.setText(QCoreApplication.translate("Form", u"\u786e\u8ba4", None))
         self.pushButton_8.setText(QCoreApplication.translate("Form", u"\u53d6\u6d88", None))
+        self.radioButton_9.setText(QCoreApplication.translate("Form", u"\u63d0\u8d27", None))
+        self.radioButton_12.setText(QCoreApplication.translate("Form", u"\u51fa\u8d27", None))
+        self.radioButton_10.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u4fe1\u606f\u67e5\u8be2", None))
+        self.radioButton_11.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u4fe1\u606f\u66f4\u6539", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QCoreApplication.translate("Form", u"\u9500\u552e\u8ba2\u5355\u7ba1\u7406", None))
-        self.label_20.setText(QCoreApplication.translate("Form", u"\u4e1a\u52a1ID", None))
-        self.label_21.setText(QCoreApplication.translate("Form", u"\u4e1a\u52a1\u65e5\u671f", None))
-        self.label_23.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458ID", None))
-        self.label_24.setText(QCoreApplication.translate("Form", u"\u660e\u7ec6", None))
-        self.radioButton_13.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u5f55\u5165", None))
-        self.radioButton_14.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u4fe1\u606f\u67e5\u8be2", None))
-        self.radioButton_15.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u4fe1\u606f\u5220\u9664", None))
-        self.radioButton_16.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u4fe1\u606f\u66f4\u65b0", None))
-        self.pushButton_9.setText(QCoreApplication.translate("Form", u"\u786e\u8ba4", None))
-        self.pushButton_10.setText(QCoreApplication.translate("Form", u"\u53d6\u6d88", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), QCoreApplication.translate("Form", u"\u9500\u552e\u4e1a\u52a1\u7ba1\u7406", None))
+        self.label_21.setText("")
+        ___qtablewidgetitem5 = self.tableWidget_2.horizontalHeaderItem(0)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458ID", None));
+        ___qtablewidgetitem6 = self.tableWidget_2.horizontalHeaderItem(1)
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458\u59d3\u540d", None));
+        ___qtablewidgetitem7 = self.tableWidget_2.horizontalHeaderItem(2)
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("Form", u"\u6210\u4ea4\u8ba2\u5355\u6570", None));
+        ___qtablewidgetitem8 = self.tableWidget_2.horizontalHeaderItem(3)
+        ___qtablewidgetitem8.setText(QCoreApplication.translate("Form", u"\u4e1a\u52a1\u603b\u503c", None));
+        self.pushButton_9.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458\u4e1a\u7ee9\u5206\u6790", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), QCoreApplication.translate("Form", u"\u9500\u552e\u5458\u4e1a\u7ee9\u5206\u6790", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("Form", u"\u9500\u552e\u9884\u6d4b", None))
     # retranslateUi
 
