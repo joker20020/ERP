@@ -21,26 +21,28 @@ class XTDataBase:
         cursor.execute(cmd)
         self.connection.commit()
 
-    def find_info(self, table_name, args):
+    def find_info(self, table_name, args,**order):
         cursor = self.connection.cursor()
         cmd = None
-        # print(args)
         if not len(args):
-            cmd = "SELECT * FROM {};".format(table_name)
-            # print(cmd)
-            cursor.execute(cmd)
-            # print(" | ".join(self.params))
+            cmd = "SELECT * FROM {} ".format(table_name)
         else:
-            cmd = "SELECT " + ", ".join(args) + " FROM {};".format(table_name)
-            # print(cmd)
-            cursor.execute(cmd)
-            # print(" | ".join(args))
+            cmd = "SELECT " + ", ".join(args) + " FROM {} ".format(table_name)
+        if len(order):
+            cmd += "ORDER BY "
+            for key,value in order.items():
+                cmd += f"{key} {value},"
+            cmd = cmd[:-1]+";"
+
+        cursor.execute(cmd)
+
         result = []
         for each in cursor:
             result.append(each)
             # each = [str(i) for i in each ]
             # print(" | ".join(each))
         return result
+
 
     def sql_cmd(self, cmd):
         cursor = self.connection.cursor()
@@ -81,9 +83,9 @@ class XTDataBase:
         cursor = self.connection.cursor()
         cmd = "DELETE FROM {} WHERE ".format(table_name)
         for k, v in kwargs.items():
-            cmd += "{} = '{}' ".format(k, v)
+            cmd += "{} = '{}' AND ".format(k, v)
         # print(cmd)
-        cursor.execute(cmd[:-1])
+        cursor.execute(cmd[:-4])
         self.connection.commit()
 
     def update(self, table_name, dicts, **condition):
@@ -110,6 +112,7 @@ class XTDataBase:
             # print(cmd)
             cursor.execute(cmd[:-1])
             # print(" | ".join(col))
+        self.connection.commit()
 
     def add_column(self, table_name, col_name, col_type):
         cursor = self.connection.cursor()
@@ -133,12 +136,12 @@ class XTDataBase:
 
     def xt_bom_create_table(self, name):
         cursor = self.connection.cursor()
+        # AUTOINCREMENT
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        ID INTEGER PRIMARY KEY ,
         LAYER INTEGER NOT NULL,
         NAME TEXT NOT NULL,
-        NUM INTEGER NOT NULL,
-        DESC TEXT NOT NULL,
+        PARENT INTEGER NOT NULL,
         COST REAL NOT NULL,
         CYCLE REAL NOT NULL,
         BUY INTEGER NOT NULL,
@@ -173,8 +176,10 @@ class XTDataBase:
 
     def xt_line_create_table(self, name):
         cursor = self.connection.cursor()
+        # AUTOINCREMENT
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-                LINE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                LINE_ID INTEGER PRIMARY KEY ,
+                NAME TEXT NOT NULL,
                 DESC TEXT,
                 WC TEXT NOT NULL
                 );
@@ -189,8 +194,9 @@ class XTDataBase:
     """
     def xt_work_create_table(self, name, parent):
         cursor = self.connection.cursor()
+        # AUTOINCREMENT
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-                WORK_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                WORK_ID INTEGER PRIMARY KEY ,
                 DESC TEXT,
                 LINE_ID INTEGER NOT NULL,
                 FOREIGN KEY (LINE_ID) REFERENCES {}(LINE_ID) ON DELETE CASCADE ON UPDATE CASCADE
@@ -207,7 +213,7 @@ class XTDataBase:
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
                         NAME TEXT PRIMARY KEY ,
-                        CHILD TEXT,
+                        FATHER TEXT NOT NULL,
                         DES TEXT
                         );
                         """.format(name))
@@ -237,21 +243,38 @@ class XTDataBase:
 
     func:创建人员信息表
     """
-    def xt_woker_create_table(self, name,character):
+    def xt_worker_create_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-                        ID INTEGER PRIMARY KEY ,
+                        ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         NAME TEXT NOT NULL,
                         AGE INTEGER NOT NULL,
-                        SEX TEXT NOT NULL,
+                        GENDER TEXT NOT NULL,
                         PLACE TEXT NOT NULL,
                         USER_NAME TEXT NOT NULL,
                         PASSWORD TEXT NOT NULL,
-                        CHARACTER TEXT,
-                        DES TEXT,
-                        FOREIGN KEY (CHARACTER) REFERENCES {}(CHARACTER) ON DELETE SET NULL ON UPDATE CASCADE
+                        DES TEXT
                         );
-                        """.format(name,character))
+                        """.format(name))
+        self.connection.commit()
+
+    """
+        name:表名
+        worker:外部键表名
+        group:外部键表名
+
+        func:创建人员角色表
+        """
+
+    def xt_wc_create_table(self, name, worker, character):
+        cursor = self.connection.cursor()
+        cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
+                    ID INTEGER NOT NULL,
+                    CHARACTER TEXT NOT NULL,
+                    FOREIGN KEY (ID) REFERENCES {}(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (CHARACTER) REFERENCES {}(CHARACTER) ON DELETE CASCADE ON UPDATE CASCADE
+                    );
+                    """.format(name, worker, character))
         self.connection.commit()
 
     """
@@ -299,7 +322,6 @@ class Logger(XTDataBase):
 
     ## 通过日期查询
     def search_by_date(self,*params):
-
         if len(params)<=3:
             date = ""
             for each in params:
@@ -364,13 +386,16 @@ class Logger(XTDataBase):
 if __name__ == "__main__":
     db = XTDataBase("test.db")
     logger = Logger("test.db")
-    # logger.generate("jdy","test operation")
-    # print(logger.search_by_date(2023,9,28,13,54,52))
+    logger.generate("jdy","test operation")
+    # print(db.sql_cmd("SELECT name FROM sqlite_master"))
+    # print(db.sql_cmd('PRAGMA table_info(bom1)'))
+    # db.insert_table("xt_bom_1",["LAYER","NAME","NUM","DESC","COST","CYCLE","BUY"],[1,"BOM1_TEST",2,"This is a test!!!",4.5,3.4,True])
+    # print(logger.search_by_date(2023,10,22,18,1,4))
     # print(logger.search_by_user("jdy"))
     # logger.export_log()
     # logger.delete_by_date(2023,9,28,13,55)
     # logger.delete_by_user("jdy")
-    print(logger.find_info("LOG",[]))
+    # print(logger.find_info("LOG",[]))
 
 
     # print(db.sql_cmd("SELECT name FROM sqlite_master WHERE type='table'"))
@@ -382,12 +407,12 @@ if __name__ == "__main__":
     # db.xt_work_create_table("work1","line1")
     # db.xt_group_create_table("group1")
     # db.xt_character_create_table("character1")
-    # db.xt_woker_create_table("worker1","character1")
+    # db.xt_worker_create_table("worker1","character1")
     # db.xt_wg_create_table("wg1","worker1","group1")
 
     # db.insert_table("bom1",["LAYER","NAME","NUM","DESC","COST","CYCLE","BUY"],[1,"BOM1_TEST",2,"This is a test!!!",4.5,3.4,True])
     # db.insert_table("bom1", ["LAYER", "NAME", "NUM", "DESC", "COST", "CYCLE","BUY"],[1, "BOM1_TEST", 3, "This is a test!!!", 4.5, 3.4,False])
-    # db.insert_table("line1", ["DESC", "WC"], ["TEST", "WC TEST"])
+    # db.insert_table("line1", ["NAME","DESC", "WC"], ["test1","TEST", "WC TEST"])
     # db.insert_table("bl1", ["ID", "LINE_ID"],[1,1])
     # db.insert_table("bl1", ["ID", "LINE_ID"], [2, 1])
     # db.insert_table("work1", ["DESC", "LINE_ID"], ["TEST", 1])
@@ -406,6 +431,7 @@ if __name__ == "__main__":
     # db.delete("character1",CHARACTER="admin")
     # db.delete("worker1",ID=1)
     # db.delete("group1",NAME="CTEST")
+    # db.drop("xt_bom_33")
 
     # print(db.find_info("bom1", []))
     # print(db.find_info("bl1", []))
