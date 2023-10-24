@@ -18,21 +18,254 @@ class MykcWidget(QWidget):
         self.ui = Ui_kcwidget()
         self.ui.setupUi(self)
 
+<<<<<<< HEAD:kc/kc_main.py
         # self.chaxun()
+=======
+>>>>>>> 45a9b04bef2dd33035d8e1ac39e70c6137552606:kc/main.py
         self.bindkc()
 
     def chaxun(self):
         mode = self.ui.comboBox_chaxun.currentText()
         if mode == "大众自动钳":
+<<<<<<< HEAD:kc/kc_main.py
             conn = sqlite3.connect(os.path.abspath('./inventory.db'))
+=======
+            self.ui.lineEdit_chaxunid.setText("1")
+            conn = sqlite3.connect('inventory.db')
+>>>>>>> 45a9b04bef2dd33035d8e1ac39e70c6137552606:kc/main.py
             cursor = conn.cursor()
 
-            cursor.execute("SELECT ID FROM products WHERE name = ?", (mode,))
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
             row = cursor.fetchone()
 
             if row:
                 product_value = row[0]
-                self.ui.lineEdit_chaxunid.setText(str(product_value))
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "壳体2":
+            self.ui.lineEdit_chaxunid.setText("2")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "支架1":
+            self.ui.lineEdit_chaxunid.setText("3")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "配件":
+            self.ui.lineEdit_chaxunid.setText("4")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "左壳体1":
+            self.ui.lineEdit_chaxunid.setText("5")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "右壳体1":
+            self.ui.lineEdit_chaxunid.setText("6")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "密封圈2":
+            self.ui.lineEdit_chaxunid.setText("7")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "活塞1":
+            self.ui.lineEdit_chaxunid.setText("8")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "塑料套1":
+            self.ui.lineEdit_chaxunid.setText("9")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "橡胶套1":
+            self.ui.lineEdit_chaxunid.setText("10")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "放气螺栓1":
+            self.ui.lineEdit_chaxunid.setText("11")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "防尘帽1":
+            self.ui.lineEdit_chaxunid.setText("12")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "内六角螺栓1":
+            self.ui.lineEdit_chaxunid.setText("13")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "摩擦片2":
+            self.ui.lineEdit_chaxunid.setText("14")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "隔垫1":
+            self.ui.lineEdit_chaxunid.setText("15")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
+
+            cursor.close()
+            conn.close()
+
+        if mode == "开口导向套管2":
+            self.ui.lineEdit_chaxunid.setText("16")
+            conn = sqlite3.connect('inventory.db')
+            cursor = conn.cursor()
+
+            cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
+            row = cursor.fetchone()
+
+            if row:
+                product_value = row[0]
+                self.ui.lineEdit_chaxunshuliang.setText(str(product_value))
 
             cursor.close()
             conn.close()
