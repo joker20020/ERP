@@ -5,16 +5,16 @@ import sys
 # 我们要展示一个普通的窗口，所以需要导入QWidget，用来让我们自己的类继承
 from PySide6.QtWidgets import QApplication, QWidget, QApplication, QTableWidget, QTableWidgetItem
 # 导入我们生成的界面
-from JH_SQL import JHDataBase
-from window_chaxun import Ui_Form
-from table_MPS import table_MPS
-from table_MRP import table_MRP
-from table_caigou import table_caigou
-from table_chejianzuoye import table_chejianzuoye
-from table_paigong import table_paigong
-from table_lingliao import table_lingliao
 
-from JH_SQL import JHDataBase
+from .window_chaxun import Ui_Form
+from .table_MPS import table_MPS
+from .table_MRP import table_MRP
+from .table_caigou import table_caigou
+from .table_chejianzuoye import table_chejianzuoye
+from .table_paigong import table_paigong
+from .table_lingliao import table_lingliao
+
+from .JH_SQL import JHDataBase
 
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import Qt, QThread, Signal, Slot

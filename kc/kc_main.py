@@ -1,4 +1,5 @@
 # 导入sys
+import os.path
 import sys
 
 
@@ -17,13 +18,13 @@ class MykcWidget(QWidget):
         self.ui = Ui_kcwidget()
         self.ui.setupUi(self)
 
-        self.chaxun()
+        # self.chaxun()
         self.bindkc()
 
     def chaxun(self):
         mode = self.ui.comboBox_chaxun.currentText()
         if mode == "大众自动钳":
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(os.path.abspath('./inventory.db'))
             cursor = conn.cursor()
 
             cursor.execute("SELECT ID FROM products WHERE name = ?", (mode,))

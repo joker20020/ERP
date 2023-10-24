@@ -7,18 +7,19 @@ sys.path.append(os.path.abspath("./jh/code"))
 sys.path.append(os.path.abspath("./kc"))
 sys.path.append(os.path.abspath("./xs"))
 sys.path.append(os.path.abspath("./xt/code"))
-
+# print(os.getcwd())
 
 from PySide6.QtWidgets import QApplication, QWidget,QMessageBox, QTreeWidgetItem, QTableWidgetItem,QHeaderView
 from PySide6.QtCore import Qt,Signal
 from qfluentwidgets import RoundMenu,FluentIcon,Action,setTheme, Theme,InfoBar,InfoBarIcon,InfoBarPosition
 
 
-from xt.code.windows import XTMainWindow,XTLoginWindow
+from xt.code.xt_windows import XTMainWindow,XTLoginWindow
 
-# from cg.cg_widget import MyWindow as cgUI
+# from cg_widget import cg_widget as cgUI
 
 from jh.code.main_ui import MyWidget as jhUI
+from kc.kc_main import MykcWidget as kcUI
 
 
 class MainWindow(XTMainWindow):
@@ -30,9 +31,11 @@ class MainWindow(XTMainWindow):
 
         # self.cg = cgUI("cg/cg_db/Purchase List.db")
         self.jh = jhUI("jh/code/JHdatabase.db")
+        self.kc = kcUI()
 
         # self.addSubInterface(self.cg, FluentIcon.ALBUM, "采购管理")
         self.addSubInterface(self.jh, FluentIcon.ACCEPT, "计划管理")
+        self.addSubInterface(self.kc,FluentIcon.ACCEPT,"库存管理")
 
 
         # self.navigationInterface.setCurrentItem("admin_wind")

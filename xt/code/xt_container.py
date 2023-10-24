@@ -1,7 +1,10 @@
 from abc import ABC,abstractmethod
 from enum import Enum
 
-import xt_module as md
+if __name__ == "__main__":
+    from .xt_module import *
+else:
+    from xt_module import *
 
 def str_null(data,null):
     for i in range(len(data)):
@@ -42,9 +45,9 @@ class XtContainer(BaseContainer):
 
     def __init__(self,authority,db:str,user_name):
         super().__init__(authority)
-        self.log = md.XtLogModule(1,db)
-        self.production = md.XtProductionModule(2,db)
-        self.member = md.XtMemberModule(4,db)
+        self.log = XtLogModule(1,db)
+        self.production = XtProductionModule(2,db)
+        self.member = XtMemberModule(4,db)
         self.register(self.authority)
         self.user_name = user_name
 
