@@ -31,7 +31,7 @@ class MainWindow(XTMainWindow):
 
         self.cg = cgUI("cg/cg_db/Purchase Supplier.db","cg/cg_db/Purchase List.db")
         self.cg.setObjectName("cj")
-        self.jh = jhUI("jh/code/JHdatabase.db")
+        self.jh = jhUI(self.user_name,"jh/code/JHdatabase.db")
         self.jh.setObjectName("jh")
         self.kc = kcUI("kc/inventory.db")
         self.kc.setObjectName("kc")

@@ -19,12 +19,12 @@ from xt_container import XtContainer,OperationCode
 
 # 继承QWidget类，以获取其属性和方法
 class MyWidget(QWidget):
-    def __init__(self, file_path, user_name):
+    def __init__(self, user_name,file_path="JHdatabase.db"):
         super().__init__()
         # 设置界面为我们生成的界面
         self.ui = Ui_Form()
         self.ui.setupUi(self)
-        self.jh_db = JHDataBase("JHdatabase.db")
+        self.jh_db = JHDataBase(file_path)
 
         self.log = XtContainer(1,"../../test.db",user_name)
 
