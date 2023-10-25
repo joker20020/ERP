@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'window_chaxun.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.2
+## Created by: Qt User Interface Compiler version 6.4.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,42 +15,28 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QDateEdit, QHBoxLayout,
-    QLabel, QLineEdit, QPushButton, QSizePolicy,
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QSizePolicy,
     QVBoxLayout, QWidget)
+
+from qfluentwidgets import (CalendarPicker, CaptionLabel, ComboBox, LineEdit,
+    PrimaryPushButton, TitleLabel)
 
 class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(614, 548)
+        Form.resize(533, 364)
         self.verticalLayout = QVBoxLayout(Form)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.label = QLabel(Form)
+        self.label = TitleLabel(Form)
         self.label.setObjectName(u"label")
-        self.label.setStyleSheet(u"font: 700 18pt \"STHeiti\";")
-        self.label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.label.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout_2.addWidget(self.label)
-
-        self.TIME = QComboBox(Form)
-        self.TIME.addItem("")
-        self.TIME.addItem("")
-        self.TIME.addItem("")
-        self.TIME.addItem("")
-        self.TIME.setObjectName(u"TIME")
-        self.TIME.setStyleSheet(u"font: 18pt \"STKaiti\";")
-
-        self.horizontalLayout_2.addWidget(self.TIME)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.verticalLayout.addWidget(self.label)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.label_2 = QLabel(Form)
+        self.label_2 = CaptionLabel(Form)
         self.label_2.setObjectName(u"label_2")
         font = QFont()
         font.setFamilies([u"STHeiti"])
@@ -59,10 +45,12 @@ class Ui_Form(object):
         font.setItalic(False)
         self.label_2.setFont(font)
         self.label_2.setStyleSheet(u"font: 700 18pt \"STHeiti\";")
+        self.label_2.setAlignment(Qt.AlignCenter)
+        self.label_2.setMargin(0)
 
         self.horizontalLayout_3.addWidget(self.label_2)
 
-        self.target = QComboBox(Form)
+        self.target = ComboBox(Form)
         self.target.addItem("")
         self.target.addItem("")
         self.target.addItem("")
@@ -71,55 +59,36 @@ class Ui_Form(object):
         self.target.addItem("")
         self.target.setObjectName(u"target")
         self.target.setStyleSheet(u"font: 18pt \"STKaiti\";")
+        # self.target.setFrame(True)
 
         self.horizontalLayout_3.addWidget(self.target)
+
+        self.label_4 = QLabel(Form)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setStyleSheet(u"font: 700 18pt \"STHeiti\";")
+        self.label_4.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_3.addWidget(self.label_4)
+
+        self.start = CalendarPicker(Form)
+        self.start.setObjectName(u"start")
+        self.start.setStyleSheet(u"font: 18pt \"STKaiti\";")
+
+        self.horizontalLayout_3.addWidget(self.start)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout_3)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.label_4 = QLabel(Form)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setStyleSheet(u"font: 700 18pt \"STHeiti\";")
-
-        self.horizontalLayout_4.addWidget(self.label_4)
-
-        self.start = QDateEdit(Form)
-        self.start.setObjectName(u"start")
-        self.start.setStyleSheet(u"font: 18pt \"STKaiti\";")
-
-        self.horizontalLayout_4.addWidget(self.start)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout_4)
-
-        self.horizontalLayout_5 = QHBoxLayout()
-        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.label_5 = QLabel(Form)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setStyleSheet(u"font: 700 18pt \"STHeiti\";")
-
-        self.horizontalLayout_5.addWidget(self.label_5)
-
-        self.ddl = QDateEdit(Form)
-        self.ddl.setObjectName(u"ddl")
-        self.ddl.setStyleSheet(u"font: 18pt \"STKaiti\";")
-
-        self.horizontalLayout_5.addWidget(self.ddl)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout_5)
-
-        self.horizontalLayout_6 = QHBoxLayout()
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.label_3 = QLabel(Form)
+        self.label_3 = CaptionLabel(Form)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setStyleSheet(u"font: 700 18pt \"Heiti SC\";")
+        self.label_3.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout_6.addWidget(self.label_3)
+        self.horizontalLayout_4.addWidget(self.label_3)
 
-        self.workID = QLineEdit(Form)
+        self.workID = LineEdit(Form)
         self.workID.setObjectName(u"workID")
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -129,17 +98,39 @@ class Ui_Form(object):
         self.workID.setStyleSheet(u"font: 18pt \"STKaiti\";")
         self.workID.setFrame(True)
 
-        self.horizontalLayout_6.addWidget(self.workID)
+        self.horizontalLayout_4.addWidget(self.workID)
+
+        self.label_5 = CaptionLabel(Form)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setStyleSheet(u"font: 700 18pt \"STHeiti\";")
+        self.label_5.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_4.addWidget(self.label_5)
+
+        self.ddl = CalendarPicker(Form)
+        self.ddl.setObjectName(u"ddl")
+        self.ddl.setStyleSheet(u"font: 18pt \"STKaiti\";")
+
+        self.horizontalLayout_4.addWidget(self.ddl)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_6)
+        self.verticalLayout.addLayout(self.horizontalLayout_4)
 
-        self.pushButton = QPushButton(Form)
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.pushButton = PrimaryPushButton(Form)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setStyleSheet(u"font: 24pt \"STKaiti\";")
 
-        self.verticalLayout.addWidget(self.pushButton)
+        self.horizontalLayout_5.addWidget(self.pushButton)
 
+
+        self.verticalLayout.addLayout(self.horizontalLayout_5)
+
+        self.verticalLayout.setStretch(0, 1)
+        self.verticalLayout.setStretch(1, 1)
+        self.verticalLayout.setStretch(2, 1)
+        self.verticalLayout.setStretch(3, 1)
 
         self.retranslateUi(Form)
 
@@ -148,12 +139,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.label.setText(QCoreApplication.translate("Form", u"\u4e3b\u751f\u4ea7\u8ba1\u5212\u65f6\u95f4\uff1a", None))
-        self.TIME.setItemText(0, QCoreApplication.translate("Form", u"\u7b2c\u4e00\u5b63\u5ea6", None))
-        self.TIME.setItemText(1, QCoreApplication.translate("Form", u"\u7b2c\u4e8c\u5b63\u5ea6", None))
-        self.TIME.setItemText(2, QCoreApplication.translate("Form", u"\u7b2c\u4e09\u5b63\u5ea6", None))
-        self.TIME.setItemText(3, QCoreApplication.translate("Form", u"\u7b2c\u56db\u5b63\u5ea6", None))
-
+        self.label.setText(QCoreApplication.translate("Form", u"\u8ba1\u5212\u7ba1\u7406\u67e5\u8be2\u7cfb\u7edf", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"\u67e5\u8be2\u76ee\u6807\uff1a", None))
         self.target.setItemText(0, QCoreApplication.translate("Form", u"MPS\u4e3b\u751f\u4ea7\u8ba1\u5212", None))
         self.target.setItemText(1, QCoreApplication.translate("Form", u"MRP\u7269\u6599\u9700\u6c42\u8ba1\u5212", None))
@@ -163,8 +149,8 @@ class Ui_Form(object):
         self.target.setItemText(5, QCoreApplication.translate("Form", u"\u9886\u6599\u5355", None))
 
         self.label_4.setText(QCoreApplication.translate("Form", u"\u8d77\u59cb\u65f6\u95f4\uff1a", None))
-        self.label_5.setText(QCoreApplication.translate("Form", u"\u622a\u6b62\u65f6\u95f4\uff1a", None))
         self.label_3.setText(QCoreApplication.translate("Form", u"\u5de5\u4f5c\u4e2d\u5fc3ID\uff1a", None))
+        self.label_5.setText(QCoreApplication.translate("Form", u"\u622a\u6b62\u65f6\u95f4\uff1a", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"\u67e5\u8be2", None))
     # retranslateUi
 
