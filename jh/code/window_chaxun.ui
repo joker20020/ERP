@@ -6,62 +6,28 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>614</width>
-    <height>548</height>
+    <width>533</width>
+    <height>364</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,1,1">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="styleSheet">
-        <string notr="true">font: 700 18pt &quot;STHeiti&quot;;</string>
-       </property>
-       <property name="text">
-        <string>主生产计划时间：</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="TIME">
-       <property name="styleSheet">
-        <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>第一季度</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>第二季度</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>第三季度</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>第四季度</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
+    <widget class="TitleLabel" name="label">
+     <property name="text">
+      <string>计划管理查询系统</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="CaptionLabel" name="label_2">
        <property name="font">
         <font>
          <family>STHeiti</family>
@@ -76,12 +42,21 @@
        <property name="text">
         <string>查询目标：</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="target">
+      <widget class="ComboBox" name="target">
        <property name="styleSheet">
         <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
        </property>
        <item>
         <property name="text">
@@ -115,10 +90,6 @@
        </item>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
       <widget class="QLabel" name="label_4">
        <property name="styleSheet">
@@ -127,10 +98,13 @@
        <property name="text">
         <string>起始时间：</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QDateEdit" name="start">
+      <widget class="CalendarPicker" name="start">
        <property name="styleSheet">
         <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
        </property>
@@ -139,40 +113,22 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <widget class="QLabel" name="label_5">
-       <property name="styleSheet">
-        <string notr="true">font: 700 18pt &quot;STHeiti&quot;;</string>
-       </property>
-       <property name="text">
-        <string>截止时间：</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDateEdit" name="ddl">
-       <property name="styleSheet">
-        <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
-     <item>
-      <widget class="QLabel" name="label_3">
+      <widget class="CaptionLabel" name="label_3">
        <property name="styleSheet">
         <string notr="true">font: 700 18pt &quot;Heiti SC&quot;;</string>
        </property>
        <property name="text">
         <string>工作中心ID：</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="workID">
+      <widget class="LineEdit" name="workID">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -187,20 +143,76 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="CaptionLabel" name="label_5">
+       <property name="styleSheet">
+        <string notr="true">font: 700 18pt &quot;STHeiti&quot;;</string>
+       </property>
+       <property name="text">
+        <string>截止时间：</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="CalendarPicker" name="ddl">
+       <property name="styleSheet">
+        <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton">
-     <property name="styleSheet">
-      <string notr="true">font: 24pt &quot;STKaiti&quot;;</string>
-     </property>
-     <property name="text">
-      <string>查询</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="PrimaryPushButton" name="pushButton">
+       <property name="styleSheet">
+        <string notr="true">font: 24pt &quot;STKaiti&quot;;</string>
+       </property>
+       <property name="text">
+        <string>查询</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PrimaryPushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>CalendarPicker</class>
+   <extends>QDateEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>CaptionLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TitleLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
