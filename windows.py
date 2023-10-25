@@ -22,6 +22,7 @@ from jh.code.main_ui import MyWidget as jhUI
 from kc.kc_main import MykcWidget as kcUI
 
 
+
 class MainWindow(XTMainWindow):
     def __init__(self,authority,file_path,avatar,user_name,password,parent=None):
         super().__init__(authority,file_path,avatar,user_name,password,parent=parent)
@@ -31,7 +32,7 @@ class MainWindow(XTMainWindow):
 
         self.cg = cgUI("cg/cg_db/Purchase Supplier.db","cg/cg_db/Purchase List.db")
         self.cg.setObjectName("cj")
-        self.jh = jhUI(self.user_name,"jh/code/JHdatabase.db")
+        self.jh = jhUI(self.user_name,"jh/code/JHdatabase.db","test.db")
         self.jh.setObjectName("jh")
         self.kc = kcUI("kc/inventory.db")
         self.kc.setObjectName("kc")
