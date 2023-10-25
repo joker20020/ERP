@@ -1,10 +1,8 @@
 import sqlite3
 import os
 
-# from ..xt.code.xt_module import BaseModule
-
 # 定义数据库文件夹名称为 cg_db
-db_folder = 'cg_db'
+db_folder = 'D:/Python/ERPProject/cg_db'
 
 # 父类 cg_database_entity
 class cg_database_entity:
@@ -93,6 +91,8 @@ class cg_purchase_detail # 采购订单明细
     │
     ├── 'material_code' 物料编码，INTEGER，必填
     │
+    ├── 'cg_order_lot' 订货批量，INTEGER，必填
+    │
     ├── 'cg_total_price' 商品总价，REAL
     │
     ├── 'cg_receipt_id' 收货单号，INTEGER，16字节，来自cg_receipt_inspection的外键
@@ -104,6 +104,7 @@ class cg_purchase_detail(cg_database_entity):
         cg_purchase_detail_id INT PRIMARY KEY NOT NULL,
         cg_purchase_list_id INT NOT NULL,
         material_code INT NOT NULL,
+        cg_order_lot INT NOT NULL,
         cg_total_price REAL,
         cg_receipt_id INT,
         cg_remarks TEXT(200),
@@ -168,41 +169,44 @@ class cg_receipt_inspection(cg_database_entity):
 if __name__ == '__main__':
 
     # 访问路径及名称，此处访问 Detail of January.db
-    database_name = os.path.join(db_folder, "Purchase Receipt.db")
+    database_name = os.path.join(db_folder, "Purchase Detail.db")
    
     # 判断是否有文件存在，如果有就读取进行操作，如果没有就新建一个表
     if os.path.exists(os.path.join(db_folder, database_name)):
-        cg_rec_ins = cg_receipt_inspection(database_name)
-        # cg_pur_det = cg_purchase_detail(database_name, 'cg_purchase_detail', 'cg_purchase_detail_id')
+        # cg_rec_ins = cg_receipt_inspection(database_name)
+        cg_pur_det = cg_purchase_detail(database_name, 'cg_purchase_detail', 'cg_purchase_detail_id')
     else:
-        cg_rec_ins = cg_receipt_inspection(database_name)
-        cg_rec_ins.create_table(cg_receipt_inspection.table_schema)
-        # cg_pur_det = cg_purchase_detail(database_name, 'cg_purchase_detail', 'cg_purchase_detail_id')
-        # cg_pur_det.create_table(cg_purchase_detail.table_schema)
-    
-    cg_rec_ins.add_item(
+        # cg_rec_ins = cg_receipt_inspection(database_name)
+        # cg_rec_ins.create_table(cg_receipt_inspection.table_schema)
+        cg_pur_det = cg_purchase_detail(database_name, 'cg_purchase_detail', 'cg_purchase_detail_id')
+        cg_pur_det.create_table(cg_purchase_detail.table_schema)
+
+    cg_pur_det.add_item(
+        cg_purchase_detail_id = 40002001,
+        cg_purchase_list_id = 40001001,
+        material_code = 101,
+        cg_order_lot = 50,
+        cg_remarks = '如果收货单号为空，就说明是在途。可以不填商品总价'
+    )
+
+    cg_pur_det.add_item(
+        cg_purchase_detail_id = 40002002,
+        cg_purchase_list_id = 40001002,
+        material_code = 102,
+        cg_order_lot = 42,
+        cg_total_price = 500.56,
         cg_receipt_id = 40005001,
-        cg_arrival_time = "2023-7-28 15:30",
-        cg_arrival_quantity = 557,
-        cg_quelified_products = 556,
-        cg_inbound_status = 1,
-        cg_remarks = "这批货还可以"
+        cg_remarks = '这个是已经收货了的'
     )
-    cg_rec_ins.add_item(
+
+    cg_pur_det.add_item(
+        cg_purchase_detail_id = 40002003,
+        cg_purchase_list_id = 40001003,
+        material_code = 103,
+        cg_order_lot = 56,
+        cg_total_price = 500.56,
         cg_receipt_id = 40005002,
-        cg_arrival_time = "2023-8-31 01:00",
-        cg_arrival_quantity = 100,
-        cg_quelified_products = 50,
-        cg_inbound_status = 1,
-        cg_remarks = "这批货简直差得不行"
-    )
-    cg_rec_ins.add_item(
-        cg_receipt_id = 40005003,
-        cg_arrival_time = "2023-9-28 22:00",
-        cg_arrival_quantity = 187,
-        cg_quelified_products = 167,
-        cg_inbound_status = 0,
-        cg_remarks = "还没验收"
+        cg_remarks = '这个也已经收货'
     )
 
 '''
