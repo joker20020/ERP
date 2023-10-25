@@ -11,6 +11,9 @@ TODO: 检查所有文件的路径、相对路径/绝对路径、是否有同名�
 FIXME: 重新写了之后貌似相对路径又有点问题
 TODO: 有一个巨大的bug，就是忘记写初始化和清栈的操作了，导致每次加载数据和文件后，相应控件不能重新显示新的内容
 TODO: 1.完善功能，确定物理表结构 2.确保每次点击按钮都可以刷新(完成) 3.动态调用.ui文件改成py文件(完成) 4.优化代码，减少功能重复 5.界面美化，使用qfluetwidget库重新生成ui
+
+UPDATE: 数据库文件采用绝对路径传入 line50
+UPDATE: 所有图标等资源文件建议放入项目根目录下res文件夹再使用
 '''
 
 import sys
@@ -36,7 +39,7 @@ import cg_database
 # 这是生成采购部门模块的类
 class cg_widget(QWidget):
     # 继承父类，并执行类的方法，一些基础的设定
-    def __init__(self):
+    def __init__(self,supplier_file,list_file,icon="cg_ui/u102.png"):
         super().__init__()
         # 定义窗体大小
         self.resize(800, 480)
@@ -44,9 +47,13 @@ class cg_widget(QWidget):
         self.init_ui()
         # 设定左上角标题
         self.setWindowTitle("采购模块")
+
+        # 数据库文件路径在窗口初始化时传入，防止文件路径查找错误
+        self.supplier_file = supplier_file
+        self.list_file = list_file
+
         # 设定左上角图标，图标png文件使用绝对路径
-        file_path = 'D:/Python/ERP/ERP/cg/cg_ui/u102.png'
-        icon = QIcon(file_path)
+        icon = QIcon(os.path.abspath(icon))
         self.setWindowIcon(icon)
         # 定义一个线程的状态
         self.thread_running = False
@@ -102,8 +109,7 @@ class cg_widget(QWidget):
         # 设定数据库类型
         self.supplier_database = QSqlDatabase.addDatabase("QSQLITE")
         # 链接数据库，采用相对路径访问
-        filename = "D:/Python/ERP/ERP/cg/cg_db/Purchase Supplier.db"
-        self.supplier_database.setDatabaseName(filename)
+        self.supplier_database.setDatabaseName(self.supplier_file)
         # 打开数据库，顺便有一个错误处理
         if not self.supplier_database.open():
             print("Error: Could not open the database")
@@ -134,8 +140,8 @@ class cg_widget(QWidget):
         # 设定数据库类型
         self.database = QSqlDatabase.addDatabase("QSQLITE")
         # 链接数据库
-        filename = "D:/Python/ERP/ERP/cg/cg_db/Purchase List.db"
-        self.database.setDatabaseName(filename)
+
+        self.database.setDatabaseName(self.list_file)
         # 一个错误处理
         if not self.database.open():
             print("Error: Could not open the database")
@@ -216,7 +222,7 @@ class cg_widget(QWidget):
     # 4的槽函数：加载供应商的logo在控件self.supplier.logo中
     def load_supplier_logo(self, company_id):
         # 从上面传过来供应商id，并且在文件夹中找到同id的png文件
-        logo_path = f"D:/Python/ERP/ERP/cg/cg_gr/{company_id}.png"
+        logo_path = os.path.abspath(f"cg_gr/{company_id}.png")
         
         logo_pixmap = QPixmap(logo_path)
 
@@ -235,8 +241,8 @@ class cg_widget(QWidget):
         # 设定数据库类型
         database = QSqlDatabase.addDatabase("QSQLITE")
         # 链接数据库
-        filename = "D:/Python/ERP/ERP/cg/cg_db/Purchase List.db"
-        database.setDatabaseName(filename)
+
+        database.setDatabaseName(self.list_file)
         # 一个错误处理
         if not database.open():
             print("Error: Could not open the database")
@@ -323,7 +329,7 @@ class supplier_eval(QThread):
 
     def run(self):
         try:
-            image_file_name = "D:/Python/ERP/ERP/cg/cg_gr/40004001.png"
+            image_file_name = os.path.abspath("cg_gr/40004001.png")
 
             self.image_generated.emit(image_file_name)
         except Exception as e:
@@ -355,7 +361,7 @@ if __name__ == '__main__':
     # 创建一个名为app的实例，代表应用本身，用于设置GUI并处理事件
     app = QApplication(sys.argv)
     # 实例化MyWindow
-    widget = cg_widget()
+    widget = cg_widget(os.path.abspath("cg_db/Purchase Supplier.db"),os.path.abspath("cg_db/Purchase List.db"))
     # 在屏幕上显示QWiget窗口
     widget.show()
     # 启动QApplication的循环，直到用户关闭窗口

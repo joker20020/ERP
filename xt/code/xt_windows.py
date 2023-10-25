@@ -130,11 +130,11 @@ class BomWindow(QWidget):
                         else:
                             root.append(bom[0])
                             tree.node(bom[2])
-                            tree.edge(boms[bom[3]+1][2],bom[2])
+                            tree.edge(boms[bom[3]-1][2],bom[2])
                             temp.remove(bom)
                 root = root[finish:]
                 boms = temp
-            tree.render(view=True)
+            tree.render(filename=bom_name,view=True)
         else:
             InfoBar.error(
                 title='BOM树导出',
