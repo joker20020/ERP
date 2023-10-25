@@ -10,6 +10,10 @@ from PySide6.QtWidgets import QApplication, QWidget
 from ui import Ui_kcwidget
 import sqlite3
 
+'''
+UPDATE：修改构造函数，将数据库文件作为参数传入，避免错误 line 25
+'''
+
 # 继承QWidget类，以获取其属性和方法
 class MykcWidget(QWidget):
     def __init__(self,file_path):
@@ -17,6 +21,8 @@ class MykcWidget(QWidget):
         # 设置界面为我们生成的界面
         self.ui = Ui_kcwidget()
         self.ui.setupUi(self)
+
+        # 将数据库文件作为参数传入，避免错误
         self.file_path = file_path
 
         # self.chaxun()

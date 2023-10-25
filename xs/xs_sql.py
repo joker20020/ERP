@@ -5,6 +5,10 @@ from PySide6.QtWidgets import QApplication, QWidget,QLineEdit,QVBoxLayout
 # PySide6-uic demo.ui -o ui_demo.py
 from xs2 import Ui_Form
 
+'''
+UPDATE：修改构造函数，将数据库文件作为参数传入，避免错误 line 229
+'''
+
 class XSDataBase:
     def __init__(self, file_path):
         self.connection = sql.connect(file_path)
