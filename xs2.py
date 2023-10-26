@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QFormLayout, QHBoxLayout, QHeaderVi
     QSizePolicy, QSpacerItem, QTabWidget, QTableWidget,
     QTableWidgetItem, QTextBrowser, QVBoxLayout, QWidget)
 
-from qfluentwidgets import (BodyLabel, LineEdit, TextEdit)
+from qfluentwidgets import LineEdit
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -47,27 +47,27 @@ class Ui_Form(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.label = BodyLabel(self.tab)
+        self.label = QLabel(self.tab)
         self.label.setObjectName(u"label")
 
         self.verticalLayout.addWidget(self.label)
 
-        self.label_2 = BodyLabel(self.tab)
+        self.label_2 = QLabel(self.tab)
         self.label_2.setObjectName(u"label_2")
 
         self.verticalLayout.addWidget(self.label_2)
 
-        self.label_3 = BodyLabel(self.tab)
+        self.label_3 = QLabel(self.tab)
         self.label_3.setObjectName(u"label_3")
 
         self.verticalLayout.addWidget(self.label_3)
 
-        self.label_4 = BodyLabel(self.tab)
+        self.label_4 = QLabel(self.tab)
         self.label_4.setObjectName(u"label_4")
 
         self.verticalLayout.addWidget(self.label_4)
 
-        self.label_5 = BodyLabel(self.tab)
+        self.label_5 = QLabel(self.tab)
         self.label_5.setObjectName(u"label_5")
 
         self.verticalLayout.addWidget(self.label_5)
@@ -77,25 +77,30 @@ class Ui_Form(object):
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.lineEdit = LineEdit(self.tab)
+        self.lineEdit = QLineEdit(self.tab)
         self.lineEdit.setObjectName(u"lineEdit")
 
         self.verticalLayout_2.addWidget(self.lineEdit)
 
-        self.lineEdit_2 = LineEdit(self.tab)
+        self.lineEdit_2 = QLineEdit(self.tab)
         self.lineEdit_2.setObjectName(u"lineEdit_2")
 
         self.verticalLayout_2.addWidget(self.lineEdit_2)
 
-        self.lineEdit_3 = LineEdit(self.tab)
+        self.lineEdit_3 = QLineEdit(self.tab)
         self.lineEdit_3.setObjectName(u"lineEdit_3")
 
         self.verticalLayout_2.addWidget(self.lineEdit_3)
 
-        self.lineEdit_4 = LineEdit(self.tab)
+        self.lineEdit_4 = QLineEdit(self.tab)
         self.lineEdit_4.setObjectName(u"lineEdit_4")
 
         self.verticalLayout_2.addWidget(self.lineEdit_4)
+
+        self.lineEdit_5 = QLineEdit(self.tab)
+        self.lineEdit_5.setObjectName(u"lineEdit_5")
+
+        self.verticalLayout_2.addWidget(self.lineEdit_5)
 
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_2)
@@ -103,7 +108,7 @@ class Ui_Form(object):
 
         self.horizontalLayout_3.addLayout(self.horizontalLayout_2)
 
-        self.textBrowser = TextEdit(self.tab)
+        self.textBrowser = QTextBrowser(self.tab)
         self.textBrowser.setObjectName(u"textBrowser")
         self.textBrowser.setMinimumSize(QSize(100, 100))
         self.textBrowser.setMaximumSize(QSize(16500, 150))
@@ -191,22 +196,22 @@ class Ui_Form(object):
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.verticalLayout_5 = QVBoxLayout()
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.label_6 = BodyLabel(self.tab_2)
+        self.label_6 = QLabel(self.tab_2)
         self.label_6.setObjectName(u"label_6")
 
         self.verticalLayout_5.addWidget(self.label_6)
 
-        self.label_7 = BodyLabel(self.tab_2)
+        self.label_7 = QLabel(self.tab_2)
         self.label_7.setObjectName(u"label_7")
 
         self.verticalLayout_5.addWidget(self.label_7)
 
-        self.label_8 = BodyLabel(self.tab_2)
+        self.label_8 = QLabel(self.tab_2)
         self.label_8.setObjectName(u"label_8")
 
         self.verticalLayout_5.addWidget(self.label_8)
 
-        self.label_9 = BodyLabel(self.tab_2)
+        self.label_9 = QLabel(self.tab_2)
         self.label_9.setObjectName(u"label_9")
 
         self.verticalLayout_5.addWidget(self.label_9)
@@ -221,17 +226,17 @@ class Ui_Form(object):
 
         self.verticalLayout_6.addWidget(self.lineEdit_7)
 
-        self.lineEdit_8 = LineEdit(self.tab_2)
+        self.lineEdit_8 = QLineEdit(self.tab_2)
         self.lineEdit_8.setObjectName(u"lineEdit_8")
 
         self.verticalLayout_6.addWidget(self.lineEdit_8)
 
-        self.lineEdit_9 = LineEdit(self.tab_2)
+        self.lineEdit_9 = QLineEdit(self.tab_2)
         self.lineEdit_9.setObjectName(u"lineEdit_9")
 
         self.verticalLayout_6.addWidget(self.lineEdit_9)
 
-        self.lineEdit_10 = LineEdit(self.tab_2)
+        self.lineEdit_10 = QLineEdit(self.tab_2)
         self.lineEdit_10.setObjectName(u"lineEdit_10")
 
         self.verticalLayout_6.addWidget(self.lineEdit_10)
@@ -458,7 +463,7 @@ class Ui_Form(object):
 
         self.verticalLayout_12.addWidget(self.label_10)
 
-        self.label_11 = BodyLabel(self.tab_5)
+        self.label_11 = QLabel(self.tab_5)
         self.label_11.setObjectName(u"label_11")
 
         self.verticalLayout_12.addWidget(self.label_11)
@@ -675,7 +680,7 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Form)
