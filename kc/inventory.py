@@ -1,9 +1,9 @@
 import sqlite3
 
 class InventoryManager:
-    def __init__(self):
+    def __init__(self,file_path):
         # 创建或连接到库存数据库
-        self.conn = sqlite3.connect('inventory.db')
+        self.conn = sqlite3.connect(file_path)
         self.c = self.conn.cursor()
 
         # 创建商品表
@@ -139,15 +139,15 @@ class InventoryManager:
 
 # 示例用法
 if __name__ == "__main__":
-    manager = InventoryManager()
+    manager = InventoryManager('inventory.db')
 
     # 查询使用方法：
-    db = InventoryManager()
+    db = InventoryManager('inventory.db')
     product_id = 8  # 可以替换为您要查询的ID
     print(db.query_by_id(product_id))
 
     # 销售查询使用方法：
-    db = InventoryManager()
+    db = InventoryManager('inventory.db')
     product_id = 4  # 可以替换为您要查询的ID
     print(db.query_xiaoshou_by_id(product_id))
 

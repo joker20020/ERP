@@ -412,14 +412,14 @@ class MyWindow(QWidget):
             kc = XSDataBase(self.kc_file)
             p_p=kc.where('products',['name'],product_id=p_id)
             p_p=len(p_p)
-            if p_p != 0:
+            if p_p == 0:
                 self.ui.lineEdit_13.setText("此商品不存在")
             else:
                 per = kc.find_info('products', [])
                 # l_per = len(per)
                 for i in range(3):
                     self.ui.tableWidget.setItem(0, i, QTableWidgetItem(str(per[0][i])))
-                    self.ui.tableWidget.setItem(0,4,QTableWidgetItem(str(10)))
+                    self.ui.tableWidget.setItem(0,3,QTableWidgetItem(str(10)))
 
 
 #销售订单管理
@@ -440,9 +440,10 @@ class MyWindow(QWidget):
             # o_test2 = int(o_test[0][0])
             # print(o_test2)
             # print(type(o_test2))
-            # print(type(o_sid))
-            # inventory_manager = InventoryManager()
-            # inventory_manager.substact_inventory("o_date",int(o_pid),int(o_number),"o_sid")
+            inventory_manager = InventoryManager('../kc/inventory.db')
+            inventory_manager.substact_inventory(o_date,int(o_pid),int(o_number),o_sid)
+            print(o_pid)
+            print(type(o_sid))
             if len(self.db.where('cust',['cust_id'],cust_id=o_cid)) != 0:
                 o_test = self.db.where('sale',['password'],salesperson_id=o_sid)
                 o_test2 = int(o_test[0][0])

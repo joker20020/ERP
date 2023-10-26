@@ -16,11 +16,12 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFormLayout, QHBoxLayout, QHeaderView,
-    QLabel, QLineEdit, QPushButton, QRadioButton,
-    QSizePolicy, QSpacerItem, QTabWidget, QTableWidget,
-    QTableWidgetItem, QTextBrowser, QVBoxLayout, QWidget)
+    QLabel, QPushButton, QSizePolicy, QSpacerItem,
+    QTabWidget, QTableWidget, QTableWidgetItem, QVBoxLayout,
+    QWidget)
 
-from qfluentwidgets import (BodyLabel, LineEdit, TextEdit)
+from qfluentwidgets import (BodyLabel, LineEdit, PrimaryPushButton, PushButton,
+    RadioButton, TextEdit)
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -115,22 +116,22 @@ class Ui_Form(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.radioButton = QRadioButton(self.tab)
+        self.radioButton = RadioButton(self.tab)
         self.radioButton.setObjectName(u"radioButton")
 
         self.horizontalLayout.addWidget(self.radioButton)
 
-        self.radioButton_2 = QRadioButton(self.tab)
+        self.radioButton_2 = RadioButton(self.tab)
         self.radioButton_2.setObjectName(u"radioButton_2")
 
         self.horizontalLayout.addWidget(self.radioButton_2)
 
-        self.radioButton_4 = QRadioButton(self.tab)
+        self.radioButton_4 = RadioButton(self.tab)
         self.radioButton_4.setObjectName(u"radioButton_4")
 
         self.horizontalLayout.addWidget(self.radioButton_4)
 
-        self.radioButton_3 = QRadioButton(self.tab)
+        self.radioButton_3 = RadioButton(self.tab)
         self.radioButton_3.setObjectName(u"radioButton_3")
 
         self.horizontalLayout.addWidget(self.radioButton_3)
@@ -144,7 +145,7 @@ class Ui_Form(object):
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer)
 
-        self.pushButton_3 = QPushButton(self.tab)
+        self.pushButton_3 = PrimaryPushButton(self.tab)
         self.pushButton_3.setObjectName(u"pushButton_3")
 
         self.horizontalLayout_4.addWidget(self.pushButton_3)
@@ -245,7 +246,7 @@ class Ui_Form(object):
 
         self.horizontalLayout_16.addLayout(self.horizontalLayout_7)
 
-        self.textBrowser_3 = QTextBrowser(self.tab_2)
+        self.textBrowser_3 = TextEdit(self.tab_2)
         self.textBrowser_3.setObjectName(u"textBrowser_3")
         self.textBrowser_3.setMaximumSize(QSize(16500, 150))
 
@@ -256,22 +257,22 @@ class Ui_Form(object):
 
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.radioButton_5 = QRadioButton(self.tab_2)
+        self.radioButton_5 = RadioButton(self.tab_2)
         self.radioButton_5.setObjectName(u"radioButton_5")
 
         self.horizontalLayout_6.addWidget(self.radioButton_5)
 
-        self.radioButton_6 = QRadioButton(self.tab_2)
+        self.radioButton_6 = RadioButton(self.tab_2)
         self.radioButton_6.setObjectName(u"radioButton_6")
 
         self.horizontalLayout_6.addWidget(self.radioButton_6)
 
-        self.radioButton_7 = QRadioButton(self.tab_2)
+        self.radioButton_7 = RadioButton(self.tab_2)
         self.radioButton_7.setObjectName(u"radioButton_7")
 
         self.horizontalLayout_6.addWidget(self.radioButton_7)
 
-        self.radioButton_8 = QRadioButton(self.tab_2)
+        self.radioButton_8 = RadioButton(self.tab_2)
         self.radioButton_8.setObjectName(u"radioButton_8")
 
         self.horizontalLayout_6.addWidget(self.radioButton_8)
@@ -285,7 +286,7 @@ class Ui_Form(object):
 
         self.horizontalLayout_8.addItem(self.horizontalSpacer_4)
 
-        self.pushButton = QPushButton(self.tab_2)
+        self.pushButton = PushButton(self.tab_2)
         self.pushButton.setObjectName(u"pushButton")
 
         self.horizontalLayout_8.addWidget(self.pushButton)
@@ -294,7 +295,7 @@ class Ui_Form(object):
 
         self.horizontalLayout_8.addItem(self.horizontalSpacer_6)
 
-        self.pushButton_2 = QPushButton(self.tab_2)
+        self.pushButton_2 = PushButton(self.tab_2)
         self.pushButton_2.setObjectName(u"pushButton_2")
 
         self.horizontalLayout_8.addWidget(self.pushButton_2)
@@ -336,17 +337,17 @@ class Ui_Form(object):
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.verticalLayout_9 = QVBoxLayout()
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.label_13 = QLabel(self.tab_3)
+        self.label_13 = BodyLabel(self.tab_3)
         self.label_13.setObjectName(u"label_13")
 
         self.verticalLayout_9.addWidget(self.label_13)
 
-        self.label_15 = QLabel(self.tab_3)
+        self.label_15 = BodyLabel(self.tab_3)
         self.label_15.setObjectName(u"label_15")
 
         self.verticalLayout_9.addWidget(self.label_15)
 
-        self.label_16 = QLabel(self.tab_3)
+        self.label_16 = BodyLabel(self.tab_3)
         self.label_16.setObjectName(u"label_16")
 
         self.verticalLayout_9.addWidget(self.label_16)
@@ -356,17 +357,17 @@ class Ui_Form(object):
 
         self.verticalLayout_10 = QVBoxLayout()
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.lineEdit_12 = QLineEdit(self.tab_3)
+        self.lineEdit_12 = LineEdit(self.tab_3)
         self.lineEdit_12.setObjectName(u"lineEdit_12")
 
         self.verticalLayout_10.addWidget(self.lineEdit_12)
 
-        self.lineEdit_14 = QLineEdit(self.tab_3)
+        self.lineEdit_14 = LineEdit(self.tab_3)
         self.lineEdit_14.setObjectName(u"lineEdit_14")
 
         self.verticalLayout_10.addWidget(self.lineEdit_14)
 
-        self.lineEdit_15 = QLineEdit(self.tab_3)
+        self.lineEdit_15 = LineEdit(self.tab_3)
         self.lineEdit_15.setObjectName(u"lineEdit_15")
 
         self.verticalLayout_10.addWidget(self.lineEdit_15)
@@ -377,7 +378,7 @@ class Ui_Form(object):
 
         self.verticalLayout_18.addLayout(self.horizontalLayout_9)
 
-        self.lineEdit_13 = QLineEdit(self.tab_3)
+        self.lineEdit_13 = LineEdit(self.tab_3)
         self.lineEdit_13.setObjectName(u"lineEdit_13")
 
         self.verticalLayout_18.addWidget(self.lineEdit_13)
@@ -391,7 +392,7 @@ class Ui_Form(object):
 
         self.horizontalLayout_15.addItem(self.horizontalSpacer_7)
 
-        self.pushButton_5 = QPushButton(self.tab_3)
+        self.pushButton_5 = PushButton(self.tab_3)
         self.pushButton_5.setObjectName(u"pushButton_5")
 
         self.horizontalLayout_15.addWidget(self.pushButton_5)
@@ -400,7 +401,7 @@ class Ui_Form(object):
 
         self.horizontalLayout_15.addItem(self.horizontalSpacer_8)
 
-        self.pushButton_6 = QPushButton(self.tab_3)
+        self.pushButton_6 = PushButton(self.tab_3)
         self.pushButton_6.setObjectName(u"pushButton_6")
 
         self.horizontalLayout_15.addWidget(self.pushButton_6)
@@ -453,7 +454,7 @@ class Ui_Form(object):
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.verticalLayout_12 = QVBoxLayout()
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
-        self.label_10 = QLabel(self.tab_5)
+        self.label_10 = BodyLabel(self.tab_5)
         self.label_10.setObjectName(u"label_10")
 
         self.verticalLayout_12.addWidget(self.label_10)
@@ -463,32 +464,32 @@ class Ui_Form(object):
 
         self.verticalLayout_12.addWidget(self.label_11)
 
-        self.label_18 = QLabel(self.tab_5)
+        self.label_18 = BodyLabel(self.tab_5)
         self.label_18.setObjectName(u"label_18")
 
         self.verticalLayout_12.addWidget(self.label_18)
 
-        self.label_14 = QLabel(self.tab_5)
+        self.label_14 = BodyLabel(self.tab_5)
         self.label_14.setObjectName(u"label_14")
 
         self.verticalLayout_12.addWidget(self.label_14)
 
-        self.label_22 = QLabel(self.tab_5)
+        self.label_22 = BodyLabel(self.tab_5)
         self.label_22.setObjectName(u"label_22")
 
         self.verticalLayout_12.addWidget(self.label_22)
 
-        self.label_12 = QLabel(self.tab_5)
+        self.label_12 = BodyLabel(self.tab_5)
         self.label_12.setObjectName(u"label_12")
 
         self.verticalLayout_12.addWidget(self.label_12)
 
-        self.label_17 = QLabel(self.tab_5)
+        self.label_17 = BodyLabel(self.tab_5)
         self.label_17.setObjectName(u"label_17")
 
         self.verticalLayout_12.addWidget(self.label_17)
 
-        self.label_19 = QLabel(self.tab_5)
+        self.label_19 = BodyLabel(self.tab_5)
         self.label_19.setObjectName(u"label_19")
 
         self.verticalLayout_12.addWidget(self.label_19)
@@ -498,42 +499,42 @@ class Ui_Form(object):
 
         self.verticalLayout_13 = QVBoxLayout()
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
-        self.lineEdit_17 = QLineEdit(self.tab_5)
+        self.lineEdit_17 = LineEdit(self.tab_5)
         self.lineEdit_17.setObjectName(u"lineEdit_17")
 
         self.verticalLayout_13.addWidget(self.lineEdit_17)
 
-        self.lineEdit_18 = QLineEdit(self.tab_5)
+        self.lineEdit_18 = LineEdit(self.tab_5)
         self.lineEdit_18.setObjectName(u"lineEdit_18")
 
         self.verticalLayout_13.addWidget(self.lineEdit_18)
 
-        self.lineEdit_19 = QLineEdit(self.tab_5)
+        self.lineEdit_19 = LineEdit(self.tab_5)
         self.lineEdit_19.setObjectName(u"lineEdit_19")
 
         self.verticalLayout_13.addWidget(self.lineEdit_19)
 
-        self.lineEdit_11 = QLineEdit(self.tab_5)
+        self.lineEdit_11 = LineEdit(self.tab_5)
         self.lineEdit_11.setObjectName(u"lineEdit_11")
 
         self.verticalLayout_13.addWidget(self.lineEdit_11)
 
-        self.lineEdit_20 = QLineEdit(self.tab_5)
+        self.lineEdit_20 = LineEdit(self.tab_5)
         self.lineEdit_20.setObjectName(u"lineEdit_20")
 
         self.verticalLayout_13.addWidget(self.lineEdit_20)
 
-        self.lineEdit_21 = QLineEdit(self.tab_5)
+        self.lineEdit_21 = LineEdit(self.tab_5)
         self.lineEdit_21.setObjectName(u"lineEdit_21")
 
         self.verticalLayout_13.addWidget(self.lineEdit_21)
 
-        self.lineEdit_6 = QLineEdit(self.tab_5)
+        self.lineEdit_6 = LineEdit(self.tab_5)
         self.lineEdit_6.setObjectName(u"lineEdit_6")
 
         self.verticalLayout_13.addWidget(self.lineEdit_6)
 
-        self.lineEdit_26 = QLineEdit(self.tab_5)
+        self.lineEdit_26 = LineEdit(self.tab_5)
         self.lineEdit_26.setObjectName(u"lineEdit_26")
 
         self.verticalLayout_13.addWidget(self.lineEdit_26)
@@ -547,7 +548,7 @@ class Ui_Form(object):
 
         self.horizontalLayout_17.addLayout(self.horizontalLayout_12)
 
-        self.textBrowser_2 = QTextBrowser(self.tab_5)
+        self.textBrowser_2 = TextEdit(self.tab_5)
         self.textBrowser_2.setObjectName(u"textBrowser_2")
         self.textBrowser_2.setMaximumSize(QSize(200, 150))
 
@@ -562,7 +563,7 @@ class Ui_Form(object):
 
         self.horizontalLayout_14.addItem(self.horizontalSpacer_10)
 
-        self.pushButton_7 = QPushButton(self.tab_5)
+        self.pushButton_7 = PushButton(self.tab_5)
         self.pushButton_7.setObjectName(u"pushButton_7")
 
         self.horizontalLayout_14.addWidget(self.pushButton_7)
@@ -571,7 +572,7 @@ class Ui_Form(object):
 
         self.horizontalLayout_14.addItem(self.horizontalSpacer_11)
 
-        self.pushButton_8 = QPushButton(self.tab_5)
+        self.pushButton_8 = PushButton(self.tab_5)
         self.pushButton_8.setObjectName(u"pushButton_8")
 
         self.horizontalLayout_14.addWidget(self.pushButton_8)
@@ -585,22 +586,22 @@ class Ui_Form(object):
 
         self.horizontalLayout_11 = QHBoxLayout()
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
-        self.radioButton_9 = QRadioButton(self.tab_5)
+        self.radioButton_9 = RadioButton(self.tab_5)
         self.radioButton_9.setObjectName(u"radioButton_9")
 
         self.horizontalLayout_11.addWidget(self.radioButton_9)
 
-        self.radioButton_12 = QRadioButton(self.tab_5)
+        self.radioButton_12 = RadioButton(self.tab_5)
         self.radioButton_12.setObjectName(u"radioButton_12")
 
         self.horizontalLayout_11.addWidget(self.radioButton_12)
 
-        self.radioButton_10 = QRadioButton(self.tab_5)
+        self.radioButton_10 = RadioButton(self.tab_5)
         self.radioButton_10.setObjectName(u"radioButton_10")
 
         self.horizontalLayout_11.addWidget(self.radioButton_10)
 
-        self.radioButton_11 = QRadioButton(self.tab_5)
+        self.radioButton_11 = RadioButton(self.tab_5)
         self.radioButton_11.setObjectName(u"radioButton_11")
 
         self.horizontalLayout_11.addWidget(self.radioButton_11)
@@ -675,7 +676,7 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(3)
 
 
         QMetaObject.connectSlotsByName(Form)
@@ -716,9 +717,9 @@ class Ui_Form(object):
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u540d\u79f0", None));
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u5e93\u5b58", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u5e93\u5b58\uff08\u4ef6\uff09", None));
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u5b9a\u4ef7", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u5b9a\u4ef7(\u5143)", None));
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("Form", u"\u4ea7\u54c1\u4fe1\u606f\u67e5\u8be2", None))
         self.label_10.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355ID", None))
         self.label_11.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u65e5\u671f", None))
@@ -743,7 +744,7 @@ class Ui_Form(object):
         ___qtablewidgetitem6 = self.tableWidget_2.horizontalHeaderItem(2)
         ___qtablewidgetitem6.setText(QCoreApplication.translate("Form", u"\u6210\u4ea4\u8ba2\u5355\u6570", None));
         ___qtablewidgetitem7 = self.tableWidget_2.horizontalHeaderItem(3)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("Form", u"\u4e1a\u52a1\u603b\u503c", None));
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("Form", u"\u4e1a\u52a1\u603b\u503c\uff08\u5143\uff09", None));
         self.pushButton_9.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458\u4e1a\u7ee9\u5206\u6790", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), QCoreApplication.translate("Form", u"\u9500\u552e\u5458\u4e1a\u7ee9\u5206\u6790", None))
     # retranslateUi

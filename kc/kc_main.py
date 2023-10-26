@@ -279,7 +279,7 @@ class MykcWidget(QWidget):
             cursor.close()
             conn.close()
 
-        self.container.generate_log(OperationCode.KC_CHANGE)
+        # self.container.generate_log(OperationCode.KC_CHANGE)
 
     # 入库函数
     def ruku(self):
@@ -294,7 +294,7 @@ class MykcWidget(QWidget):
                 self.ui.tableWidget.setItem(row_num, col_num, QTableWidgetItem(str(data)))
 
         conn.close()
-        self.container.generate_log(OperationCode.KC_CHANGE)
+        # self.container.generate_log(OperationCode.KC_CHANGE)
 
     # 出库函数
     def chuku(self):
@@ -309,7 +309,7 @@ class MykcWidget(QWidget):
                 self.ui.tableWidget_2.setItem(row_num, col_num, QTableWidgetItem(str(data)))
 
         conn.close()
-        self.container.generate_log(OperationCode.KC_CHANGE)
+        # self.container.generate_log(OperationCode.KC_CHANGE)
 
     def bindkc(self):
         self.ui.pushButton_chaxun.clicked.connect(self.chaxun)
