@@ -180,6 +180,7 @@ class XTDataBase:
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
                 LINE_ID INTEGER PRIMARY KEY ,
                 NAME TEXT NOT NULL,
+                CHEJIAN TEXT NOT NULL,
                 DESC TEXT
                 );
                 """.format(name))
@@ -400,6 +401,7 @@ if __name__ == "__main__":
 
 
     # print(db.sql_cmd("SELECT name FROM sqlite_master WHERE type='table'"))
+    # print(db.sql_cmd("SELECT * FROM sqlite_master WHERE name='line'"))
     # print(db.sql_cmd("PRAGMA table_info(sqlite_master)"))
 
     # db.xt_bom_create_table("bom1")
