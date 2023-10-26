@@ -24,7 +24,7 @@ class Ui_kcwidget(object):
     def setupUi(self, kcwidget):
         if not kcwidget.objectName():
             kcwidget.setObjectName(u"kcwidget")
-        kcwidget.resize(646, 517)
+        kcwidget.resize(647, 566)
         self.verticalLayout_2 = QVBoxLayout(kcwidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(20, 9, 20, 30)
@@ -35,8 +35,8 @@ class Ui_kcwidget(object):
         self.horizontalLayout = QHBoxLayout(self.tab_2)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.tableWidget = QTableWidget(self.tab_2)
-        if (self.tableWidget.columnCount() < 5):
-            self.tableWidget.setColumnCount(5)
+        if (self.tableWidget.columnCount() < 4):
+            self.tableWidget.setColumnCount(4)
         __qtablewidgetitem = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
@@ -45,29 +45,16 @@ class Ui_kcwidget(object):
         self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         __qtablewidgetitem3 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
-        if (self.tableWidget.rowCount() < 8):
-            self.tableWidget.setRowCount(8)
-        __qtablewidgetitem5 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(0, __qtablewidgetitem5)
-        __qtablewidgetitem6 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(1, __qtablewidgetitem6)
-        __qtablewidgetitem7 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(2, __qtablewidgetitem7)
-        __qtablewidgetitem8 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(3, __qtablewidgetitem8)
-        __qtablewidgetitem9 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(4, __qtablewidgetitem9)
-        __qtablewidgetitem10 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(5, __qtablewidgetitem10)
-        __qtablewidgetitem11 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(6, __qtablewidgetitem11)
-        __qtablewidgetitem12 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(7, __qtablewidgetitem12)
+        if (self.tableWidget.rowCount() < 16):
+            self.tableWidget.setRowCount(16)
         self.tableWidget.setObjectName(u"tableWidget")
 
         self.horizontalLayout.addWidget(self.tableWidget)
+
+        self.pushButton_rukugx = QPushButton(self.tab_2)
+        self.pushButton_rukugx.setObjectName(u"pushButton_rukugx")
+
+        self.horizontalLayout.addWidget(self.pushButton_rukugx)
 
         self.tabWidget.addTab(self.tab_2, "")
         self.tab_3 = QWidget()
@@ -75,39 +62,26 @@ class Ui_kcwidget(object):
         self.horizontalLayout_3 = QHBoxLayout(self.tab_3)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.tableWidget_2 = QTableWidget(self.tab_3)
-        if (self.tableWidget_2.columnCount() < 5):
-            self.tableWidget_2.setColumnCount(5)
-        __qtablewidgetitem13 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(0, __qtablewidgetitem13)
-        __qtablewidgetitem14 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(1, __qtablewidgetitem14)
-        __qtablewidgetitem15 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(2, __qtablewidgetitem15)
-        __qtablewidgetitem16 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(3, __qtablewidgetitem16)
-        __qtablewidgetitem17 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(4, __qtablewidgetitem17)
-        if (self.tableWidget_2.rowCount() < 8):
-            self.tableWidget_2.setRowCount(8)
-        __qtablewidgetitem18 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(0, __qtablewidgetitem18)
-        __qtablewidgetitem19 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(1, __qtablewidgetitem19)
-        __qtablewidgetitem20 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(2, __qtablewidgetitem20)
-        __qtablewidgetitem21 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(3, __qtablewidgetitem21)
-        __qtablewidgetitem22 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(4, __qtablewidgetitem22)
-        __qtablewidgetitem23 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(5, __qtablewidgetitem23)
-        __qtablewidgetitem24 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(6, __qtablewidgetitem24)
-        __qtablewidgetitem25 = QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(7, __qtablewidgetitem25)
+        if (self.tableWidget_2.columnCount() < 4):
+            self.tableWidget_2.setColumnCount(4)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.tableWidget_2.setHorizontalHeaderItem(0, __qtablewidgetitem4)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.tableWidget_2.setHorizontalHeaderItem(1, __qtablewidgetitem5)
+        __qtablewidgetitem6 = QTableWidgetItem()
+        self.tableWidget_2.setHorizontalHeaderItem(2, __qtablewidgetitem6)
+        __qtablewidgetitem7 = QTableWidgetItem()
+        self.tableWidget_2.setHorizontalHeaderItem(3, __qtablewidgetitem7)
+        if (self.tableWidget_2.rowCount() < 16):
+            self.tableWidget_2.setRowCount(16)
         self.tableWidget_2.setObjectName(u"tableWidget_2")
 
         self.horizontalLayout_3.addWidget(self.tableWidget_2)
+
+        self.pushButton_chukugx = QPushButton(self.tab_3)
+        self.pushButton_chukugx.setObjectName(u"pushButton_chukugx")
+
+        self.horizontalLayout_3.addWidget(self.pushButton_chukugx)
 
         self.tabWidget.addTab(self.tab_3, "")
         self.tab = QWidget()
@@ -165,36 +139,6 @@ class Ui_kcwidget(object):
 
         self.verticalLayout.addWidget(self.lineEdit_chaxunshuliang)
 
-        self.label_4 = QLabel(self.tab)
-        self.label_4.setObjectName(u"label_4")
-
-        self.verticalLayout.addWidget(self.label_4)
-
-        self.label_3 = QLabel(self.tab)
-        self.label_3.setObjectName(u"label_3")
-
-        self.verticalLayout.addWidget(self.label_3)
-
-        self.lineEdit_tianjiamingcheng = QLineEdit(self.tab)
-        self.lineEdit_tianjiamingcheng.setObjectName(u"lineEdit_tianjiamingcheng")
-
-        self.verticalLayout.addWidget(self.lineEdit_tianjiamingcheng)
-
-        self.label_2 = QLabel(self.tab)
-        self.label_2.setObjectName(u"label_2")
-
-        self.verticalLayout.addWidget(self.label_2)
-
-        self.lineEdit_tianjiashuliang = QLineEdit(self.tab)
-        self.lineEdit_tianjiashuliang.setObjectName(u"lineEdit_tianjiashuliang")
-
-        self.verticalLayout.addWidget(self.lineEdit_tianjiashuliang)
-
-        self.pushButton_tianjia = QPushButton(self.tab)
-        self.pushButton_tianjia.setObjectName(u"pushButton_tianjia")
-
-        self.verticalLayout.addWidget(self.pushButton_tianjia)
-
         self.label_6 = QLabel(self.tab)
         self.label_6.setObjectName(u"label_6")
 
@@ -222,7 +166,7 @@ class Ui_kcwidget(object):
 
         self.retranslateUi(kcwidget)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(kcwidget)
@@ -237,52 +181,18 @@ class Ui_kcwidget(object):
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1\u6570\u91cf", None));
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("kcwidget", u"\u5165\u5e93\u4f4d\u7f6e", None));
-        ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("kcwidget", u"\u64cd\u4f5c\u4eba\u5458", None));
-        ___qtablewidgetitem5 = self.tableWidget.verticalHeaderItem(0)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("kcwidget", u"0", None));
-        ___qtablewidgetitem6 = self.tableWidget.verticalHeaderItem(1)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("kcwidget", u"1", None));
-        ___qtablewidgetitem7 = self.tableWidget.verticalHeaderItem(2)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("kcwidget", u"2", None));
-        ___qtablewidgetitem8 = self.tableWidget.verticalHeaderItem(3)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("kcwidget", u"3", None));
-        ___qtablewidgetitem9 = self.tableWidget.verticalHeaderItem(4)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("kcwidget", u"4", None));
-        ___qtablewidgetitem10 = self.tableWidget.verticalHeaderItem(5)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("kcwidget", u"5", None));
-        ___qtablewidgetitem11 = self.tableWidget.verticalHeaderItem(6)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("kcwidget", u"6", None));
-        ___qtablewidgetitem12 = self.tableWidget.verticalHeaderItem(7)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("kcwidget", u"7", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("kcwidget", u"\u64cd\u4f5c\u4eba\u5458", None));
+        self.pushButton_rukugx.setText(QCoreApplication.translate("kcwidget", u"\u66f4\u65b0", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("kcwidget", u"\u5165\u5e93", None))
-        ___qtablewidgetitem13 = self.tableWidget_2.horizontalHeaderItem(0)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("kcwidget", u"\u51fa\u5e93\u65f6\u95f4", None));
-        ___qtablewidgetitem14 = self.tableWidget_2.horizontalHeaderItem(1)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1id", None));
-        ___qtablewidgetitem15 = self.tableWidget_2.horizontalHeaderItem(2)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1\u6570\u91cf", None));
-        ___qtablewidgetitem16 = self.tableWidget_2.horizontalHeaderItem(3)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("kcwidget", u"\u51fa\u5e93\u4f4d\u7f6e", None));
-        ___qtablewidgetitem17 = self.tableWidget_2.horizontalHeaderItem(4)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("kcwidget", u"\u64cd\u4f5c\u4eba\u5458", None));
-        ___qtablewidgetitem18 = self.tableWidget_2.verticalHeaderItem(0)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("kcwidget", u"0", None));
-        ___qtablewidgetitem19 = self.tableWidget_2.verticalHeaderItem(1)
-        ___qtablewidgetitem19.setText(QCoreApplication.translate("kcwidget", u"1", None));
-        ___qtablewidgetitem20 = self.tableWidget_2.verticalHeaderItem(2)
-        ___qtablewidgetitem20.setText(QCoreApplication.translate("kcwidget", u"2", None));
-        ___qtablewidgetitem21 = self.tableWidget_2.verticalHeaderItem(3)
-        ___qtablewidgetitem21.setText(QCoreApplication.translate("kcwidget", u"3", None));
-        ___qtablewidgetitem22 = self.tableWidget_2.verticalHeaderItem(4)
-        ___qtablewidgetitem22.setText(QCoreApplication.translate("kcwidget", u"4", None));
-        ___qtablewidgetitem23 = self.tableWidget_2.verticalHeaderItem(5)
-        ___qtablewidgetitem23.setText(QCoreApplication.translate("kcwidget", u"5", None));
-        ___qtablewidgetitem24 = self.tableWidget_2.verticalHeaderItem(6)
-        ___qtablewidgetitem24.setText(QCoreApplication.translate("kcwidget", u"6", None));
-        ___qtablewidgetitem25 = self.tableWidget_2.verticalHeaderItem(7)
-        ___qtablewidgetitem25.setText(QCoreApplication.translate("kcwidget", u"7", None));
+        ___qtablewidgetitem4 = self.tableWidget_2.horizontalHeaderItem(0)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("kcwidget", u"\u51fa\u5e93\u65f6\u95f4", None));
+        ___qtablewidgetitem5 = self.tableWidget_2.horizontalHeaderItem(1)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1id", None));
+        ___qtablewidgetitem6 = self.tableWidget_2.horizontalHeaderItem(2)
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1\u6570\u91cf", None));
+        ___qtablewidgetitem7 = self.tableWidget_2.horizontalHeaderItem(3)
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("kcwidget", u"\u64cd\u4f5c\u4eba\u5458", None));
+        self.pushButton_chukugx.setText(QCoreApplication.translate("kcwidget", u"\u66f4\u65b0", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("kcwidget", u"\u51fa\u5e93", None))
         self.label_8.setText(QCoreApplication.translate("kcwidget", u"\u5e93\u5b58\u67e5\u8be2", None))
         self.comboBox_chaxun.setItemText(0, QCoreApplication.translate("kcwidget", u"\u5927\u4f17\u81ea\u52a8\u94b3", None))
@@ -305,10 +215,6 @@ class Ui_kcwidget(object):
         self.pushButton_chaxun.setText(QCoreApplication.translate("kcwidget", u"\u67e5\u8be2", None))
         self.label_11.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1id", None))
         self.label_12.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1\u6570\u91cf", None))
-        self.label_4.setText(QCoreApplication.translate("kcwidget", u"\u6dfb\u52a0\u65b0\u5546\u54c1", None))
-        self.label_3.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1\u540d\u79f0", None))
-        self.label_2.setText(QCoreApplication.translate("kcwidget", u"\u6dfb\u52a0\u6570\u91cf", None))
-        self.pushButton_tianjia.setText(QCoreApplication.translate("kcwidget", u"\u786e\u8ba4", None))
         self.label_6.setText(QCoreApplication.translate("kcwidget", u"\u5220\u9664\u5546\u54c1", None))
         self.label_7.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1id", None))
         self.pushButton_shancbu.setText(QCoreApplication.translate("kcwidget", u"\u786e\u8ba4", None))

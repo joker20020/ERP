@@ -16,6 +16,30 @@ class InventoryManager:
         if self.c.fetchone()[0] == 0:
             self._initialize_products()
 
+        # 创建入库表
+        self.c.execute('''
+        CREATE TABLE IF NOT EXISTS ruku (
+            id INTEGER PRIMARY KEY,
+            entry_time TEXT NOT NULL,
+            product_id INTEGER NOT NULL,
+            quantity INTEGER NOT NULL,
+            operator TEXT NOT NULL
+        )
+        ''')
+
+        # 创建出库表
+        self.c.execute('''
+        CREATE TABLE IF NOT EXISTS chuku (
+            id INTEGER PRIMARY KEY,
+            exit_time TEXT NOT NULL,
+            product_id INTEGER NOT NULL,
+            quantity INTEGER NOT NULL,
+            operator TEXT NOT NULL
+        )
+        ''')
+
+
+
     def _initialize_products(self):
         """初始化商品列表"""
         products = [
@@ -72,6 +96,15 @@ class InventoryManager:
         else:
             return "No product found with the given ID"
 
+    def query_xiaoshou_by_id(self, search_id):
+        # 使用参数化查询来提高安全性
+        self.c.execute('SELECT name, quantity FROM products WHERE ID=?', (search_id,))
+        result = self.c.fetchone()
+        if result:
+            return result
+        else:
+            return "No product found with the given ID"
+
 
 # 示例用法
 if __name__ == "__main__":
@@ -81,6 +114,11 @@ if __name__ == "__main__":
     db = InventoryManager()
     product_id = 5  # 可以替换为您要查询的ID
     print(db.query_by_id(product_id))
+
+    # 销售查询使用方法：
+    db = InventoryManager()
+    product_id = 4  # 可以替换为您要查询的ID
+    print(db.query_xiaoshou_by_id(product_id))
 
     # 列出所有商品
     print(manager.list_products())

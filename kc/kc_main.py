@@ -2,7 +2,7 @@
 import os.path
 import sys
 
-
+from PySide6.QtWidgets import QTableWidgetItem
 # 任何一个PySide界面程序都需要使用QApplication
 # 我们要展示一个普通的窗口，所以需要导入QWidget，用来让我们自己的类继承
 from PySide6.QtWidgets import QApplication, QWidget
@@ -27,7 +27,10 @@ class MykcWidget(QWidget):
 
         # self.chaxun()
         self.bindkc()
+        self.bindruku()
+        self.bindchuku()
 
+    # 查询函数
     def chaxun(self):
         mode = self.ui.comboBox_chaxun.currentText()
         if mode == "大众自动钳":
@@ -273,8 +276,42 @@ class MykcWidget(QWidget):
             cursor.close()
             conn.close()
 
+    # 入库函数
+    def ruku(self):
+        conn = sqlite3.connect('inventory.db')
+        cursor = conn.cursor()
+
+        cursor.execute('SELECT entry_time, product_id, quantity, operator FROM ruku LIMIT 16')
+        rows = cursor.fetchall()
+
+        for row_num, row_data in enumerate(rows):
+            for col_num, data in enumerate(row_data):
+                self.ui.tableWidget.setItem(row_num, col_num, QTableWidgetItem(str(data)))
+
+        conn.close()
+
+    # 出库函数
+    def chuku(self):
+        conn = sqlite3.connect('inventory.db')
+        cursor = conn.cursor()
+
+        cursor.execute('SELECT exit_time, product_id, quantity, operator FROM chuku LIMIT 16')
+        rows = cursor.fetchall()
+
+        for row_num, row_data in enumerate(rows):
+            for col_num, data in enumerate(row_data):
+                self.ui.tableWidget_2.setItem(row_num, col_num, QTableWidgetItem(str(data)))
+
+        conn.close()
+
     def bindkc(self):
         self.ui.pushButton_chaxun.clicked.connect(self.chaxun)
+
+    def bindruku(self):
+        self.ui.pushButton_rukugx.clicked.connect(self.ruku)
+
+    def bindchuku(self):
+        self.ui.pushButton_chukugx.clicked.connect(self.chuku)
 
 # 程序入口
 if __name__ == "__main__":
