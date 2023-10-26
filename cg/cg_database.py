@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import random
 
 # 定义数据库文件夹名称为 cg_db
 db_folder = 'D:/Python/ERPProject/cg_db'
@@ -121,19 +122,19 @@ class cg_supplier_info # 供应商资料
     │
     ├── 'cg_supplier_name' 供应商名称，TEXT，50字节，必填
     │
-    ├── 'cg_company_tel' 公司电话，TEXT，20字节
+    ├── 'cg_company_tel' 公司电话，TEXT，30字节
     │
     ├── 'cg_company_address' 公司地址，TEXT，50字节
     │
-    ├── 'cg_remarks' 备注，TEXT，200字节
+    ├── 'cg_remarks' 备注，TEXT，2000字节
 '''
 class cg_supplier_info(cg_database_entity):
     table_schema = '''
         cg_supplier_id INT PRIMARY KEY NOT NULL,
         cg_supplier_name TEXT(50) NOT NULL,
-        cg_company_tel TEXT(20),
+        cg_company_tel TEXT(30),
         cg_company_address TEXT(50),
-        cg_remarks TEXT(200)
+        cg_remarks TEXT(2000)
     '''
 
     def __init__(self, database_name):
@@ -166,48 +167,63 @@ class cg_receipt_inspection(cg_database_entity):
     def __init__(self, database_name):
         super().__init__(database_name, 'cg_receipt_inspection', 'cg_receipt_id')  
 
+'''物理表结构
+class cg_supplier_item # 供应商供货明细
+    ├── 'cg_item_name' 物料名称，TEXT，20字节，必填
+    │
+    ├── 'material_code' 物料编码，INT，必填，主键
+    │
+    ├── 'cg_item_price' 物料价格，REAL，必填
+    │
+    ├── 'cg_remarks' 备注，TEXT，200字节
+'''
+class cg_supplier_item(cg_database_entity):
+    table_schema = '''
+        cg_item_name TEXT(20) NOT NULL,
+        material_code INT NOT NULL,
+        cg_item_price REAL NOT NULL,
+        cg_remarks TEXT(200)
+    '''
+
+    def __init__(self, database_name):
+        super().__init__(database_name, 'cg_supplier_item', 'cg_material_code')  
+
 if __name__ == '__main__':
 
     # 访问路径及名称，此处访问 Detail of January.db
-    database_name = os.path.join(db_folder, "Purchase Detail.db")
+    database_name = os.path.join(db_folder, "40004005.db")
    
     # 判断是否有文件存在，如果有就读取进行操作，如果没有就新建一个表
     if os.path.exists(os.path.join(db_folder, database_name)):
+        cg_sup_item = cg_supplier_item(database_name)
+        # cg_sup_info = cg_supplier_info(database_name)
         # cg_rec_ins = cg_receipt_inspection(database_name)
-        cg_pur_det = cg_purchase_detail(database_name, 'cg_purchase_detail', 'cg_purchase_detail_id')
+        # cg_pur_det = cg_purchase_detail(database_name, 'cg_purchase_detail', 'cg_purchase_detail_id')
     else:
+        cg_sup_item = cg_supplier_item(database_name)
+        cg_sup_item.create_table(cg_supplier_item.table_schema)
         # cg_rec_ins = cg_receipt_inspection(database_name)
         # cg_rec_ins.create_table(cg_receipt_inspection.table_schema)
-        cg_pur_det = cg_purchase_detail(database_name, 'cg_purchase_detail', 'cg_purchase_detail_id')
-        cg_pur_det.create_table(cg_purchase_detail.table_schema)
+        # cg_pur_det = cg_purchase_detail(database_name, 'cg_purchase_detail', 'cg_purchase_detail_id')
+        # cg_pur_det.create_table(cg_purchase_detail.table_schema)
 
-    cg_pur_det.add_item(
-        cg_purchase_detail_id = 40002001,
-        cg_purchase_list_id = 40001001,
-        material_code = 101,
-        cg_order_lot = 50,
-        cg_remarks = '如果收货单号为空，就说明是在途。可以不填商品总价'
+    cg_sup_item.add_item(
+        cg_item_name = '橡胶套',
+        material_code = 10,
+        cg_item_price = 15.52,
+        cg_remarks = ''
     )
 
-    cg_pur_det.add_item(
-        cg_purchase_detail_id = 40002002,
-        cg_purchase_list_id = 40001002,
-        material_code = 102,
-        cg_order_lot = 42,
-        cg_total_price = 500.56,
-        cg_receipt_id = 40005001,
-        cg_remarks = '这个是已经收货了的'
-    )
-
-    cg_pur_det.add_item(
-        cg_purchase_detail_id = 40002003,
-        cg_purchase_list_id = 40001003,
-        material_code = 103,
-        cg_order_lot = 56,
-        cg_total_price = 500.56,
-        cg_receipt_id = 40005002,
-        cg_remarks = '这个也已经收货'
-    )
+'''物理表结构
+class cg_supplier_item # 供应商供货明细
+    ├── 'cg_item_name' 物料名称，TEXT，20字节，必填
+    │
+    ├── 'material_code' 物料编码，INT，必填，主键
+    │
+    ├── 'cg_item_price' 物料价格，REAL，必填
+    │
+    ├── 'cg_remarks' 备注，TEXT，200字节
+'''
 
 '''
     # 案例输入
@@ -253,4 +269,25 @@ if __name__ == '__main__':
     # 在终端输出一条记录
     result = cg_pur_lis.query_item(40001002)
     print(result)
+
+        for i in range(1, 17):
+        pdid = 40002001 + i
+        if (i > 10):
+            crid = None
+            remarks = '单号为' + str(pdid) + '的货物仍在途'
+        else: 
+            crid = pdid + i + 3000
+            remarks = '单号为' + str(pdid) + '的货物已收货'
+        orlo = random.randint(10, 300)
+        tapr = orlo * 12.45
+        
+        cg_pur_det.add_item(
+            cg_purchase_detail_id = pdid,
+            cg_purchase_list_id = pdid - 1000,
+            material_code = i,
+            cg_order_lot = orlo,
+            cg_total_price = tapr,
+            cg_receipt_id = crid,
+            cg_remarks = remarks            
+        )
 '''
