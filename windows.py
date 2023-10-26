@@ -32,14 +32,14 @@ class MainWindow(XTMainWindow):
         # self.cg.setObjectName("cj")
         self.jh = jhUI(self.user_name,"test.db","xs/lk.db","kc/inventory.db","cg/cg_db/Purchase Detail.db","jh/code/JHdatabase.db","test.db")
         self.jh.setObjectName("jh")
-        # self.kc = kcUI("kc/inventory.db")
-        # self.kc.setObjectName("kc")
+        self.kc = kcUI("kc/inventory.db","test.db",self.user_name)
+        self.kc.setObjectName("kc")
         self.xs = xsUI(self.user_name,"kc/inventory.db","test.db","xs/lk.db")
         self.xs.setObjectName("xs")
         #
         # self.addSubInterface(self.cg, FluentIcon.ALBUM, "采购管理",position=NavigationItemPosition.SCROLL)
         self.addSubInterface(self.jh, FluentIcon.APPLICATION, "计划管理",position=NavigationItemPosition.SCROLL)
-        # self.addSubInterface(self.kc, FluentIcon.ACCEPT,"库存管理",position=NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.kc, FluentIcon.ACCEPT,"库存管理",position=NavigationItemPosition.SCROLL)
         self.addSubInterface(self.xs, FluentIcon.AIRPLANE, "销售管理",position=NavigationItemPosition.SCROLL)
 
 
