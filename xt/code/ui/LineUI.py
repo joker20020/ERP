@@ -59,14 +59,16 @@ class Ui_Line(object):
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
 
         self.lineTable = TableWidget(Line)
-        if (self.lineTable.columnCount() < 3):
-            self.lineTable.setColumnCount(3)
+        if (self.lineTable.columnCount() < 4):
+            self.lineTable.setColumnCount(4)
         __qtablewidgetitem = QTableWidgetItem()
         self.lineTable.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
         self.lineTable.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         __qtablewidgetitem2 = QTableWidgetItem()
         self.lineTable.setHorizontalHeaderItem(2, __qtablewidgetitem2)
+        __qtablewidgetitem3 = QTableWidgetItem()
+        self.lineTable.setHorizontalHeaderItem(3, __qtablewidgetitem3)
         self.lineTable.setObjectName(u"lineTable")
         self.lineTable.horizontalHeader().setDefaultSectionSize(150)
         self.lineTable.horizontalHeader().setStretchLastSection(False)
@@ -155,16 +157,16 @@ class Ui_Line(object):
         self.workTable = TableWidget(Line)
         if (self.workTable.columnCount() < 5):
             self.workTable.setColumnCount(5)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.workTable.setHorizontalHeaderItem(0, __qtablewidgetitem3)
         __qtablewidgetitem4 = QTableWidgetItem()
-        self.workTable.setHorizontalHeaderItem(1, __qtablewidgetitem4)
+        self.workTable.setHorizontalHeaderItem(0, __qtablewidgetitem4)
         __qtablewidgetitem5 = QTableWidgetItem()
-        self.workTable.setHorizontalHeaderItem(2, __qtablewidgetitem5)
+        self.workTable.setHorizontalHeaderItem(1, __qtablewidgetitem5)
         __qtablewidgetitem6 = QTableWidgetItem()
-        self.workTable.setHorizontalHeaderItem(3, __qtablewidgetitem6)
+        self.workTable.setHorizontalHeaderItem(2, __qtablewidgetitem6)
         __qtablewidgetitem7 = QTableWidgetItem()
-        self.workTable.setHorizontalHeaderItem(4, __qtablewidgetitem7)
+        self.workTable.setHorizontalHeaderItem(3, __qtablewidgetitem7)
+        __qtablewidgetitem8 = QTableWidgetItem()
+        self.workTable.setHorizontalHeaderItem(4, __qtablewidgetitem8)
         self.workTable.setObjectName(u"workTable")
         self.workTable.horizontalHeader().setCascadingSectionResizes(False)
         self.workTable.horizontalHeader().setDefaultSectionSize(100)
@@ -199,7 +201,9 @@ class Ui_Line(object):
         ___qtablewidgetitem1 = self.lineTable.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("Line", u"\u5de5\u827a\u8def\u7ebf\u540d", None));
         ___qtablewidgetitem2 = self.lineTable.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("Line", u"\u63cf\u8ff0", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("Line", u"\u8f66\u95f4ID", None));
+        ___qtablewidgetitem3 = self.lineTable.horizontalHeaderItem(3)
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Line", u"\u63cf\u8ff0", None));
         self.lineNew.setText(QCoreApplication.translate("Line", u"\u65b0\u5efa\u5de5\u827a\u8def\u7ebf", None))
         self.lineRemove.setText(QCoreApplication.translate("Line", u"\u5220\u9664\u5de5\u827a\u8def\u7ebf", None))
         self.lineUpdate.setText(QCoreApplication.translate("Line", u"\u540c\u6b65", None))
@@ -207,15 +211,15 @@ class Ui_Line(object):
         self.workNew.setText(QCoreApplication.translate("Line", u"\u65b0\u5efa\u5de5\u5e8f", None))
         self.workRemove.setText(QCoreApplication.translate("Line", u"\u5220\u9664\u5de5\u5e8f", None))
         self.workUpdate.setText(QCoreApplication.translate("Line", u"\u540c\u6b65", None))
-        ___qtablewidgetitem3 = self.workTable.horizontalHeaderItem(0)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("Line", u"\u5de5\u5e8f\u53f7", None));
-        ___qtablewidgetitem4 = self.workTable.horizontalHeaderItem(1)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("Line", u"\u5de5\u4f5c\u4e2d\u5fc3", None));
-        ___qtablewidgetitem5 = self.workTable.horizontalHeaderItem(2)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("Line", u"\u5de5\u5e8f\u65f6\u957f", None));
-        ___qtablewidgetitem6 = self.workTable.horizontalHeaderItem(3)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("Line", u"\u5de5\u5e8f\u63cf\u8ff0", None));
-        ___qtablewidgetitem7 = self.workTable.horizontalHeaderItem(4)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("Line", u"\u6240\u5c5e\u5de5\u827a\u8def\u7ebf\u53f7", None));
+        ___qtablewidgetitem4 = self.workTable.horizontalHeaderItem(0)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("Line", u"\u5de5\u5e8f\u53f7", None));
+        ___qtablewidgetitem5 = self.workTable.horizontalHeaderItem(1)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("Line", u"\u5de5\u4f5c\u4e2d\u5fc3", None));
+        ___qtablewidgetitem6 = self.workTable.horizontalHeaderItem(2)
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("Line", u"\u5de5\u5e8f\u65f6\u957f", None));
+        ___qtablewidgetitem7 = self.workTable.horizontalHeaderItem(3)
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("Line", u"\u5de5\u5e8f\u63cf\u8ff0", None));
+        ___qtablewidgetitem8 = self.workTable.horizontalHeaderItem(4)
+        ___qtablewidgetitem8.setText(QCoreApplication.translate("Line", u"\u6240\u5c5e\u5de5\u827a\u8def\u7ebf\u53f7", None));
     # retranslateUi
 

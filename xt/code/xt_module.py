@@ -77,10 +77,22 @@ class XtProductionModule(BaseModule):
         return self.db.insert_table(name,col,data)
 
     def remove_boms(self,name,line_name="line"):
+        bom_ids = self.get_ids(name)
+        for bom_id in bom_ids:
+            bom_id = bom_id[0]
+            lines = self.get_line_ids("line"+"_"+name,bom_id)
+            for line in lines:
+                line = line[0]
+                self.db.drop("work"+str(line))
+                self.db.delete(line_name,LINE_ID=line)
         self.db.drop(name)
-        self.db.drop(line_name+"_"+name)
+        self.db.drop(line_name + "_" + name)
 
     def delete_bom(self,name,id):
+        lines = self.get_line_ids("line" + "_" + name, id)
+        for line in lines:
+            line = line[0]
+            self.delete_line(line)
         self.db.delete(name,ID=id)
 
     def delete_line(self,id):

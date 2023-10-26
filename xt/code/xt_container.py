@@ -112,6 +112,9 @@ class XtContainer(BaseContainer):
         if not self.production.is_activity():
             raise AuthorityError("受限制的访问权限")
         self.production.delete_bom("xt_bom_"+name,id)
+        ids = self.get_line_ids(name,id)
+        for id in ids:
+            self.del_line(id[0])
         self.generate_log(OperationCode.XT_BOM_CHANGE)
 
     def get_in_bom(self,name):
@@ -153,13 +156,13 @@ class XtContainer(BaseContainer):
     def update_line(self,bom_name,bom_id,data):
         if not self.production.is_activity():
             raise AuthorityError("受限制的访问权限")
-        head = ["LINE_ID", "NAME","DESC"]
+        head = ["LINE_ID", "NAME","CHEJIAN","DESC"]
         ids = self.get_line_ids(bom_name,bom_id)
         for i in range(len(ids)):
             ids[i] = ids[i][0]
 
         for i in range(len(data)):
-            str_null(data[i], [None, None, ""])
+            str_null(data[i], [None, None, None,""])
             if data[i][0] in ids:
                 dicts = {}
 

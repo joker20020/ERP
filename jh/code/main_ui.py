@@ -24,7 +24,7 @@ UPDATE:数据库路径修改为传入,修改日志数据库路径为传入，避
 
 # 继承QWidget类，以获取其属性和方法
 class MyWidget(QWidget):
-    def __init__(self, user_name,file_path="JHdatabase.db",log_path ="../../test.db" ):
+    def __init__(self, user_name, file_path="JHdatabase.db", log_path ="../../test.db" ):
         super().__init__()
         # 设置界面为我们生成的界面
         self.ui = Ui_Form()
@@ -33,7 +33,7 @@ class MyWidget(QWidget):
         # 数据库和日志库路径均改为传入参数
         self.jh_db = JHDataBase(file_path)
 
-        self.log = XtContainer(1,log_path,user_name)
+        self.log = XtContainer(1, log_path, user_name)
 
         self.MPS = table_MPS1()
         self.MRP = table_MRP1()
@@ -161,7 +161,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # 初始化并展示我们的界面组件
-    window = MyWidget("/Users/jackie/Documents/BUAA/Grade4fir/ERP/jh/code","lzj")
+    window = MyWidget("lzj")
     window.show()
 
     # 结束QApplication

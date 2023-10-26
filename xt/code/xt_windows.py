@@ -198,7 +198,12 @@ class BomWindow(QWidget):
         for i in range(self.ui.bomTable.columnCount()):
             self.ui.bomTable.setItem(self.ui.bomTable.rowCount() - 1,i,QTableWidgetItem(""))
         if self.ui.bomTable.rowCount() == 1:
-            self.ui.bomTable.setItem(self.ui.bomTable.rowCount() - 1, 0, QTableWidgetItem("1"))
+            ids = self.xt.production.db.find_info("line",["LINE_ID"],LINE_ID="ASC")
+            if ids == []:
+                self.ui.bomTable.setItem(self.ui.bomTable.rowCount() - 1, 0, QTableWidgetItem("1"))
+            else:
+                ids = ids[-1][0]
+                self.ui.bomTable.setItem(self.ui.bomTable.rowCount() - 1, 0, QTableWidgetItem(str(ids+1)))
             return
         self.ui.bomTable.setItem(self.ui.bomTable.rowCount()-1, 0, QTableWidgetItem(str(
             int(self.ui.bomTable.item(self.ui.bomTable.rowCount()-2,0).text())+1
@@ -270,7 +275,7 @@ class LineWindow(QWidget):
         self.container = container
         self.bom_name = ""
         self.bom_id = ""
-        self.Ldata_type = [int,str,str]
+        self.Ldata_type = [int,str,str,str]
         self.Wdata_type = [int,int,str,str,int]
 
         self.ui.lineTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
@@ -324,8 +329,14 @@ class LineWindow(QWidget):
         self.ui.lineTable.setRowCount(self.ui.lineTable.rowCount() + 1)
         for i in range(self.ui.lineTable.columnCount()):
             self.ui.lineTable.setItem(self.ui.lineTable.rowCount() - 1,i,QTableWidgetItem(""))
+
         if self.ui.lineTable.rowCount() == 1:
-            self.ui.lineTable.setItem(self.ui.lineTable.rowCount() - 1, 0, QTableWidgetItem("1"))
+            ids = self.container.production.db.find_info("line",["LINE_ID"],LINE_ID="ASC")
+            if ids == []:
+                self.ui.lineTable.setItem(self.ui.lineTable.rowCount() - 1, 0, QTableWidgetItem("1"))
+            else:
+                ids = ids[-1][0]
+                self.ui.lineTable.setItem(self.ui.lineTable.rowCount() - 1, 0, QTableWidgetItem(str(ids+1)))
             return
         self.ui.lineTable.setItem(self.ui.lineTable.rowCount() - 1, 0, QTableWidgetItem(str(
             int(self.ui.lineTable.item(self.ui.lineTable.rowCount() - 2, 0).text()) + 1
