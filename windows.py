@@ -26,8 +26,6 @@ from kc.kc_main import MykcWidget as kcUI
 class MainWindow(XTMainWindow):
     def __init__(self,authority,file_path,avatar,user_name,password,parent=None):
         super().__init__(authority,file_path,avatar,user_name,password,parent=parent)
-
-
         # setTheme(Theme.DARK)
 
         # self.cg = cgUI("cg/cg_db/Purchase Supplier.db","cg/cg_db/Purchase List.db")
@@ -36,13 +34,13 @@ class MainWindow(XTMainWindow):
         self.jh.setObjectName("jh")
         # self.kc = kcUI("kc/inventory.db")
         # self.kc.setObjectName("kc")
-        self.xs = xsUI("xs/lk.db")
+        self.xs = xsUI(self.user_name,"kc/inventory.db","test.db","xs/lk.db")
         self.xs.setObjectName("xs")
         #
         # self.addSubInterface(self.cg, FluentIcon.ALBUM, "采购管理",position=NavigationItemPosition.SCROLL)
         self.addSubInterface(self.jh, FluentIcon.APPLICATION, "计划管理",position=NavigationItemPosition.SCROLL)
         # self.addSubInterface(self.kc, FluentIcon.ACCEPT,"库存管理",position=NavigationItemPosition.SCROLL)
-        # self.addSubInterface(self.xs, FluentIcon.AIRPLANE, "销售管理",position=NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.xs, FluentIcon.AIRPLANE, "销售管理",position=NavigationItemPosition.SCROLL)
 
 
         # self.navigationInterface.setCurrentItem("admin_wind")

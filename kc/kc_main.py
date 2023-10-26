@@ -19,7 +19,7 @@ UPDATE：修改构造函数，将数据库文件作为参数传入，避免错�
 
 # 继承QWidget类，以获取其属性和方法
 class MykcWidget(QWidget):
-    def __init__(self,file_path,user_name):
+    def __init__(self,file_path,log_path,user_name):
         super().__init__()
         # 设置界面为我们生成的界面
         self.ui = Ui_kcwidget()
@@ -27,7 +27,7 @@ class MykcWidget(QWidget):
 
         # 将数据库文件作为参数传入，避免错误
         self.file_path = file_path
-        # self.container = XtContainer(1,"../test.db",user_name)
+        self.container = XtContainer(1,log_path,user_name)
         self.bindkc()
         self.bindruku()
         self.bindchuku()
