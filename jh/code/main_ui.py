@@ -17,21 +17,32 @@ from table_lingliao import table_lingliao
 
 from xt_container import XtContainer,OperationCode
 
+sys.path.append(os.path.abspath("../../kc"))
+from inventory import InventoryManager
+
 '''
 UPDATE:数据库路径修改为传入,修改日志数据库路径为传入，避免错误 line 33
 '''
 
 
 # 继承QWidget类，以获取其属性和方法
-class MyWidget(QWidget):
-    def __init__(self, user_name, file_path="JHdatabase.db", log_path ="../../test.db" ):
+class JHWidget(QWidget):
+    def __init__(self, user_name, xt_file, xs_file, kc_file, cg_file, file_path="JHdatabase.db", log_path ="../../test.db"):
         super().__init__()
         # 设置界面为我们生成的界面
         self.ui = Ui_Form()
         self.ui.setupUi(self)
 
+        self.file_path = file_path
+        self.xt_file = xt_file
+        self.xs_file = xs_file
+        self.kc_file = kc_file
+        self.cg_file = cg_file
+        self.log_path = log_path
+        self.user_name = user_name
+
         # 数据库和日志库路径均改为传入参数
-        self.jh_db = JHDataBase(file_path)
+        self.jh_db = JHDataBase(file_path, xt_file, xs_file, kc_file, cg_file)
 
         self.log = XtContainer(1, log_path, user_name)
 
@@ -45,9 +56,13 @@ class MyWidget(QWidget):
         self.bind()
         self.loadin()
 
+
+
     def open(self):
+
         mode = self.ui.target.currentText()
         self.log.generate_log(OperationCode.JH_CHANGE)
+
         if mode == "MPS主生产计划":
             self.MPS.show()
         elif mode == "MRP物料需求计划":
@@ -56,10 +71,53 @@ class MyWidget(QWidget):
             self.caigou.show()
         elif mode == "车间工作作业计划":
             self.chejianzuoye.show()
+
         elif mode == "派工单":
+            work_id = self.ui.workID.text()
+            if work_id != "":
+                paigong = self.jh_db.where("paigong_table", [], work_id=int(work_id))
+                self.paigong.ui.tableWidget.clearContents()
+                rows5 = len(paigong)
+                self.paigong.ui.tableWidget.setRowCount(rows5)
+                for i in range(rows5):
+                    for j in range(len(paigong[i])):
+                        self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong[i][j])))
+            else:
+                paigong_table = self.jh_db.find_info("paigong_table", [])
+                self.paigong.ui.tableWidget.clearContents()
+                rows5 = len(paigong_table)
+                self.paigong.ui.tableWidget.setRowCount(rows5)
+                for i in range(rows5):
+                    for j in range(len(paigong_table[i])):
+                        self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong_table[i][j])))
+
             self.paigong.show()
+
         elif mode == "领料单":
+            work_id = self.ui.workID.text()
+            if work_id != "":
+                lingliao = self.jh_db.where("lingliao_table", [], work_id=int(work_id))
+                self.lingliao.ui.tableWidget.clearContents()
+                rows6 = len(lingliao)
+                self.lingliao.ui.tableWidget.setRowCount(rows6)
+                for i in range(rows6):
+                    for j in range(len(lingliao[i])):
+                        self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao[i][j])))
+            else:
+                lingliao_table = self.jh_db.find_info("lingliao_table", [])
+                self.lingliao.ui.tableWidget.clearContents()
+                rows5 = len(lingliao_table)
+                self.lingliao.ui.tableWidget.setRowCount(rows5)
+                for i in range(rows5):
+                    for j in range(len(lingliao_table[i])):
+                        self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao_table[i][j])))
+
             self.lingliao.show()
+
+            lingliao = db.find_info("lingliao_table", ["goods_id", "goods_request", "needed_time"])
+            inventor_manager = InventoryManager()
+            for i in range(len(lingliao)):
+                inventor_manager.substact_inventory(lingliao[i][2], lingliao[i][0], int(lingliao[i][1]), self.user_name)
 
     def bind(self):
         self.ui.pushButton.clicked.connect(self.open)
@@ -93,25 +151,25 @@ class MyWidget(QWidget):
         self.chejianzuoye.ui.tableWidget.clearContents()
         rows4 = len(zuoye_table)
         self.chejianzuoye.ui.tableWidget.setRowCount(rows4)
-        for i in range(rows3):
+        for i in range(rows4):
             for j in range(len(zuoye_table[i])):
                 self.chejianzuoye.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(zuoye_table[i][j])))
 
-        paigong_table = self.jh_db.find_info("paigong_table", [])
-        self.paigong.ui.tableWidget.clearContents()
-        rows5 = len(paigong_table)
-        self.paigong.ui.tableWidget.setRowCount(rows5)
-        for i in range(rows5):
-            for j in range(len(caigou_table[i])):
-                self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong_table[i][j])))
+        # paigong_table = self.jh_db.find_info("paigong_table", [])
+        # self.paigong.ui.tableWidget.clearContents()
+        # rows5 = len(paigong_table)
+        # self.paigong.ui.tableWidget.setRowCount(rows5)
+        # for i in range(rows5):
+        #     for j in range(len(paigong_table[i])):
+        #         self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong_table[i][j])))
 
-        lingliao_table = self.jh_db.find_info("lingliao_table", [])
-        self.lingliao.ui.tableWidget.clearContents()
-        rows6 = len(lingliao_table)
-        self.lingliao.ui.tableWidget.setRowCount(rows6)
-        for i in range(rows6):
-            for j in range(len(lingliao_table[i])):
-                self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao_table[i][j])))
+        # lingliao_table = self.jh_db.find_info("lingliao_table", [])
+        # self.lingliao.ui.tableWidget.clearContents()
+        # rows6 = len(lingliao_table)
+        # self.lingliao.ui.tableWidget.setRowCount(rows6)
+        # for i in range(rows6):
+        #     for j in range(len(lingliao_table[i])):
+        #         self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao_table[i][j])))
 
 class table_MPS1(QWidget):
     def __init__(self):
@@ -161,7 +219,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # 初始化并展示我们的界面组件
-    window = MyWidget("lzj")
+    window = JHWidget("lzj", "../../test.db", "../../xs/lk.db", "../../kc/inventory.db", "../../cg/cg_db/Purchase Detail.db")
     window.show()
 
     # 结束QApplication
