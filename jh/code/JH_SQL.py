@@ -299,6 +299,7 @@ class JHDataBase:
         chejian = self.find_info("zuoye_table", ["chejian_id", "product_id", "product_amount"])
         db1 = XTDataBase(self.xt_file)
         for i in range(len(chejian)):
+            people = db1.where("worker", ["ID"], PLACE=chejian[i][0])
             line = db1.where("line", ["LINE_ID"], CHEJIAN=chejian[i][0])
             work_ddl = self.where("zuoye_table", ["ddl_time"], chejian_id=chejian[i][0])
             work_place_date = datetime.strptime(work_ddl[0][0], "%Y-%m-%d")
@@ -307,11 +308,11 @@ class JHDataBase:
                 work_place = db1.find_info("work"+ str(line[0][0]), ["WC", "TIME", "WORK_ID"], WORK_ID="DESC")
                 if j == 0:
                     self.insert_table("paigong_table", ["work_id", "product_id", "work_request", "work_time"],
-                                      [work_place[j][0], chejian[i][1], chejian[i][2], work_place_ddl_date])
+                                      [work_place[j][0], chejian[i][1], int(work_place[j][1]/len(people)), work_place_ddl_date])
                 else:
                     work_place_ddl_date -= timedelta(weeks=work_place[j-1][1])
                     self.insert_table("paigong_table", ["work_id", "product_id", "work_request", "work_time"],
-                                      [work_place[j][0], chejian[i][1], int(chejian[i][2]), work_place_ddl_date])
+                                      [work_place[j][0], chejian[i][1], int(work_place[j][1]/len(people)), work_place_ddl_date])
 
     def lingliao_cal(self):
         lingliao = self.find_info("lingliao_table", ["work_id"])
