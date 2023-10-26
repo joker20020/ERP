@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>515</width>
-    <height>417</height>
+    <width>643</width>
+    <height>441</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -61,6 +61,11 @@
      <row/>
      <row/>
      <row/>
+     <column>
+      <property name="text">
+       <string>工作中心ID</string>
+      </property>
+     </column>
      <column>
       <property name="text">
        <string>物料ID</string>
