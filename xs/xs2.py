@@ -419,8 +419,8 @@ class Ui_Form(object):
         self.formLayout.setLayout(0, QFormLayout.FieldRole, self.verticalLayout_19)
 
         self.tableWidget = QTableWidget(self.tab_3)
-        if (self.tableWidget.columnCount() < 5):
-            self.tableWidget.setColumnCount(5)
+        if (self.tableWidget.columnCount() < 4):
+            self.tableWidget.setColumnCount(4)
         __qtablewidgetitem = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
@@ -429,13 +429,11 @@ class Ui_Form(object):
         self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         __qtablewidgetitem3 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
         if (self.tableWidget.rowCount() < 15):
             self.tableWidget.setRowCount(15)
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setRowCount(15)
-        self.tableWidget.setColumnCount(5)
+        self.tableWidget.setColumnCount(4)
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.tableWidget)
 
@@ -638,14 +636,14 @@ class Ui_Form(object):
         self.tableWidget_2 = QTableWidget(self.tab_6)
         if (self.tableWidget_2.columnCount() < 4):
             self.tableWidget_2.setColumnCount(4)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.tableWidget_2.setHorizontalHeaderItem(0, __qtablewidgetitem4)
         __qtablewidgetitem5 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(0, __qtablewidgetitem5)
+        self.tableWidget_2.setHorizontalHeaderItem(1, __qtablewidgetitem5)
         __qtablewidgetitem6 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(1, __qtablewidgetitem6)
+        self.tableWidget_2.setHorizontalHeaderItem(2, __qtablewidgetitem6)
         __qtablewidgetitem7 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(2, __qtablewidgetitem7)
-        __qtablewidgetitem8 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(3, __qtablewidgetitem8)
+        self.tableWidget_2.setHorizontalHeaderItem(3, __qtablewidgetitem7)
         if (self.tableWidget_2.rowCount() < 15):
             self.tableWidget_2.setRowCount(15)
         self.tableWidget_2.setObjectName(u"tableWidget_2")
@@ -674,16 +672,13 @@ class Ui_Form(object):
         self.formLayout_2.setLayout(0, QFormLayout.FieldRole, self.horizontalLayout_13)
 
         self.tabWidget.addTab(self.tab_6, "")
-        self.tab_4 = QWidget()
-        self.tab_4.setObjectName(u"tab_4")
-        self.tabWidget.addTab(self.tab_4, "")
 
         self.formLayout_4.setWidget(0, QFormLayout.FieldRole, self.tabWidget)
 
 
         self.retranslateUi(Form)
 
-        self.tabWidget.setCurrentIndex(4)
+        self.tabWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(Form)
@@ -724,11 +719,9 @@ class Ui_Form(object):
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u540d\u79f0", None));
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("Form", u"\u751f\u4ea7\u65e5\u671f", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u5e93\u5b58", None));
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u5b9a\u4ef7", None));
-        ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("Form", u"\u4ea7\u54c1\u5e93\u5b58", None));
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("Form", u"\u4ea7\u54c1\u4fe1\u606f\u67e5\u8be2", None))
         self.label_10.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355ID", None))
         self.label_11.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u65e5\u671f", None))
@@ -746,16 +739,15 @@ class Ui_Form(object):
         self.radioButton_11.setText(QCoreApplication.translate("Form", u"\u8ba2\u5355\u4fe1\u606f\u66f4\u6539", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QCoreApplication.translate("Form", u"\u9500\u552e\u8ba2\u5355\u7ba1\u7406", None))
         self.label_21.setText("")
-        ___qtablewidgetitem5 = self.tableWidget_2.horizontalHeaderItem(0)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458ID", None));
-        ___qtablewidgetitem6 = self.tableWidget_2.horizontalHeaderItem(1)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458\u59d3\u540d", None));
-        ___qtablewidgetitem7 = self.tableWidget_2.horizontalHeaderItem(2)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("Form", u"\u6210\u4ea4\u8ba2\u5355\u6570", None));
-        ___qtablewidgetitem8 = self.tableWidget_2.horizontalHeaderItem(3)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("Form", u"\u4e1a\u52a1\u603b\u503c", None));
+        ___qtablewidgetitem4 = self.tableWidget_2.horizontalHeaderItem(0)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458ID", None));
+        ___qtablewidgetitem5 = self.tableWidget_2.horizontalHeaderItem(1)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458\u59d3\u540d", None));
+        ___qtablewidgetitem6 = self.tableWidget_2.horizontalHeaderItem(2)
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("Form", u"\u6210\u4ea4\u8ba2\u5355\u6570", None));
+        ___qtablewidgetitem7 = self.tableWidget_2.horizontalHeaderItem(3)
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("Form", u"\u4e1a\u52a1\u603b\u503c", None));
         self.pushButton_9.setText(QCoreApplication.translate("Form", u"\u9500\u552e\u5458\u4e1a\u7ee9\u5206\u6790", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), QCoreApplication.translate("Form", u"\u9500\u552e\u5458\u4e1a\u7ee9\u5206\u6790", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("Form", u"\u9500\u552e\u9884\u6d4b", None))
     # retranslateUi
 
