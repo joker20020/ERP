@@ -11,7 +11,7 @@ from PySide6.QtWidgets import QApplication, QWidget
 # 导入我们生成的界面
 from ui import Ui_kcwidget
 import sqlite3
-from xt_container import OperationCode,XtContainer
+# from xt_container import OperationCode,XtContainer
 
 '''
 UPDATE：修改构造函数，将数据库文件作为参数传入，避免错误 line 25

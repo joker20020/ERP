@@ -3,7 +3,12 @@ import sqlite3
 class InventoryManager:
     def __init__(self,file_path):
         # 创建或连接到库存数据库
+<<<<<<< HEAD
         self.conn = sqlite3.connect(file_path)
+=======
+        self.file_path=file_path
+        self.conn = sqlite3.connect(self.file_path)
+>>>>>>> 4848cf9bd0825979b33b2f2176def46825542744
         self.c = self.conn.cursor()
 
         # 创建商品表
@@ -42,13 +47,13 @@ class InventoryManager:
     def add_inventory(self, entry_time, product_id, quantity, operator):
         # 添加入库记录
         self.c.execute('''
-        INSERT INTO ruku (entry_time, product_id, quantity, operator) 
+        INSERT INTO ruku (entry_time, product_id, quantity, operator)
         VALUES (?, ?, ?, ?)
         ''', (entry_time, product_id, quantity, operator))
 
         # 更新库存表
         self.c.execute('''
-        UPDATE products 
+        UPDATE products
         SET quantity = quantity + ?
         WHERE ID = ?
         ''', (quantity, product_id))
@@ -58,13 +63,13 @@ class InventoryManager:
     def substact_inventory(self, exit_time, product_id, quantity, operator):
         # 添加出库记录
         self.c.execute('''
-        INSERT INTO chuku (exit_time, product_id, quantity, operator) 
+        INSERT INTO chuku (exit_time, product_id, quantity, operator)
         VALUES (?, ?, ?, ?)
         ''', (exit_time, product_id, quantity, operator))
 
         # 更新库存表
         self.c.execute('''
-        UPDATE products 
+        UPDATE products
         SET quantity = quantity - ?
         WHERE ID = ?
         ''', (quantity, product_id))
