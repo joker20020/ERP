@@ -11,7 +11,7 @@ from PySide6.QtWidgets import QApplication, QWidget
 # 导入我们生成的界面
 from ui import Ui_kcwidget
 import sqlite3
-from xt_container import OperationCode,XtContainer
+# from xt_container import OperationCode,XtContainer
 
 '''
 UPDATE：修改构造函数，将数据库文件作为参数传入，避免错误 line 25
@@ -279,7 +279,7 @@ class MykcWidget(QWidget):
             cursor.close()
             conn.close()
 
-        self.container.generate_log(OperationCode.KC_CHANGE)
+        # self.container.generate_log(OperationCode.KC_CHANGE)
 
     # 入库函数
     def ruku(self):
@@ -294,7 +294,7 @@ class MykcWidget(QWidget):
                 self.ui.tableWidget.setItem(row_num, col_num, QTableWidgetItem(str(data)))
 
         conn.close()
-        self.container.generate_log(OperationCode.KC_CHANGE)
+        # self.container.generate_log(OperationCode.KC_CHANGE)
 
     # 出库函数
     def chuku(self):
@@ -309,7 +309,7 @@ class MykcWidget(QWidget):
                 self.ui.tableWidget_2.setItem(row_num, col_num, QTableWidgetItem(str(data)))
 
         conn.close()
-        self.container.generate_log(OperationCode.KC_CHANGE)
+        # self.container.generate_log(OperationCode.KC_CHANGE)
 
     def bindkc(self):
         self.ui.pushButton_chaxun.clicked.connect(self.chaxun)
