@@ -78,6 +78,11 @@
          </column>
          <column>
           <property name="text">
+           <string>车间ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>描述</string>
           </property>
          </column>

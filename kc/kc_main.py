@@ -27,8 +27,7 @@ class MykcWidget(QWidget):
 
         # 将数据库文件作为参数传入，避免错误
         self.file_path = file_path
-        self.container = XtContainer(1,"../test.db",user_name)
-        # self.chaxun()
+        # self.container = XtContainer(1,"../test.db",user_name)
         self.bindkc()
         self.bindruku()
         self.bindchuku()

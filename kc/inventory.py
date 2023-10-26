@@ -37,8 +37,39 @@ class InventoryManager:
             operator TEXT NOT NULL
         )
         ''')
+        self.conn.commit()
 
+    def add_inventory(self, entry_time, product_id, quantity, operator):
+        # 添加入库记录
+        self.c.execute('''
+        INSERT INTO ruku (entry_time, product_id, quantity, operator) 
+        VALUES (?, ?, ?, ?)
+        ''', (entry_time, product_id, quantity, operator))
 
+        # 更新库存表
+        self.c.execute('''
+        UPDATE products 
+        SET quantity = quantity + ?
+        WHERE ID = ?
+        ''', (quantity, product_id))
+
+        self.conn.commit()
+
+    def substact_inventory(self, exit_time, product_id, quantity, operator):
+        # 添加出库记录
+        self.c.execute('''
+        INSERT INTO chuku (exit_time, product_id, quantity, operator) 
+        VALUES (?, ?, ?, ?)
+        ''', (exit_time, product_id, quantity, operator))
+
+        # 更新库存表
+        self.c.execute('''
+        UPDATE products 
+        SET quantity = quantity - ?
+        WHERE ID = ?
+        ''', (quantity, product_id))
+
+        self.conn.commit()
 
     def _initialize_products(self):
         """初始化商品列表"""
@@ -112,7 +143,7 @@ if __name__ == "__main__":
 
     # 查询使用方法：
     db = InventoryManager()
-    product_id = 5  # 可以替换为您要查询的ID
+    product_id = 8  # 可以替换为您要查询的ID
     print(db.query_by_id(product_id))
 
     # 销售查询使用方法：
