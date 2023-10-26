@@ -24,10 +24,10 @@ class Ui_kcwidget(object):
     def setupUi(self, kcwidget):
         if not kcwidget.objectName():
             kcwidget.setObjectName(u"kcwidget")
-        kcwidget.resize(647, 566)
-        self.verticalLayout_2 = QVBoxLayout(kcwidget)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(20, 9, 20, 30)
+        kcwidget.resize(588, 463)
+        self.horizontalLayout_2 = QHBoxLayout(kcwidget)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(20, 9, 20, 30)
         self.tabWidget = QTabWidget(kcwidget)
         self.tabWidget.setObjectName(u"tabWidget")
         self.tab_2 = QWidget()
@@ -45,8 +45,8 @@ class Ui_kcwidget(object):
         self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         __qtablewidgetitem3 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        if (self.tableWidget.rowCount() < 16):
-            self.tableWidget.setRowCount(16)
+        if (self.tableWidget.rowCount() < 45):
+            self.tableWidget.setRowCount(45)
         self.tableWidget.setObjectName(u"tableWidget")
 
         self.horizontalLayout.addWidget(self.tableWidget)
@@ -72,8 +72,8 @@ class Ui_kcwidget(object):
         self.tableWidget_2.setHorizontalHeaderItem(2, __qtablewidgetitem6)
         __qtablewidgetitem7 = QTableWidgetItem()
         self.tableWidget_2.setHorizontalHeaderItem(3, __qtablewidgetitem7)
-        if (self.tableWidget_2.rowCount() < 16):
-            self.tableWidget_2.setRowCount(16)
+        if (self.tableWidget_2.rowCount() < 45):
+            self.tableWidget_2.setRowCount(45)
         self.tableWidget_2.setObjectName(u"tableWidget_2")
 
         self.horizontalLayout_3.addWidget(self.tableWidget_2)
@@ -90,8 +90,17 @@ class Ui_kcwidget(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.label_8 = QLabel(self.tab)
         self.label_8.setObjectName(u"label_8")
+        font = QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        self.label_8.setFont(font)
 
         self.verticalLayout.addWidget(self.label_8)
+
+        self.pushButton_chaxun = QPushButton(self.tab)
+        self.pushButton_chaxun.setObjectName(u"pushButton_chaxun")
+
+        self.verticalLayout.addWidget(self.pushButton_chaxun)
 
         self.comboBox_chaxun = QComboBox(self.tab)
         self.comboBox_chaxun.addItem("")
@@ -114,13 +123,12 @@ class Ui_kcwidget(object):
 
         self.verticalLayout.addWidget(self.comboBox_chaxun)
 
-        self.pushButton_chaxun = QPushButton(self.tab)
-        self.pushButton_chaxun.setObjectName(u"pushButton_chaxun")
-
-        self.verticalLayout.addWidget(self.pushButton_chaxun)
-
         self.label_11 = QLabel(self.tab)
         self.label_11.setObjectName(u"label_11")
+        font1 = QFont()
+        font1.setPointSize(10)
+        font1.setBold(False)
+        self.label_11.setFont(font1)
 
         self.verticalLayout.addWidget(self.label_11)
 
@@ -131,6 +139,9 @@ class Ui_kcwidget(object):
 
         self.label_12 = QLabel(self.tab)
         self.label_12.setObjectName(u"label_12")
+        font2 = QFont()
+        font2.setPointSize(10)
+        self.label_12.setFont(font2)
 
         self.verticalLayout.addWidget(self.label_12)
 
@@ -141,11 +152,22 @@ class Ui_kcwidget(object):
 
         self.label_6 = QLabel(self.tab)
         self.label_6.setObjectName(u"label_6")
+        self.label_6.setFont(font)
 
         self.verticalLayout.addWidget(self.label_6)
 
+        self.label = QLabel(self.tab)
+        self.label.setObjectName(u"label")
+        self.label.setFont(font)
+
+        self.verticalLayout.addWidget(self.label)
+
         self.label_7 = QLabel(self.tab)
         self.label_7.setObjectName(u"label_7")
+        font3 = QFont()
+        font3.setPointSize(10)
+        font3.setBold(True)
+        self.label_7.setFont(font3)
 
         self.verticalLayout.addWidget(self.label_7)
 
@@ -156,17 +178,18 @@ class Ui_kcwidget(object):
 
         self.pushButton_shancbu = QPushButton(self.tab)
         self.pushButton_shancbu.setObjectName(u"pushButton_shancbu")
+        self.pushButton_shancbu.setFont(font2)
 
         self.verticalLayout.addWidget(self.pushButton_shancbu)
 
         self.tabWidget.addTab(self.tab, "")
 
-        self.verticalLayout_2.addWidget(self.tabWidget)
+        self.horizontalLayout_2.addWidget(self.tabWidget)
 
 
         self.retranslateUi(kcwidget)
 
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(kcwidget)
@@ -195,6 +218,7 @@ class Ui_kcwidget(object):
         self.pushButton_chukugx.setText(QCoreApplication.translate("kcwidget", u"\u66f4\u65b0", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("kcwidget", u"\u51fa\u5e93", None))
         self.label_8.setText(QCoreApplication.translate("kcwidget", u"\u5e93\u5b58\u67e5\u8be2", None))
+        self.pushButton_chaxun.setText(QCoreApplication.translate("kcwidget", u"\u67e5\u8be2", None))
         self.comboBox_chaxun.setItemText(0, QCoreApplication.translate("kcwidget", u"\u5927\u4f17\u81ea\u52a8\u94b3", None))
         self.comboBox_chaxun.setItemText(1, QCoreApplication.translate("kcwidget", u"\u58f3\u4f532", None))
         self.comboBox_chaxun.setItemText(2, QCoreApplication.translate("kcwidget", u"\u652f\u67b61", None))
@@ -212,12 +236,12 @@ class Ui_kcwidget(object):
         self.comboBox_chaxun.setItemText(14, QCoreApplication.translate("kcwidget", u"\u9694\u57ab1", None))
         self.comboBox_chaxun.setItemText(15, QCoreApplication.translate("kcwidget", u"\u5f00\u53e3\u5bfc\u5411\u5957\u7ba12", None))
 
-        self.pushButton_chaxun.setText(QCoreApplication.translate("kcwidget", u"\u67e5\u8be2", None))
-        self.label_11.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1id", None))
+        self.label_11.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1ID", None))
         self.label_12.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1\u6570\u91cf", None))
         self.label_6.setText(QCoreApplication.translate("kcwidget", u"\u5220\u9664\u5546\u54c1", None))
-        self.label_7.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1id", None))
-        self.pushButton_shancbu.setText(QCoreApplication.translate("kcwidget", u"\u786e\u8ba4", None))
+        self.label.setText(QCoreApplication.translate("kcwidget", u"\u6ce8\u610f\uff01\u8bf7\u8c28\u614e\u4f7f\u7528", None))
+        self.label_7.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1ID", None))
+        self.pushButton_shancbu.setText(QCoreApplication.translate("kcwidget", u"\u786e\u8ba4\u5220\u9664", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("kcwidget", u"\u67e5\u8be2\u589e\u6539", None))
     # retranslateUi
 
