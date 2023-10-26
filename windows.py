@@ -28,8 +28,8 @@ class MainWindow(XTMainWindow):
         super().__init__(authority,file_path,avatar,user_name,password,parent=parent)
         # setTheme(Theme.DARK)
 
-        # self.cg = cgUI("cg/cg_db/Purchase Supplier.db","cg/cg_db/Purchase List.db")
-        # self.cg.setObjectName("cj")
+        self.cg = cgUI("cg/cg_db/Purchase Detail.db","cg/cg_db/Purchase List.db","cg/cg_db/Purchase Receipt.db","cg/cg_db/Purchase Supplier.db",)
+        self.cg.setObjectName("cj")
         self.jh = jhUI(self.user_name,"test.db","xs/lk.db","kc/inventory.db","cg/cg_db/Purchase Detail.db","jh/code/JHdatabase.db","test.db")
         self.jh.setObjectName("jh")
         self.kc = kcUI("kc/inventory.db","test.db",self.user_name)
@@ -37,10 +37,10 @@ class MainWindow(XTMainWindow):
         self.xs = xsUI(self.user_name,"kc/inventory.db","test.db","xs/lk.db")
         self.xs.setObjectName("xs")
         #
-        # self.addSubInterface(self.cg, FluentIcon.ALBUM, "采购管理",position=NavigationItemPosition.SCROLL)
-        self.addSubInterface(self.jh, FluentIcon.APPLICATION, "计划管理",position=NavigationItemPosition.SCROLL)
-        self.addSubInterface(self.kc, FluentIcon.ACCEPT,"库存管理",position=NavigationItemPosition.SCROLL)
-        self.addSubInterface(self.xs, FluentIcon.AIRPLANE, "销售管理",position=NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.cg, FluentIcon.MARKET, "采购管理",position=NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.jh, FluentIcon.EDIT, "计划管理",position=NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.kc, FluentIcon.BOOK_SHELF,"库存管理",position=NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.xs, FluentIcon.FEEDBACK, "销售管理",position=NavigationItemPosition.SCROLL)
 
 
         # self.navigationInterface.setCurrentItem("admin_wind")
