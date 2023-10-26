@@ -84,10 +84,15 @@ class XtProductionModule(BaseModule):
             for line in lines:
                 line = line[0]
                 self.db.drop("work"+str(line))
+                self.db.delete(line_name,LINE_ID=line)
         self.db.drop(name)
         self.db.drop(line_name + "_" + name)
 
     def delete_bom(self,name,id):
+        lines = self.get_line_ids("line" + "_" + name, id)
+        for line in lines:
+            line = line[0]
+            self.delete_line(line)
         self.db.delete(name,ID=id)
 
     def delete_line(self,id):

@@ -435,7 +435,7 @@ if __name__ == "__main__":
     # db.delete("worker1",ID=1)
     # db.delete("group1",NAME="CTEST")
     # db.drop("line")
-    # db.drop("work1")
+    # db.drop("work3")
 
     # print(db.find_info("bom1", []))
     # print(db.find_info("bl1", []))
