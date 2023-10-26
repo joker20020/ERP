@@ -32,6 +32,9 @@
      <property name="styleSheet">
       <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
      <property name="rowCount">
       <number>20</number>
      </property>

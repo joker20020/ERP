@@ -2,8 +2,10 @@ import copy
 import sys
 import os
 
-sys.path.append(os.path.abspath("./cg"))
-sys.path.append(os.path.abspath("./jg/code"))
+
+# sys.path.append(os.path.abspath("./cg"))
+# sys.path.append(os.path.abspath("./"))
+# print(sys.path)
 
 
 from PySide6.QtWidgets import QApplication, QWidget, QTreeWidgetItem, QTableWidgetItem,QHeaderView
@@ -11,18 +13,30 @@ from PySide6.QtCore import Qt,Signal
 from PySide6.QtGui import QIcon,QPixmap
 from qfluentwidgets import RoundMenu,FluentWindow,FluentIcon,Action,NavigationItemPosition,NavigationPushButton,NavigationTreeWidget,SplitTitleBar,MessageBox,InfoBar,InfoBarIcon,InfoBarPosition
 from qframelesswindow import AcrylicWindow
+from graphviz import Graph
 
-from ui.BomUI import Ui_Bom
-from ui.LineUI import Ui_Line
-from ui.AdminUI import Ui_Admin
-from ui.BomCreateUI import Ui_BomCreate
-from ui.AddGroupUI import Ui_AddGroup
-from ui.AddCharacterUI import Ui_AddCharacter
-from ui.AddWorkerUI import Ui_AddWorker
-from ui.LoginUI import Ui_Login
-from ui.HomeUI import Ui_HomePage
-
-from xt_container import XtContainer,AuthorityError
+if __name__ == "__main__":
+    from ui.BomUI import Ui_Bom
+    from ui.LineUI import Ui_Line
+    from ui.AdminUI import Ui_Admin
+    from ui.BomCreateUI import Ui_BomCreate
+    from ui.AddGroupUI import Ui_AddGroup
+    from ui.AddCharacterUI import Ui_AddCharacter
+    from ui.AddWorkerUI import Ui_AddWorker
+    from ui.LoginUI import Ui_Login
+    from ui.HomeUI import Ui_HomePage
+    from xt_container import XtContainer, AuthorityError
+else:
+    from .ui.BomUI import Ui_Bom
+    from .ui.LineUI import Ui_Line
+    from .ui.AdminUI import Ui_Admin
+    from .ui.BomCreateUI import Ui_BomCreate
+    from .ui.AddGroupUI import Ui_AddGroup
+    from .ui.AddCharacterUI import Ui_AddCharacter
+    from .ui.AddWorkerUI import Ui_AddWorker
+    from .ui.LoginUI import Ui_Login
+    from .ui.HomeUI import Ui_HomePage
+    from .xt_container import XtContainer,AuthorityError
 
 
 def BOOL(data):
@@ -70,7 +84,11 @@ class BomWindow(QWidget):
         self.xt = XtContainer(authority,file_path,user_name)
         self.bcw = BomCreateWindow(self.xt,parent=self)
         self.lineWindow = LineWindow(self.xt)
-        self.head = ["ID","bom层级","零件名称","零件描述","零件成本","零件生产周期","是否外购","注释"]
+        self.ui.bomList.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+
+        self.draw_action = Action(text="输出树状图")
+
+        self.head = ["ID","bom层级","零件名称","父零件ID","零件成本","零件生产周期","是否外购","注释"]
 
         self.ui.bomTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Custom)
 
@@ -81,6 +99,7 @@ class BomWindow(QWidget):
     def bind(self):
 
         self.ui.bomTable.customContextMenuRequested.connect(self.show_menu)
+        self.ui.bomList.customContextMenuRequested.connect(self.show_draw)
         self.ui.bomNew.clicked.connect(self.create_bom)
         self.ui.bomRefresh.clicked.connect(self.refresh_boms)
         self.ui.bomRemove.clicked.connect(self.remove_bom)
@@ -91,6 +110,47 @@ class BomWindow(QWidget):
         self.ui.bomUpdate.clicked.connect(self.sync_bom)
         self.bcw.closed.connect(self.refresh_boms)
         self.ui.bomInput.searchSignal.connect(self.find_bom)
+        self.draw_action.triggered.connect(self.draw_tree)
+
+    def draw_tree(self):
+        if self.ui.bomList.currentItem():
+            bom_name = self.ui.bomList.currentItem().text()
+            tree = Graph(bom_name,format="svg")
+            boms = self.xt.get_in_bom(bom_name)
+            root = [0]
+            temp = copy.deepcopy(boms)
+            while root != []:
+                finish = len(root)
+                for bom in boms:
+                    if bom[3] in root:
+                        if bom[3]==0:
+                            root.append(bom[0])
+                            tree.node(bom[2])
+                            temp.remove(bom)
+                        else:
+                            root.append(bom[0])
+                            tree.node(bom[2])
+                            tree.edge(boms[bom[3]-1][2],bom[2])
+                            temp.remove(bom)
+                root = root[finish:]
+                boms = temp
+            tree.render(filename=bom_name,view=True)
+        else:
+            InfoBar.error(
+                title='BOM树导出',
+                content="BOM树导出失败，请检查选择的BOM表",
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.TOP_LEFT,
+                duration=2000,  # won't disappear automatically
+                parent=self
+            )
+
+    def show_draw(self,pos):
+        menu = RoundMenu(self.ui.bomList)
+        menu.addAction(self.draw_action)
+        menu.exec(self.ui.bomList.mapToGlobal(pos))
+
 
     def show_menu(self,pos):
         menu = RoundMenu(self.ui.bomTable)
@@ -210,8 +270,8 @@ class LineWindow(QWidget):
         self.container = container
         self.bom_name = ""
         self.bom_id = ""
-        self.Ldata_type = [int,str,str,str]
-        self.Wdata_type = [int,str,int]
+        self.Ldata_type = [int,str,str]
+        self.Wdata_type = [int,int,str,str,int]
 
         self.ui.lineTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         self.ui.workTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
@@ -316,13 +376,13 @@ class LineWindow(QWidget):
             self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1,i,QTableWidgetItem(""))
         if self.ui.workTable.rowCount() == 1:
             self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1, 0, QTableWidgetItem("1"))
-            self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1, 2, QTableWidgetItem(
+            self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1, 4, QTableWidgetItem(
                 self.ui.lineTable.item(self.ui.lineTable.currentRow(), 0).text()))
             return
         self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1, 0, QTableWidgetItem(str(
             int(self.ui.workTable.item(self.ui.workTable.rowCount() - 2, 0).text()) + 1
         )))
-        self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1,2,QTableWidgetItem(self.ui.lineTable.item(self.ui.lineTable.currentRow(),0).text()))
+        self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1,4,QTableWidgetItem(self.ui.lineTable.item(self.ui.lineTable.currentRow(),0).text()))
 
     def del_work(self):
         id = int(self.ui.workTable.item(self.ui.workTable.currentRow(), 0).text())
@@ -333,7 +393,7 @@ class LineWindow(QWidget):
         try:
             data = []
             for i in range(self.ui.workTable.rowCount()):
-                if self.ui.workTable.item(i, 2).text() != self.ui.lineTable.item(self.ui.lineTable.currentRow(),0).text():
+                if self.ui.workTable.item(i, 4).text() != self.ui.lineTable.item(self.ui.lineTable.currentRow(),0).text():
                     return
                 data.append(
                     [self.Wdata_type[j](self.ui.workTable.item(i, j).text()) if self.ui.workTable.item(i, j).text() else "" for
@@ -950,8 +1010,8 @@ class XTMainWindow(FluentWindow):
         )
 
 
-        self.addSubInterface(self.bomWind, FluentIcon.FOLDER, "工艺信息管理",parent=self.xtMain)
-        self.addSubInterface(self.adminWind, FluentIcon.PEOPLE, "人员信息管理",parent=self.xtMain)
+        self.addSubInterface(self.bomWind, FluentIcon.FOLDER, "工艺信息管理",parent=self.xtMain,position=NavigationItemPosition.SCROLL)
+        self.addSubInterface(self.adminWind, FluentIcon.PEOPLE, "人员信息管理",parent=self.xtMain,position=NavigationItemPosition.SCROLL)
 
 
         self.navigationInterface.addWidget(

@@ -1,5 +1,8 @@
-from xt_sql import Logger
-from xt_sql import XTDataBase
+if __name__ == "__main__":
+    from .xt_sql import Logger,XTDataBase
+else:
+    from xt_sql import Logger, XTDataBase
+
 
 class BaseModule:
     def __init__(self,operation_id):

@@ -1,4 +1,17 @@
+import sys
+import os
+sys.path.append(os.path.abspath("../../xt/code"))
+from xt_sql import XTDataBase
+sys.path.append(os.path.abspath("../../xs"))
+from xs_sql import XSDataBase
+sys.path.append(os.path.abspath("../../kc"))
+from inventory import InventoryManager
+sys.path.append(os.path.abspath("../../cg"))
+from cg_database import cg_database_entity
+
 import sqlite3 as sql
+
+from datetime import date, datetime, timedelta
 
 # 计算物料需求量
 # 毛需求 = 独立需求 + 相关需求
@@ -20,7 +33,7 @@ class JHDataBase:
         cursor.execute('''CREATE TABLE IF NOT EXISTS {}(
             product_id INTEGER PRIMARY KEY,
             planned_amount INTEGER NOT NULL,
-            planned_deadline varchar(20)
+            planned_deadline DATE
         );
         '''.format(name))
         self.connection.commit()
@@ -30,7 +43,7 @@ class JHDataBase:
         cursor.execute('''CREATE TABLE IF NOT EXISTS {}(
             product_id INTEGER PRIMARY KEY,
             planned_amount INTEGER NOT NULL,
-            planned_deadline varchar(20)
+            planned_deadline TIME
         );
         '''.format(name))
         self.connection.commit()
@@ -40,7 +53,7 @@ class JHDataBase:
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
             caigoupin_id INTEGER PRIMARY KEY,
             caigou_amount INTEGER NOT NULL,
-            ddl_time varchar(20)
+            ddl_time INTEGER
         );
         """.format(name))
         self.connection.commit()
@@ -51,7 +64,7 @@ class JHDataBase:
             chejian_id INTEGER PRIMARY KEY,
             product_id INTEGER NOT NULL,
             product_amount INTEGER NOT NULL,
-            ddl_time varchar(20)
+            ddl_time INTERGER
         );
         """.format(name))
         self.connection.commit()
@@ -62,7 +75,7 @@ class JHDataBase:
             work_id INTEGER PRIMARY KEY,
             product_id INTEGER NOT NULL,
             work_request varchar(30) NOT NULL,
-            work_time varchar(20)
+            work_time INTEGER
         );
         """.format(name))
         self.connection.commit()
@@ -72,7 +85,7 @@ class JHDataBase:
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
             goods_id INTEGER PRIMARY KEY,
             goods_amount INTEGER NOT NULL,
-            needed_time varchar(20) NOT NULL
+            needed_time INTEGER NOT NULL
         );
         """.format(name))
         self.connection.commit()
@@ -110,7 +123,7 @@ class JHDataBase:
             # print(" | ".join(each))
         return result
 
-    def sql_cmd(self,cmd):
+    def sql_cmd(self, cmd):
         cursor = self.connection.cursor()
         cursor.execute(cmd)
         self.connection.commit()
@@ -120,7 +133,7 @@ class JHDataBase:
             # print(each)
         return result
 
-    def where(self,table_name,col,**dicts):
+    def where(self, table_name, col, **dicts):
         cursor = self.connection.cursor()
         cmd = None
         # print(args)
@@ -145,7 +158,7 @@ class JHDataBase:
             # print(" | ".join(each))
         return result
 
-    def delete(self,table_name,**kwargs):
+    def delete(self, table_name, **kwargs):
         cursor = self.connection.cursor()
         cmd = "DELETE FROM {} WHERE ".format(table_name)
         for k,v in kwargs.items():
@@ -154,7 +167,7 @@ class JHDataBase:
         cursor.execute(cmd[:-1])
         self.connection.commit()
 
-    def update(self,table_name,dicts,**condition):
+    def update(self, table_name, dicts, **condition):
         cursor = self.connection.cursor()
         cmd = None
         # print(args)
@@ -183,6 +196,54 @@ class JHDataBase:
         self.connection.commit()
         self.connection.close()
 
+    def MPS_insert(self):
+        MPS = self.find_info("MPS_table", [])
+        for i in range(len(MPS)):
+            db.delete("MPS_table", product_id=i+1)
+        db1 = XTDataBase("../../test.db")
+        BOM1 = db1.where("xt_bom_bike", ["ID"], LAYER=1)
+        for i in range(len(BOM1)):
+            self.insert_table("MPS_table", ["product_id", "planned_amount", "planned_deadline"],[BOM1[i][0], 1000, date(2024,12,31)])
+
+    def MRP_calculate(self):
+        MPS = self.find_info("MPS_table", [])
+        MRP = self.find_info("MRP_table", [])
+        row = len(MPS)
+        row2 = len(MRP)
+        for i in range(row):
+            MPS_amount = self.where("MPS_table", ["planned_amount"], product_id=i+1)
+            if MPS_amount != []:
+                MRP_amount = MPS_amount[0][0]
+                MPS_planned_deadline = self.where("MPS_table", ["planned_deadline"], product_id=i+1)
+                MRP_ddl = datetime.strptime(MPS_planned_deadline[0][0], "%Y-%m-%d")
+                MRP_ddl_date = MRP_ddl.date() - timedelta(weeks=4)
+                if i >= row2:
+                    self.insert_table("MRP_table", ["product_id","planned_amount","planned_deadline"], [i+1, MRP_amount, MRP_ddl_date])
+                else:
+                    self.update("MRP_table", {"planned_amount": MRP_amount}, product_id=i+1)
+
+        db1 = XTDataBase("../../test.db")
+        db2 = XSDataBase("../../xs/xs_sql.db")
+        BOM1 = db1.sql_cmd("SELECT ID FROM xt_bom_bike WHERE LAYER >= 2")
+
+
+
+    def chejianzuoye_cal(self):
+        db1 = XTDataBase("../../test.db")
+        BOM_zuoye = db1.where("xt_bom_bike", ["ID"], BUY="否")
+
+    def caigou_cal(self):
+        db1 = XTDataBase("../../test.db")
+        BOM_caigou = db1.where("xt_bom_bike", ["ID"], BUY="是")
+
+    def paigong_cal(self):
+        pass
+
+    def lingliao_cal(self):
+        pass
+
+
+
 
 if __name__ == "__main__":
     db = JHDataBase("JHdatabase.db")
@@ -194,10 +255,11 @@ if __name__ == "__main__":
     db.paigong_table("paigong_table")
     db.lingliao_table("lingliao_table")
 
-    db.insert_table("MPS_table",["product_id","planned_amount","planned_deadline"],["11","100","10.1"])
-    # print(db.find_info("test",[]))
-    # db.find_info("test",["PASSWORD"])
-    # db.where("test",FORMAT="step")
-    # db.where("test","FILE_PATH","NAME",FORMAT="step")
-    # db.delete("test",FORMAT="step")
-    # db.find_info("test")
+    # db.insert_table("MPS_table",["product_id","planned_amount","planned_deadline"],[1, 100, date(2024,12,31)])
+
+    db.MPS_insert()
+    db.MRP_calculate()
+
+    # for i in range (20):
+    #     db.delete("MPS_table", product_id = i+1)
+    #     db.delete("MRP_table", product_id = i+1)

@@ -5,6 +5,10 @@ from PySide6.QtWidgets import QApplication, QWidget,QLineEdit,QVBoxLayout,QTable
 # PySide6-uic demo.ui -o ui_demo.py
 from xs2 import Ui_Form
 
+'''
+UPDATE：修改构造函数，将数据库文件作为参数传入，避免错误 line 229
+'''
+
 class XSDataBase:
     def __init__(self, file_path):
         self.connection = sql.connect(file_path)
@@ -233,11 +237,11 @@ class XSDataBase:
                 # FOREIGN KEY(salesperson_id) REFERENCES salespersons(salesperson_id),
                 # FOREIGN KEY(product_id) REFERENCES products(product_id)
 class MyWindow(QWidget):
-    def __init__(self):
+    def __init__(self,file_path="lk.db"):
         super().__init__()
         self.ui = Ui_Form()  # UI类的实例化()
         self.ui.setupUi(self)
-        self.db = XSDataBase("lk.db")
+        self.db = XSDataBase(file_path)
         self.bind()
 
     def bind(self):
