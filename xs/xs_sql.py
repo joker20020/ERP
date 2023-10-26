@@ -121,6 +121,7 @@ class XSDataBase:
             # print(cmd)
             cursor.execute(cmd[:-1])
             # print(" | ".join(col))
+        self.connection.commit()
 
     def add_column(self, table_name, col_name, col_type):
         cursor = self.connection.cursor()
@@ -277,6 +278,7 @@ class MyWindow(QWidget):
             self.ui.lineEdit_3.clear()
             self.ui.lineEdit_4.clear()
             self.ui.lineEdit_5.clear()
+            self.ui.textBrowser.setText("操作成功")
         if self.ui.radioButton_2.isChecked():
             self.ui.textBrowser.clear()
             w_cid = self.ui.lineEdit.text()
@@ -310,6 +312,7 @@ class MyWindow(QWidget):
             d_sid = self.ui.lineEdit.text()
             self.db.delete('cust', cust_id=d_sid)
             self.ui.lineEdit.clear()
+            self.ui.textBrowser.setText("操作成功")
         if self.ui.radioButton_3.isChecked():
             self.ui.textBrowser.clear()
             u_cid = self.ui.lineEdit.text()
@@ -326,6 +329,7 @@ class MyWindow(QWidget):
             self.ui.lineEdit_3.clear()
             self.ui.lineEdit_4.clear()
             self.ui.lineEdit_5.clear()
+            self.ui.textBrowser.setText("操作成功")
         self.log.generate_log(OperationCode.XS_CHANGE)
 
     def get_btn4_text(self):
@@ -350,6 +354,7 @@ class MyWindow(QWidget):
             self.ui.lineEdit_7.clear()
             self.ui.lineEdit_8.clear()
             self.ui.lineEdit_9.clear()
+            self.ui.textBrowser_3.setText("操作成功")
         if self.ui.radioButton_6.isChecked():
             self.ui.textBrowser_3.clear()
             w_sid = self.ui.lineEdit_7.text()
@@ -378,6 +383,7 @@ class MyWindow(QWidget):
             d_sid = self.ui.lineEdit_7.text()
             self.db.delete('sale',salesperson_id=d_sid)
             self.ui.lineEdit_7.clear()
+            self.ui.textBrowser_3.setText("操作成功")
         if self.ui.radioButton_8.isChecked():
             self.ui.textBrowser_3.clear()
             u_sid = self.ui.lineEdit_7.text()
@@ -391,6 +397,8 @@ class MyWindow(QWidget):
             self.ui.lineEdit_7.clear()
             self.ui.lineEdit_8.clear()
             self.ui.lineEdit_9.clear()
+            self.ui.textBrowser_3.setText("操作成功")
+        self.log.generate_log(OperationCode.XS_CHANGE)
 
     def get_btn3_text(self):
         self.ui.textBrowser_3.clear()
@@ -440,7 +448,7 @@ class MyWindow(QWidget):
             # o_test2 = int(o_test[0][0])
             # print(o_test2)
             # print(type(o_test2))
-            inventory_manager = InventoryManager('../kc/inventory.db')
+            inventory_manager = InventoryManager(self.kc_file)
             inventory_manager.substact_inventory(o_date,int(o_pid),int(o_number),o_sid)
             print(o_pid)
             print(type(o_sid))
@@ -474,6 +482,7 @@ class MyWindow(QWidget):
                     self.db.update('per', {"value": u_value+int(o_number)*int(o_price2)}, saleman_id=o_sid)
             else:
                 self.ui.textBrowser_2.setText('该用户不存在')
+            self.ui.textBrowser_2.setText("操作成功")
             self.ui.lineEdit_11.clear()
             self.ui.lineEdit_17.clear()
             self.ui.lineEdit_18.clear()
@@ -486,20 +495,35 @@ class MyWindow(QWidget):
             self.ui.textBrowser_2.clear()
             o_id = self.ui.lineEdit_17.text()
             # order_id，order_date，product_name，customer_id，salesperson_id，product_id，number
-            slist = self.db.where('ordr',['order_id', 'order_date','O_product_name','O_customer_id','O_salesperson_id','O_product_id', 'O_number'], order_id=o_id)
-            print(slist)
-            sstr = ' '.join(map(str,slist))
-            self.ui.textBrowser_2.setText(sstr)
+            clist = self.db.where('ordr',['order_id', 'order_date','O_product_name','O_customer_id','O_salesperson_id','O_product_id', 'O_number'], order_id=o_id)
+            # print(slist)
+            # sstr = ' '.join(map(str,slist))
+            # self.ui.textBrowser_2.setText(sstr)
             self.ui.lineEdit_17.clear()
-            if len(slist) == 0:
+            if len(clist) == 0:
                 self.ui.textBrowser_2.setText("此订单不存在")
             else:
-                self.ui.textBrowser_3.setText(sstr)
+                html_text = '订单ID：' + str(clist[0][0])
+                self.ui.textBrowser_2.append(html_text)
+                html_text = '订单日期：' + str(clist[0][1])
+                self.ui.textBrowser_2.append(html_text)
+                html_text = '商品名称：' + str(clist[0][2])
+                self.ui.textBrowser_2.append(html_text)
+                html_text = '客户ID：' + str(clist[0][3])
+                self.ui.textBrowser_2.append(html_text)
+                html_text = '销售员ID：' + str(clist[0][4])
+                self.ui.textBrowser_2.append(html_text)
+                html_text = '商品ID：' + str(clist[0][5])
+                self.ui.textBrowser_2.append(html_text)
+                html_text = '商品数量：' + str(clist[0][6])
+                self.ui.textBrowser_2.append(html_text)
+                # self.ui.textBrowser_3.setText(sstr)
         if self.ui.radioButton_12.isChecked():
             self.ui.textBrowser_2.clear()
             o_id = self.ui.lineEdit_17.text()
             self.db.delete('ordr',order_id=o_id)
             self.ui.lineEdit_7.clear()
+            self.ui.textBrowser_2.setText("操作成功")
         if self.ui.radioButton_11.isChecked():
             self.ui.textBrowser_2.clear()
             o_name = self.ui.lineEdit_11.text()
@@ -525,6 +549,8 @@ class MyWindow(QWidget):
             self.ui.lineEdit_21.clear()
             self.ui.lineEdit_26.clear()
             self.ui.lineEdit_6.clear()
+            self.ui.textBrowser_2.setText("操作成功")
+        self.log.generate_log(OperationCode.XS_CHANGE)
 
     def get_btn7_text(self):
         self.ui.textBrowser_2.clear()
@@ -576,18 +602,18 @@ if __name__ == '__main__':
     # i=kc.find_info('products',[])
     # print(i)
     # kc.find_info('',[])
-    salespersons = XSDataBase('lk.db')
-    salespersons.xs_salespersons_create_table('sale')
-    products = XSDataBase('lk.db')
-    products.xs_products_create_table('pod')
-    customer = XSDataBase('lk.db')
-    customer.xs_customer_create_table('cust')
-    order = XSDataBase('lk.db')
-    order.xs_sales_orders_create_table('ordr')
-    performance = XSDataBase('lk.db')
-    performance.xs_sale_performance_create_table('per')
-    forcast = XSDataBase('lk.db')
-    forcast.xs_sales_forcast_create_table('for')
+    # salespersons = XSDataBase('lk.db')
+    # salespersons.xs_salespersons_create_table('sale')
+    # products = XSDataBase('lk.db')
+    # products.xs_products_create_table('pod')
+    # customer = XSDataBase('lk.db')
+    # customer.xs_customer_create_table('cust')
+    # order = XSDataBase('lk.db')
+    # order.xs_sales_orders_create_table('ordr')
+    # performance = XSDataBase('lk.db')
+    # performance.xs_sale_performance_create_table('per')
+    # forcast = XSDataBase('lk.db')
+    # forcast.xs_sales_forcast_create_table('for')
     # salespersons.insert_table('sale',['salesperson_id','name'],[20374105,'舒琛'])
     # salespersons.insert_table('sale', ['salesperson_id', 'name'], [20374103, '吴哥'])
     # print(salespersons.find_info('sale',[]))

@@ -17,11 +17,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFormLayout, QHBoxLayout, QHeaderView,
     QLabel, QPushButton, QSizePolicy, QSpacerItem,
-    QTabWidget, QTableWidget, QTableWidgetItem, QVBoxLayout,
-    QWidget)
+    QTabWidget, QTableWidgetItem, QVBoxLayout, QWidget)
 
 from qfluentwidgets import (BodyLabel, LineEdit, PrimaryPushButton, PushButton,
-    RadioButton, TextEdit)
+    RadioButton, TableWidget, TextEdit)
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -97,6 +96,11 @@ class Ui_Form(object):
         self.lineEdit_4.setObjectName(u"lineEdit_4")
 
         self.verticalLayout_2.addWidget(self.lineEdit_4)
+
+        self.lineEdit_5 = LineEdit(self.tab)
+        self.lineEdit_5.setObjectName(u"lineEdit_5")
+
+        self.verticalLayout_2.addWidget(self.lineEdit_5)
 
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_2)
@@ -416,7 +420,7 @@ class Ui_Form(object):
 
         self.formLayout.setLayout(0, QFormLayout.FieldRole, self.verticalLayout_19)
 
-        self.tableWidget = QTableWidget(self.tab_3)
+        self.tableWidget = TableWidget(self.tab_3)
         if (self.tableWidget.columnCount() < 4):
             self.tableWidget.setColumnCount(4)
         __qtablewidgetitem = QTableWidgetItem()
@@ -631,7 +635,7 @@ class Ui_Form(object):
 
         self.formLayout_2.setLayout(1, QFormLayout.LabelRole, self.verticalLayout_17)
 
-        self.tableWidget_2 = QTableWidget(self.tab_6)
+        self.tableWidget_2 = TableWidget(self.tab_6)
         if (self.tableWidget_2.columnCount() < 4):
             self.tableWidget_2.setColumnCount(4)
         __qtablewidgetitem4 = QTableWidgetItem()
@@ -656,7 +660,7 @@ class Ui_Form(object):
 
         self.horizontalLayout_13.addItem(self.horizontalSpacer_13)
 
-        self.pushButton_9 = QPushButton(self.tab_6)
+        self.pushButton_9 = PushButton(self.tab_6)
         self.pushButton_9.setObjectName(u"pushButton_9")
         self.pushButton_9.setMinimumSize(QSize(60, 30))
 
@@ -676,7 +680,7 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(Form)

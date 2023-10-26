@@ -3,12 +3,9 @@ import sqlite3
 class InventoryManager:
     def __init__(self,file_path):
         # 创建或连接到库存数据库
-<<<<<<< HEAD
-        self.conn = sqlite3.connect(file_path)
-=======
+
         self.file_path=file_path
         self.conn = sqlite3.connect(self.file_path)
->>>>>>> 4848cf9bd0825979b33b2f2176def46825542744
         self.c = self.conn.cursor()
 
         # 创建商品表
