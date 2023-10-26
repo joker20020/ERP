@@ -26,7 +26,7 @@ class OperationCode(Enum):
     XT_CHARACTER_CHANGE="修改了角色信息"
     XT_LOG_CHANGE="修改了日志信息"
     CG_CHANGE="修改了采购信息"
-    JH_CHANGE="修改了计划信息"
+    JH_CHANGE="查询了计划信息"
     KC_CHANGE = "修改了库存信息"
     XS_CHANGE= "修改了销售信息"
 class BaseContainer(ABC):
