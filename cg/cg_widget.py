@@ -8,9 +8,13 @@
 
 TODO: 貌似很多头函数没用上，后续可能会删除或者精简一下
 TODO: 检查所有文件的路径、相对路径/绝对路径、是否有同名文件、是否最新，以及文件名
-FIXME: 重新写了之后貌似相对路径又有点问题
-TODO: 有一个巨大的bug，就是忘记写初始化和清栈的操作了，导致每次加载数据和文件后，相应控件不能重新显示新的内容
-TODO: 1.完善功能，确定物理表结构 2.确保每次点击按钮都可以刷新(完成) 3.动态调用.ui文件改成py文件(完成) 4.优化代码，减少功能重复 5.界面美化，使用qfluetwidget库重新生成ui
+TODO: 下一步可能需要完善功能，然后进行代码优化、改bug
+
+TODO: 
+0.完成日志功能 
+1.完善功能：接受请购，发送收获数据
+2.供应商评价(功能和bug) 
+3.界面美化，使用qfluetwidget库重新生成ui 
 
 UPDATE: 数据库文件采用绝对路径传入 line50
 UPDATE: 所有图标等资源文件建议放入项目根目录下res文件夹再使用
@@ -20,8 +24,11 @@ import sys
 import os
 import time
 
+sys.path.append(os.path.abspath("xt/code"))
+sys.path.append(os.path.abspath("kc"))
+
 from PySide6.QtWidgets import (QApplication, QWidget, QComboBox,
-QPushButton, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout,
+QPushButton, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QDialog,
 QGroupBox, QMainWindow, QRadioButton, QGridLayout, QTableView,
 QFormLayout, QStackedLayout, QScrollArea, QFileDialog, 
 QGraphicsView, QGraphicsScene, QGraphicsPixmapItem)
@@ -33,13 +40,17 @@ from PySide6 import QtCore
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
-from cg_ui.version2 import Ui_cg_sector
-import cg_database
+from cg_ui.version3 import Ui_cg_sector
+from cg_ui.dialog import Ui_cg_form
+from xt_container import OperationCode, XtContainer
+from inventory import InventoryManager
+
+# import cg_database
 
 # 这是生成采购部门模块的类
 class cg_widget(QWidget):
     # 继承父类，并执行类的方法，一些基础的设定
-    def __init__(self,supplier_file,list_file,icon="cg_ui/u102.png"):
+    def __init__(self, detail_file, list_file, receipt_file, supplier_file, icon = "cg_ui/u102.png"):
         super().__init__()
         # 定义窗体大小
         self.resize(800, 480)
@@ -48,9 +59,13 @@ class cg_widget(QWidget):
         # 设定左上角标题
         self.setWindowTitle("采购模块")
 
-        # 数据库文件路径在窗口初始化时传入，防止文件路径查找错误
-        self.supplier_file = supplier_file
+        self.detail_file = detail_file
+        self.receipt_file = receipt_file
         self.list_file = list_file
+        self.supplier_file = supplier_file
+
+        # OC = OperationCode()
+        # XC = XtContainer()
 
         # 设定左上角图标，图标png文件使用绝对路径
         icon = QIcon(os.path.abspath(icon))
@@ -95,13 +110,19 @@ class cg_widget(QWidget):
     # 2.采购订单页面
     def init_order(self):
         # TODO: 设定信号，绑定函数
-        pass
+        self.ui.order_search.clicked.connect(self.order_table)
+        self.ui.order_add.clicked.connect(self.order_add_table)
+        self.ui.order_delete.clicked.connect(self.order_delete_table)
+        self.ui.order_save.clicked.connect(self.order_save_table)
 
     # 3.到货接收页面
     # TODO: 到货接收页面
     def init_recieve(self):
         # 直接绑定槽函数
-        self.ui.receive_add.clicked.connect(self.receive_add_item)
+        self.ui.receive_search.clicked.connect(self.receive_table)
+        self.ui.receive_add.clicked.connect(self.receive_add_table)
+        self.ui.receive_delete.clicked.connect(self.receive_delete_table)
+        self.ui.receive_save.clicked.connect(self.receive_save_table)
 
     # 4.供应商管理与评价页面
     def init_supplier(self):
@@ -109,7 +130,8 @@ class cg_widget(QWidget):
         # 设定数据库类型
         self.supplier_database = QSqlDatabase.addDatabase("QSQLITE")
         # 链接数据库，采用相对路径访问
-        self.supplier_database.setDatabaseName(self.supplier_file)
+        filename = self.supplier_file
+        self.supplier_database.setDatabaseName(filename)
         # 打开数据库，顺便有一个错误处理
         if not self.supplier_database.open():
             print("Error: Could not open the database")
@@ -125,13 +147,17 @@ class cg_widget(QWidget):
         self.ui.supplier_choose_box.show()
 
         self.ui.supplier_choose_box.currentTextChanged.connect(self.update_info)
-        self.ui.supplier_list.clicked.connect(self.supplier_table_view)
+        # self.ui.supplier_list.clicked.connect(self.supplier_table_view)
         self.ui.supplier_evaluate.clicked.connect(self.supplier_evaluation)        
 
     # TODO: 采购业务页面的编写
     # 5.采购业务页面
     def init_query(self):
         self.ui.query_choose_btn.clicked.connect(self.query_table)
+        self.ui.query_add.clicked.connect(self.query_add_table)
+        self.ui.query_delete.clicked.connect(self.query_delete_table)
+        self.ui.query_save.clicked.connect(self.query_save_table)
+
 
     # 以下是各个页面初始化后需要用到的一些槽函数操作
     # 已经按页面顺序和运行的顺序排好
@@ -140,7 +166,6 @@ class cg_widget(QWidget):
         # 设定数据库类型
         self.database = QSqlDatabase.addDatabase("QSQLITE")
         # 链接数据库
-
         self.database.setDatabaseName(self.list_file)
         # 一个错误处理
         if not self.database.open():
@@ -183,16 +208,106 @@ class cg_widget(QWidget):
         else:
             print("No row selected")
 
-    # TODO: 完成代码
-    # FIXME: 为什么这个代码会重复执行，然后一直叠加？
-    # 3的槽函数，点击增加后，直接判断当前输入，然后把信息都加入到数据库文件中
-    def receive_add_item(self):
-        print("add item success!")
+    # 2的槽函数
+    def order_table(self):
+        self.database = QSqlDatabase.addDatabase("QSQLITE")
+        self.database.setDatabaseName(self.detail_file)
+        if not self.database.open():
+            print("Error: Could not open the database")
 
-    # FIXME: 供应商页面有个bug，就是comboBox的内容会一直堆栈堆进去，缺一个初始化清空的操作
-    # FIXME: 更多bug：所有控件的文本都没清空
-    # FIXME: 产生两组列表以后点击评估按钮会闪退
-    # TODO: 写这个代码块的注释
+        table_name = self.detect_table_name()
+        if table_name:
+            model = QSqlTableModel(self, self.database)
+            model.setTable(table_name)
+
+            model.setHeaderData(0, Qt.Horizontal, "采购明细号")
+            model.setHeaderData(1, Qt.Horizontal, "采购清单号")
+            model.setHeaderData(2, Qt.Horizontal, "物料编码")
+            model.setHeaderData(3, Qt.Horizontal, "订货批量")
+            model.setHeaderData(4, Qt.Horizontal, "商品总价")
+            model.setHeaderData(5, Qt.Horizontal, "收货单号")
+            model.setHeaderData(6, Qt.Horizontal, "备注")
+            model.select()
+            # 显示表格
+            self.ui.order_table_view.setModel(model)
+            self.ui.order_table_view.resizeColumnsToContents()
+
+    # 2的槽函数
+    def order_add_table(self):
+        print("ok")
+        model = self.ui.order_table_view.model()
+        model.submitAll()
+        result = model.insertRows(model.rowCount(), 1)
+
+        if not result:
+            self.error_check(model)
+
+    # 2的槽函数
+    def order_delete_table(self):
+        model = self.ui.order_table_view.model()
+        model.removeRow(self.ui.order_table_view.currentIndex().row())
+        model.submitAll()
+        model.select()
+
+    # 2的槽函数
+    def order_save_table(self):
+        model = self.ui.order_table_view.model()
+        model.database().transaction()
+        if model.submitAll():
+            model.database().commit()
+        else:
+            model.database().rollback()
+
+    # 3的槽函数
+    def receive_table(self):
+        self.database = QSqlDatabase.addDatabase("QSQLITE")
+        self.database.setDatabaseName(self.receipt_file)
+        if not self.database.open():
+            print("Error: Could not open the database")
+
+        table_name = self.detect_table_name()
+        if table_name:
+            model = QSqlTableModel(self, self.database)
+            model.setTable(table_name)
+
+            model.setHeaderData(0, Qt.Horizontal, "收货单号")
+            model.setHeaderData(1, Qt.Horizontal, "到货时间")
+            model.setHeaderData(2, Qt.Horizontal, "到货量")
+            model.setHeaderData(3, Qt.Horizontal, "合格品数")
+            model.setHeaderData(4, Qt.Horizontal, "入库状态")
+            model.setHeaderData(6, Qt.Horizontal, "备注")
+            model.select()
+            # 显示表格
+            self.ui.receive_table_view.setModel(model)
+            self.ui.receive_table_view.resizeColumnsToContents()
+
+    # 3的槽函数
+    def receive_add_table(self):
+        print("ok")
+        model = self.ui.receive_table_view.model()
+        model.submitAll()
+        result = model.insertRows(model.rowCount(), 1)
+
+        if not result:
+            self.error_check(model)
+
+    # 3的槽函数
+    def receive_delete_table(self):
+        model = self.ui.receive_table_view.model()
+        model.removeRow(self.ui.receive_table_view.currentIndex().row())
+        model.submitAll()
+        model.select()
+
+    # 3的槽函数
+    def receive_save_table(self):
+        model = self.ui.receive_table_view.model()
+        model.database().transaction()
+        if model.submitAll():
+            model.database().commit()
+        else:
+            model.database().rollback()
+
+    # FIXME: 有bug，但是暂时不想改了
     # 4的槽函数：列举供应商信息
     def update_info(self):
         # 读取选取的供应商名字
@@ -216,14 +331,20 @@ class cg_widget(QWidget):
             self.ui.supplier_profile.setPlainText(remarks)
 
             # 同时，加载该供应商的logo图片，图片储存在cg_gr中
-            self.load_supplier_logo(company_id)
+            self.load_supplier_logo(company_id)  
+            self.ui.supplier_list.clicked.connect(lambda: self.supplier_table_view(company_id))
+            # if self.ui.supplier_list.clicked:
+            #   print("OKKKKKK!!!! This is: ", company_id)
     
     # TODO: 写这个代码块的注释
+    # FIXME: 供应商模块还有bug
     # 4的槽函数：加载供应商的logo在控件self.supplier.logo中
+    @Slot()
     def load_supplier_logo(self, company_id):
+        self.ui.supplier_logo.setScene(None)
+
         # 从上面传过来供应商id，并且在文件夹中找到同id的png文件
-        logo_path = os.path.abspath(f"cg_gr/{company_id}.png")
-        
+        logo_path = f"cg_gr/{company_id}.png"
         logo_pixmap = QPixmap(logo_path)
 
         scene = QGraphicsScene()
@@ -235,33 +356,9 @@ class cg_widget(QWidget):
         del logo_pixmap
         del scene
 
-    # TODO: 写这个代码块，考虑重新生成一张供货商的供货明细表
-    # 4的槽函数：点击后显示该供应商的售货明细
-    def supplier_table_view(self):
-        # 设定数据库类型
-        database = QSqlDatabase.addDatabase("QSQLITE")
-        # 链接数据库
-
-        database.setDatabaseName(self.list_file)
-        # 一个错误处理
-        if not database.open():
-            print("Error: Could not open the database")
-        
-        # TODO: 写这个代码块的注释
-        # 设置tableView的模型以及表的名称
-        try:
-            self.model = QSqlTableModel(self, database)
-            self.model.setTable('cg_purchase_list')
-
-            self.model.setHeaderData(0, Qt.Horizontal, "采购请求号")
-            self.model.setHeaderData(1, Qt.Horizontal, "计划分配号")
-            self.model.setHeaderData(2, Qt.Horizontal, "备注")
-            self.model.select()
-            # 显示表格
-            self.ui.supplier_table.setModel(self.model)
-            self.ui.supplier_table.resizeColumnsToContents()
-        finally:
-            database.close()
+    def supplier_table_view(self, company_id):
+        dialog = supplier_form(company_id)
+        dialog.exec()
 
     # TODO: 写这个代码块
     # FIXME: 调试后可以发现，是因为点击一次后线程已经在运行，点击第二次就会导致堆叠任务导致内存占用过多
@@ -300,23 +397,57 @@ class cg_widget(QWidget):
     # 5的槽函数，点击选择文件后，弹出选择文件的对话框，进行文件的选择
     # TODO: 可能需要优化一下界面以及交互
     def query_table(self):
+        self.database = QSqlDatabase.addDatabase("QSQLITE")
         path, _ = QFileDialog.getOpenFileName(self, u"打开sqlite文件",os.getcwd(), "sqlite db(*.db)")
         if path:
             self.data_file = path
-        filename = os.path.join(os.path.dirname(__file__),self.data_file)
-        self.database.setDatabaseName(filename)
+            filename = os.path.join(os.path.dirname(__file__),self.data_file)
+            self.database.setDatabaseName(filename)
 
         if not self.database.open():
             print("Error: Could not open the database")
 
-                # 设置tableView的模型以及表的名称
-        self.model = QSqlTableModel(self, self.database)
-        self.model.setTable('cg_purchase_list')
+        table_name = self.detect_table_name()
+        if table_name:
+            # 设置tableView的模型以及表的名称
+            model = QSqlTableModel(self, self.database)
+            model.setTable(table_name)
 
-        self.model.select()
-        # 显示表格
-        self.ui.query_list_view.setModel(self.model)
-        self.ui.query_list_view.resizeColumnsToContents() 
+            model.select()
+            # 显示表格
+            self.ui.query_list_view.setModel(model)
+            self.ui.query_list_view.resizeColumnsToContents() 
+
+    def detect_table_name(self):
+        tables = self.database.tables()
+        if tables:
+            return tables[0]
+        else:
+            print("No such tables.")
+            return None
+
+    def query_add_table(self):
+        print("ok")
+        model = self.ui.query_list_view.model()
+        model.submitAll()
+        result = model.insertRows(model.rowCount(), 1)
+
+        if not result:
+            self.error_check(model)
+
+    def query_delete_table(self):
+        model = self.ui.query_list_view.model()
+        model.removeRow(self.ui.query_list_view.currentIndex().row())
+        model.submitAll()
+        model.select()
+
+    def query_save_table(self):
+        model = self.ui.query_list_view.model()
+        model.database().transaction()
+        if model.submitAll():
+            model.database().commit()
+        else:
+            model.database().rollback()
 
 # TODO: 这里是子线程函数
 # 4的子线程，在点击供应商评估后完成对供应商数据的计算，生成图表并展示在窗体上
@@ -329,7 +460,7 @@ class supplier_eval(QThread):
 
     def run(self):
         try:
-            image_file_name = os.path.abspath("cg_gr/40004001.png")
+            image_file_name = "D:/Python/ERPProject/cg_gr/40004001.png"
 
             self.image_generated.emit(image_file_name)
         except Exception as e:
@@ -337,31 +468,84 @@ class supplier_eval(QThread):
         finally:
             self.quit()
 
-
-"""     def choose_file(self):
-        path, _ = QFileDialog.getOpenFileName(self, u"打开sqlite文件",os.getcwd(), "sqlite db(*.db)")
-        if path:
-            self.data_file = path
-        filename = os.path.join(os.path.dirname(__file__),self.data_file)
+class supplier_form(QDialog):
+    def __init__(self, company_id):
+        super(supplier_form, self).__init__()
+        self.ui = Ui_cg_form()
+        self.ui.setupUi(self)
+        self.company_id = company_id
+        self.init_table()
+    
+    def init_table(self):
+        company_id = self.company_id
+        self.database = QSqlDatabase.addDatabase("QSQLITE")
+        filename = f"cg_db/{company_id}.db"
         self.database.setDatabaseName(filename)
-
         if not self.database.open():
             print("Error: Could not open the database")
 
-                # 设置tableView的模型以及表的名称
-        self.model = QSqlTableModel(self, self.database)
-        self.model.setTable('cg_purchase_list')
+        table_name = self.detect_table_name()
+        if table_name:
+            model = QSqlTableModel(self, self.database)
+            model.setTable(table_name)
 
-        self.model.select()
-        # 显示表格
-        self.purchase_list_view.setModel(self.model)
-        self.purchase_list_view.resizeColumnsToContents() """
+            model.setHeaderData(0, Qt.Horizontal, "物料名称")
+            model.setHeaderData(1, Qt.Horizontal, "物料编码")
+            model.setHeaderData(2, Qt.Horizontal, "物料价格")
+            model.setHeaderData(3, Qt.Horizontal, "备注")
+            model.select()
+            # 显示表格
+            self.ui.supplier_table_view.setModel(model)
+            self.ui.supplier_table_view.resizeColumnsToContents()
+
+        self.ui.supplier_item_add.clicked.connect(self.item_add)
+        self.ui.supplier_item_delete.clicked.connect(self.item_delete)
+        self.ui.supplier_item_save.clicked.connect(self.item_save)
+    
+
+    def detect_table_name(self):
+        tables = self.database.tables()
+        if tables:
+            return tables[0]
+        else:
+            print("No such tables.")
+            return None
+
+    def item_add(self):
+        print("add")
+        model = self.ui.supplier_table_view.model()
+        model.submitAll()
+        result = model.insertRows(model.rowCount(), 1)
+
+        if not result:
+            self.error_check(model)
+
+    def item_delete(self):
+        print("delete")
+        model = self.ui.supplier_table_view.model()
+        model.removeRow(self.ui.supplier_table_view.currentIndex().row())
+        model.submitAll()
+        model.select()
+
+    def item_save(self):
+        print("save")
+        model = self.ui.supplier_table_view.model()
+        model.database().transaction()
+        if model.submitAll():
+            model.database().commit()
+        else:
+            model.database().rollback()
 
 if __name__ == '__main__':
+    detail_file = os.path.abspath("cg/cg_db/Purchase Detail.db")
+    list_file = os.path.abspath("cg/cg_db/Purchase List.db")
+    receipt_file = os.path.abspath("cg/cg_db/Purchase Receipt.db")
+    supplier_file = os.path.abspath("cg/cg_db/Purchase Supplier.db")
+
     # 创建一个名为app的实例，代表应用本身，用于设置GUI并处理事件
     app = QApplication(sys.argv)
     # 实例化MyWindow
-    widget = cg_widget(os.path.abspath("cg_db/Purchase Supplier.db"),os.path.abspath("cg_db/Purchase List.db"))
+    widget = cg_widget(detail_file, list_file, receipt_file, supplier_file)
     # 在屏幕上显示QWiget窗口
     widget.show()
     # 启动QApplication的循环，直到用户关闭窗口
