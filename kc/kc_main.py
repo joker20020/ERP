@@ -1,6 +1,8 @@
 # 导入sys
 import os.path
 import sys
+import os
+sys.path.append(os.path.abspath("../xt/code"))
 
 from PySide6.QtWidgets import QTableWidgetItem
 # 任何一个PySide界面程序都需要使用QApplication
@@ -9,6 +11,7 @@ from PySide6.QtWidgets import QApplication, QWidget
 # 导入我们生成的界面
 from ui import Ui_kcwidget
 import sqlite3
+from xt_container import OperationCode,XtContainer
 
 '''
 UPDATE：修改构造函数，将数据库文件作为参数传入，避免错误 line 25
@@ -16,7 +19,7 @@ UPDATE：修改构造函数，将数据库文件作为参数传入，避免错�
 
 # 继承QWidget类，以获取其属性和方法
 class MykcWidget(QWidget):
-    def __init__(self,file_path):
+    def __init__(self,file_path,user_name):
         super().__init__()
         # 设置界面为我们生成的界面
         self.ui = Ui_kcwidget()
@@ -24,11 +27,12 @@ class MykcWidget(QWidget):
 
         # 将数据库文件作为参数传入，避免错误
         self.file_path = file_path
-
+        self.container = XtContainer(1,"../test.db",user_name)
         # self.chaxun()
         self.bindkc()
         self.bindruku()
         self.bindchuku()
+
 
     # 查询函数
     def chaxun(self):
@@ -276,6 +280,8 @@ class MykcWidget(QWidget):
             cursor.close()
             conn.close()
 
+        self.container.generate_log(OperationCode.KC_CHANGE)
+
     # 入库函数
     def ruku(self):
         conn = sqlite3.connect('inventory.db')
@@ -289,6 +295,7 @@ class MykcWidget(QWidget):
                 self.ui.tableWidget.setItem(row_num, col_num, QTableWidgetItem(str(data)))
 
         conn.close()
+        self.container.generate_log(OperationCode.KC_CHANGE)
 
     # 出库函数
     def chuku(self):
@@ -303,6 +310,7 @@ class MykcWidget(QWidget):
                 self.ui.tableWidget_2.setItem(row_num, col_num, QTableWidgetItem(str(data)))
 
         conn.close()
+        self.container.generate_log(OperationCode.KC_CHANGE)
 
     def bindkc(self):
         self.ui.pushButton_chaxun.clicked.connect(self.chaxun)
@@ -319,7 +327,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # 初始化并展示我们的界面组件
-    window = MykcWidget('./inventory.db')
+    window = MykcWidget('./inventory.db',1)
     window.show()
 
     # 结束QApplication
