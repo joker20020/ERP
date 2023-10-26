@@ -80,7 +80,7 @@ class XtProductionModule(BaseModule):
         bom_ids = self.get_ids(name)
         for bom_id in bom_ids:
             bom_id = bom_id[0]
-            lines = self.get_line_ids(line_name,bom_id)
+            lines = self.get_line_ids("line"+"_"+name,bom_id)
             for line in lines:
                 line = line[0]
                 self.db.drop("work"+str(line))
