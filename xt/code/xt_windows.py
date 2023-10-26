@@ -270,8 +270,8 @@ class LineWindow(QWidget):
         self.container = container
         self.bom_name = ""
         self.bom_id = ""
-        self.Ldata_type = [int,str,str,str]
-        self.Wdata_type = [int,str,int]
+        self.Ldata_type = [int,str,str]
+        self.Wdata_type = [int,int,str,str,int]
 
         self.ui.lineTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         self.ui.workTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
@@ -376,13 +376,13 @@ class LineWindow(QWidget):
             self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1,i,QTableWidgetItem(""))
         if self.ui.workTable.rowCount() == 1:
             self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1, 0, QTableWidgetItem("1"))
-            self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1, 2, QTableWidgetItem(
+            self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1, 4, QTableWidgetItem(
                 self.ui.lineTable.item(self.ui.lineTable.currentRow(), 0).text()))
             return
         self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1, 0, QTableWidgetItem(str(
             int(self.ui.workTable.item(self.ui.workTable.rowCount() - 2, 0).text()) + 1
         )))
-        self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1,2,QTableWidgetItem(self.ui.lineTable.item(self.ui.lineTable.currentRow(),0).text()))
+        self.ui.workTable.setItem(self.ui.workTable.rowCount() - 1,4,QTableWidgetItem(self.ui.lineTable.item(self.ui.lineTable.currentRow(),0).text()))
 
     def del_work(self):
         id = int(self.ui.workTable.item(self.ui.workTable.currentRow(), 0).text())
@@ -393,7 +393,7 @@ class LineWindow(QWidget):
         try:
             data = []
             for i in range(self.ui.workTable.rowCount()):
-                if self.ui.workTable.item(i, 2).text() != self.ui.lineTable.item(self.ui.lineTable.currentRow(),0).text():
+                if self.ui.workTable.item(i, 4).text() != self.ui.lineTable.item(self.ui.lineTable.currentRow(),0).text():
                     return
                 data.append(
                     [self.Wdata_type[j](self.ui.workTable.item(i, j).text()) if self.ui.workTable.item(i, j).text() else "" for

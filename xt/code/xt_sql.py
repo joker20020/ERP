@@ -180,8 +180,7 @@ class XTDataBase:
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
                 LINE_ID INTEGER PRIMARY KEY ,
                 NAME TEXT NOT NULL,
-                DESC TEXT,
-                WC TEXT NOT NULL
+                DESC TEXT
                 );
                 """.format(name))
         self.connection.commit()
@@ -197,7 +196,9 @@ class XTDataBase:
         # AUTOINCREMENT
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
                 WORK_ID INTEGER PRIMARY KEY ,
-                DESC TEXT,
+                TIME INTEGER NOT NULL,
+                WC TEXT NOT NULL,
+                DESC TEXT, 
                 LINE_ID INTEGER NOT NULL,
                 FOREIGN KEY (LINE_ID) REFERENCES {}(LINE_ID) ON DELETE CASCADE ON UPDATE CASCADE
                 );
@@ -427,11 +428,11 @@ if __name__ == "__main__":
     # db.insert_table("wg1", ["ID", "ORG"], [2, "CTEST"])
 
     # db.delete("bom1",ID=1)
-    # db.delete("line1",LINE_ID=1)
+    # db.delete("line",LINE_ID=1)
     # db.delete("character1",CHARACTER="admin")
     # db.delete("worker1",ID=1)
     # db.delete("group1",NAME="CTEST")
-    # db.drop("xt_bom_33")
+    # db.drop("line")
 
     # print(db.find_info("bom1", []))
     # print(db.find_info("bl1", []))

@@ -19,7 +19,6 @@
      <property name="font">
       <font>
        <pointsize>20</pointsize>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -82,11 +81,6 @@
            <string>描述</string>
           </property>
          </column>
-         <column>
-          <property name="text">
-           <string>工作中心</string>
-          </property>
-         </column>
         </widget>
        </item>
        <item>
@@ -117,7 +111,7 @@
       </layout>
      </item>
      <item>
-      <widget class="VerticalSeparator" name="VerticalSeparator"/>
+      <widget class="VerticalSeparator" name="VerticalSeparator" native="true"/>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -201,7 +195,7 @@
           <bool>false</bool>
          </attribute>
          <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>200</number>
+          <number>100</number>
          </attribute>
          <attribute name="horizontalHeaderHighlightSections">
           <bool>true</bool>
@@ -218,6 +212,16 @@
          <column>
           <property name="text">
            <string>工序号</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>工作中心</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>工序时长</string>
           </property>
          </column>
          <column>

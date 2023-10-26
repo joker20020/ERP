@@ -153,13 +153,13 @@ class XtContainer(BaseContainer):
     def update_line(self,bom_name,bom_id,data):
         if not self.production.is_activity():
             raise AuthorityError("受限制的访问权限")
-        head = ["LINE_ID", "NAME","DESC", "WC"]
+        head = ["LINE_ID", "NAME","DESC"]
         ids = self.get_line_ids(bom_name,bom_id)
         for i in range(len(ids)):
             ids[i] = ids[i][0]
 
         for i in range(len(data)):
-            str_null(data[i], [None, None, "", None])
+            str_null(data[i], [None, None, ""])
             if data[i][0] in ids:
                 dicts = {}
 
@@ -204,13 +204,13 @@ class XtContainer(BaseContainer):
     def update_work(self,line_id,data):
         if not self.production.is_activity():
             raise AuthorityError("受限制的访问权限")
-        head = ["WORK_ID", "DESC", "LINE_ID"]
+        head = ["WORK_ID","TIME","WC", "DESC", "LINE_ID"]
         ids = self.get_work_ids(str(line_id))
         for i in range(len(ids)):
             ids[i] = ids[i][0]
 
         for i in range(len(data)):
-            str_null(data[i], [None, "", None])
+            str_null(data[i], [None, None,None,"", None])
             if data[i][0] in ids:
                 dicts = {}
 
