@@ -214,9 +214,9 @@ class Ui_Line(object):
         ___qtablewidgetitem4 = self.workTable.horizontalHeaderItem(0)
         ___qtablewidgetitem4.setText(QCoreApplication.translate("Line", u"\u5de5\u5e8f\u53f7", None));
         ___qtablewidgetitem5 = self.workTable.horizontalHeaderItem(1)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("Line", u"\u5de5\u4f5c\u4e2d\u5fc3", None));
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("Line", u"\u5de5\u5e8f\u65f6\u957f", None));
         ___qtablewidgetitem6 = self.workTable.horizontalHeaderItem(2)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("Line", u"\u5de5\u5e8f\u65f6\u957f", None));
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("Line", u"\u5de5\u4f5c\u4e2d\u5fc3", None));
         ___qtablewidgetitem7 = self.workTable.horizontalHeaderItem(3)
         ___qtablewidgetitem7.setText(QCoreApplication.translate("Line", u"\u5de5\u5e8f\u63cf\u8ff0", None));
         ___qtablewidgetitem8 = self.workTable.horizontalHeaderItem(4)

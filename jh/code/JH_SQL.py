@@ -14,9 +14,13 @@ import sqlite3 as sql
 from datetime import date, datetime, timedelta
 
 class JHDataBase:
-    def __init__(self, file_path):
+    def __init__(self, file_path, xt_file, xs_file, kc_file, cg_file):
         self.connection = sql.connect(file_path)
         self.file_path = file_path
+        self.xt_file = xt_file
+        self.xs_file = xs_file
+        self.kc_file = kc_file
+        self.cg_file = cg_file
 
     def MPS_table(self, name):
         cursor = self.connection.cursor()
@@ -62,7 +66,7 @@ class JHDataBase:
     def paigong_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-            work_id INTEGER PRIMARY KEY,
+            work_id INTEGER NOT NULL,
             product_id INTEGER NOT NULL,
             work_request varchar(30) NOT NULL,
             work_time INTEGER
@@ -73,7 +77,7 @@ class JHDataBase:
     def lingliao_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-            work_id INTEGER PRIMARY KEY,
+            work_id INTEGER NOT NULL,
             goods_id INTEGER NOT NULL,
             goods_amount INTEGER NOT NULL,
             needed_time INTEGER NOT NULL
@@ -183,43 +187,61 @@ class JHDataBase:
             cursor.execute(cmd[:-1])
             # print(" | ".join(col))
 
+    def drop(self, table_name):
+        cursor = self.connection.cursor()
+        cmd = "DROP TABLE {} ;".format(table_name)
+        # print(cmd)
+        cursor.execute(cmd[:-1])
+        self.connection.commit()
+
     def close(self):
         self.connection.commit()
         self.connection.close()
 
+
+
     def MPS_insert(self):
-        MPS = self.find_info("MPS_table", [])
+        MPS = self.find_info("MPS_table", ["product_id"])
         for i in range(len(MPS)):
-            db.delete("MPS_table", product_id=i+1)
-        db1 = XTDataBase("../../test.db")
+            db.delete("MPS_table", product_id=MPS[i][0])
+        db1 = XTDataBase(self.xt_file)
         BOM1 = db1.where("xt_bom_大众自动钳BOM", ["ID"], LAYER=1)
+        conn1 = sql.connect(self.xs_file, check_same_thread=False)
+        cursor1 = conn1.cursor()
+
         for i in range(len(BOM1)):
-            self.insert_table("MPS_table", ["product_id", "planned_amount", "planned_deadline"],
-                              [BOM1[i][0], 1000, date(2024, 12, 31)])
+            cursor1.execute(f'SELECT forcast FROM for WHERE f_id={BOM1[i][0]}')  # 采购量
+            cursor1.connection.commit()
+            table_forecast = []
+            for each in cursor1:
+                table_forecast.append(each)
+            for j in range(len(table_forecast)):
+                self.insert_table("MPS_table", ["product_id", "planned_amount", "planned_deadline"],
+                              [BOM1[i][0], table_forecast[j][0], date(2024, 12, 31)])
 
     def MRP_calculate(self):
         MPS = self.find_info("MPS_table", [])
-        MRP = self.find_info("MRP_table", [])
+        MRP = self.find_info("MRP_table", ["product_id"])
         for i in range(len(MRP)):
-            db.delete("MRP_table", product_id=i+1)
+            db.delete("MRP_table", product_id=MRP[i][0])
 
         for i in range(len(MPS)):
             MPS_amount = self.where("MPS_table", ["planned_amount"], product_id=i+1)
             if MPS_amount != []:
                 MRP_amount = MPS_amount[0][0]/12
                 self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                                  [i + 1, MRP_amount, date(2024, 1, 31)])
+                                  [i + 1, int(MRP_amount), date(2024, 1, 31)])
 
         # 计算物料需求量
         # 毛需求 = 独立需求 + 相关需求
         # 计划库存量 = 上期库存量 + 本期订单产出量 + 本期预计入库量 - 毛需求量
         # 净需求量 = 本期毛需求量 - 上期库存量 - 本期预计入库量 + 安全库存量
 
-        db1 = XTDataBase("../../test.db")
+        db1 = XTDataBase(self.xt_file)
         BOM1 = db1.sql_cmd("SELECT ID, parent FROM xt_bom_大众自动钳BOM WHERE LAYER >= 2")
-        conn1 = sql.connect(os.path.join("../../cg/cg_db", "Purchase Detail.db"), check_same_thread=False)
+        conn1 = sql.connect(self.cg_file, check_same_thread=False)
         cursor1 = conn1.cursor()
-        conn2 = sql.connect(os.path.join("../../kc", "inventory.db"), check_same_thread=False)
+        conn2 = sql.connect(self.kc_file, check_same_thread=False)
         cursor2 = conn2.cursor()
         for i in range(len(BOM1)):
             cursor1.execute(f'SELECT cg_order_lot FROM cg_purchase_detail WHERE material_code={BOM1[i][0]}')  # 采购量
@@ -239,10 +261,13 @@ class JHDataBase:
             cycle = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=parent[0][0])
             MRP_ddl_date = MRP_date.date() - timedelta(weeks=cycle[0][0])
             self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                              [BOM1[i][0], planned_amount1, MRP_ddl_date])
+                              [BOM1[i][0], int(planned_amount1), MRP_ddl_date])
 
     def chejianzuoye_cal(self):
-        db1 = XTDataBase("../../test.db")
+        zuoye= self.find_info("zuoye_table", ["chejian_id"])
+        for i in range(len(zuoye)):
+            db.delete("zuoye_table", chejian_id=zuoye[i][0])
+        db1 = XTDataBase(self.xt_file)
         BOM_zuoye = db1.where("xt_bom_大众自动钳BOM", ["ID"], BUY=0)
         for i in range(len(BOM_zuoye)):
             info = self.where("MRP_table", ["planned_amount", "planned_deadline"], product_id=BOM_zuoye[i][0])
@@ -251,53 +276,67 @@ class JHDataBase:
             line = db1.where("line_xt_bom_大众自动钳BOM", ["LINE_ID"], ID=BOM_zuoye[i][0])
             chejian = db1.where("line", ["CHEJIAN"], LINE_ID=line[0][0])
             self.insert_table("zuoye_table", ["chejian_id", "product_id", "product_amount", "ddl_time"],
-                              [chejian[0][0], BOM_zuoye[i][0], info[0][0], zuoye_ddl_date])
+                              [chejian[0][0], BOM_zuoye[i][0], int(info[0][0]), zuoye_ddl_date])
 
 
     def caigou_cal(self):
-        db1 = XTDataBase("../../test.db")
+        caigou = self.find_info("caigou_table", ["caigoupin_id"])
+        for i in range(len(caigou)):
+            db.delete("caigou_table", caigoupin_id=caigou[i][0])
+        db1 = XTDataBase(self.xt_file)
         BOM_caigou = db1.where("xt_bom_大众自动钳BOM", ["ID"], BUY=1)
         for i in range(len(BOM_caigou)):
             info = self.where("MRP_table", ["planned_amount", "planned_deadline"], product_id=BOM_caigou[i][0])
-            caigou_ddl = datetime.strptime(info[i][1], "%Y-%m-%d")
+            caigou_ddl = datetime.strptime(info[0][1], "%Y-%m-%d")
             caigou_ddl_date = caigou_ddl.date()
             self.insert_table("caigou_table", ["caigoupin_id", "caigou_amount", "ddl_time"],
-                              [BOM_caigou[i][0], info[i][0], caigou_ddl_date])
+                              [BOM_caigou[i][0], int(info[0][0]), caigou_ddl_date])
 
     def paigong_cal(self):
+        paigong = self.find_info("paigong_table", ["work_id"])
+        for i in range(len(paigong)):
+            db.delete("paigong_table", work_id=paigong[i][0])
         chejian = self.find_info("zuoye_table", ["chejian_id", "product_id", "product_amount"])
-        db1 = XTDataBase("../../test.db")
+        db1 = XTDataBase(self.xt_file)
         for i in range(len(chejian)):
+            people = db1.where("worker", ["ID"], PLACE=chejian[i][0])
             line = db1.where("line", ["LINE_ID"], CHEJIAN=chejian[i][0])
             work_ddl = self.where("zuoye_table", ["ddl_time"], chejian_id=chejian[i][0])
-            work_place_date = datetime.strptime(work_ddl[i][0], "%Y-%m-%d")
+            work_place_date = datetime.strptime(work_ddl[0][0], "%Y-%m-%d")
             work_place_ddl_date = work_place_date.date()
             for j in range(len(line)):
-                work_place = db1.find_info("work"+"line[i][0]", ["WC", "TIME"], WORK_ID="DESC")
+                work_place = db1.find_info("work"+ str(line[0][0]), ["WC", "TIME", "WORK_ID"], WORK_ID="DESC")
                 if j == 0:
                     self.insert_table("paigong_table", ["work_id", "product_id", "work_request", "work_time"],
-                                      [work_place[j][0], chejian[i][1], chejian[i][2], work_place_ddl_date])
+                                      [work_place[j][0], chejian[i][1], int(work_place[j][1]/len(people)), work_place_ddl_date])
                 else:
                     work_place_ddl_date -= timedelta(weeks=work_place[j-1][1])
                     self.insert_table("paigong_table", ["work_id", "product_id", "work_request", "work_time"],
-                                      [work_place[j][0], chejian[i][1], chejian[i][2], work_place_ddl_date])
+                                      [work_place[j][0], chejian[i][1], int(work_place[j][1]/len(people)), work_place_ddl_date])
 
     def lingliao_cal(self):
+        lingliao = self.find_info("lingliao_table", ["work_id"])
+        for i in range(len(lingliao)):
+            db.delete("lingliao_table", work_id=lingliao[i][0])
         work_place = self.find_info("paigong_table", [])
-        db1 = XTDataBase("../../test.db")
+        db1 = XTDataBase(self.xt_file)
+        BOM = db1.find_info("xt_bom_大众自动钳BOM", ["ID", "PARENT"])
+        db1 = XTDataBase(self.xt_file)
         for i in range(len(work_place)):
-            work_place_date = datetime.strptime(work_place[i+1][3], "%Y-%m-%d")
-            lingliao_ddl_date = work_place_date.date()
             lingliao_id = db1.where("xt_bom_大众自动钳BOM", ["ID"], PARENT=work_place[i][1])
+            product_time = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=work_place[i][1])
+            work_place_date = datetime.strptime(work_place[i][3], "%Y-%m-%d")
+            date = work_place_date.date()
+            lingliao_ddl_date = date - timedelta(product_time[0][0])
             for j in range(len(lingliao_id)):
-                self.insert_table("lingliao_table", ["work_id", "goods_id", "goods_request", "needed_time"],
-                              [work_place[i][0], lingliao_id[j][0], work_place[i][2], lingliao_ddl_date])
+                self.insert_table("lingliao_table", ["work_id", "goods_id", "goods_amount", "needed_time"],
+                              [work_place[i][0], lingliao_id[j][0], int(work_place[i][2]), lingliao_ddl_date])
 
 
 
 
 if __name__ == "__main__":
-    db = JHDataBase("JHdatabase.db")
+    db = JHDataBase("JHdatabase.db", "../../test.db", "../../xs/lk.db", "../../kc/inventory.db", "../../cg/cg_db/Purchase Detail.db")
 
     db.MPS_table("MPS_table")
     db.MRP_table("MRP_table")
@@ -306,14 +345,16 @@ if __name__ == "__main__":
     db.paigong_table("paigong_table")
     db.lingliao_table("lingliao_table")
 
+    # db.drop("lingliao_table")
+
     # db.insert_table("MPS_table",["product_id","planned_amount","planned_deadline"],[1, 100, date(2024,12,31)])
 
     db.MPS_insert()
     db.MRP_calculate()
     db.chejianzuoye_cal()
     db.caigou_cal()
-    # db.paigong_cal()
-    # db.lingliao_cal()
+    db.paigong_cal()
+    db.lingliao_cal()
 
     # for i in range (20):
     #     db.delete("MPS_table", product_id = i+1)
