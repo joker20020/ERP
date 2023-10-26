@@ -28,20 +28,22 @@ class MainWindow(XTMainWindow):
         super().__init__(authority,file_path,avatar,user_name,password,parent=parent)
         # setTheme(Theme.DARK)
 
-        self.cg = cgUI("cg/cg_db/Purchase Detail.db","cg/cg_db/Purchase List.db","cg/cg_db/Purchase Receipt.db","cg/cg_db/Purchase Supplier.db",)
-        self.cg.setObjectName("cj")
-        self.jh = jhUI(self.user_name,"test.db","xs/lk.db","kc/inventory.db","cg/cg_db/Purchase Detail.db","jh/code/JHdatabase.db","test.db")
-        self.jh.setObjectName("jh")
-        self.kc = kcUI("kc/inventory.db","test.db",self.user_name)
-        self.kc.setObjectName("kc")
-        self.xs = xsUI(self.user_name,"kc/inventory.db","test.db","xs/lk.db")
-        self.xs.setObjectName("xs")
-        #
-        self.addSubInterface(self.cg, FluentIcon.MARKET, "采购管理",position=NavigationItemPosition.SCROLL)
-        self.addSubInterface(self.jh, FluentIcon.EDIT, "计划管理",position=NavigationItemPosition.SCROLL)
-        self.addSubInterface(self.kc, FluentIcon.BOOK_SHELF,"库存管理",position=NavigationItemPosition.SCROLL)
-        self.addSubInterface(self.xs, FluentIcon.FEEDBACK, "销售管理",position=NavigationItemPosition.SCROLL)
-
+        if authority & 8:
+            self.cg = cgUI("cg/cg_db/Purchase Detail.db","cg/cg_db/Purchase List.db","cg/cg_db/Purchase Receipt.db","cg/cg_db/Purchase Supplier.db",)
+            self.cg.setObjectName("cj")
+            self.addSubInterface(self.cg, FluentIcon.MARKET, "采购管理", position=NavigationItemPosition.SCROLL)
+        if authority & 16:
+            self.jh = jhUI(self.user_name,"test.db","xs/lk.db","kc/inventory.db","cg/cg_db/Purchase Detail.db","jh/code/JHdatabase.db","test.db")
+            self.jh.setObjectName("jh")
+            self.addSubInterface(self.jh, FluentIcon.EDIT, "计划管理", position=NavigationItemPosition.SCROLL)
+        if authority & 32:
+            self.kc = kcUI("kc/inventory.db","test.db",self.user_name)
+            self.kc.setObjectName("kc")
+            self.addSubInterface(self.kc, FluentIcon.BOOK_SHELF, "库存管理", position=NavigationItemPosition.SCROLL)
+        if authority & 64:
+            self.xs = xsUI(self.user_name,"kc/inventory.db","test.db","xs/lk.db")
+            self.xs.setObjectName("xs")
+            self.addSubInterface(self.xs, FluentIcon.FEEDBACK, "销售管理", position=NavigationItemPosition.SCROLL)
 
         # self.navigationInterface.setCurrentItem("admin_wind")
         # self.stackedWidget.setCurrentIndex(0)
