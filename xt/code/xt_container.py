@@ -317,6 +317,11 @@ class XtContainer(BaseContainer):
             raise AuthorityError("受限制的访问权限")
         return self.member.get_worker(worker_id)
 
+    def get_workers(self):
+        if not self.member.is_activity():
+            raise AuthorityError("受限制的访问权限")
+        return self.member.get_workers()
+
     def get_pwd(self,user_name):
         if not self.member.is_activity():
             raise AuthorityError("受限制的访问权限")
