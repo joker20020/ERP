@@ -64,8 +64,12 @@ class JHWidget(QWidget):
         self.log.generate_log(OperationCode.JH_CHANGE)
 
         if mode == "MPS主生产计划":
+            MPS = self.jh_db.find_info("MPS_table", [])
             self.MPS.show()
         elif mode == "MRP物料需求计划":
+            MRP = self.jh_db.find_info("MPS_table", [])
+            ddl = self.ui.ddl.date
+            print(ddl)
             self.MRP.show()
         elif mode == "车间工作采购单":
             self.caigou.show()
