@@ -78,6 +78,15 @@ class Ui_AddCharacter(object):
         AddCharacter.setWindowTitle(QCoreApplication.translate("AddCharacter", u"Form", None))
         self.characterAuthorityL.setText(QCoreApplication.translate("AddCharacter", u"\u6743\u9650\u4ee3\u7801", None))
         self.characterDesL.setText(QCoreApplication.translate("AddCharacter", u"\u6743\u9650\u4ee3\u7801\u542b\u4e49", None))
+        self.groupDes.setPlainText(QCoreApplication.translate("AddCharacter", u"1\u2014\u2014\u65e5\u5fd7\u64cd\u4f5c\u6743\u9650\n"
+"2\u2014\u2014\u4ea7\u54c1\u4fe1\u606f\u64cd\u4f5c\u6743\u9650\n"
+"4\u2014\u2014\u4eba\u5458\u4fe1\u606f\u64cd\u4f5c\u6743\u9650\n"
+"8\u2014\u2014\u91c7\u8d2d\u4fe1\u606f\u64cd\u4f5c\u6743\u9650\n"
+"16\u2014\u2014\u8ba1\u5212\u4fe1\u606f\u64cd\u4f5c\u6743\u9650\n"
+"32\u2014\u2014\u5e93\u5b58\u4fe1\u606f\u64cd\u4f5c\u6a21\u5757\n"
+"64\u2014\u2014\u9500\u552e\u4fe1\u606f\u64cd\u4f5c\u6a21\u5757\n"
+"\u89d2\u8272\u64cd\u4f5c\u6743\u9650\u4e3a\u6240\u6709\u6743\u9650\u4ee3\u7801\u4e4b\u548c\n"
+"", None))
         self.characterNameL.setText(QCoreApplication.translate("AddCharacter", u"\u89d2\u8272\u540d\u79f0", None))
         self.ok.setText(QCoreApplication.translate("AddCharacter", u"\u786e\u8ba4", None))
     # retranslateUi

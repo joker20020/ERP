@@ -243,14 +243,14 @@ class XSDataBase:
                 # FOREIGN KEY(salesperson_id) REFERENCES salespersons(salesperson_id),
                 # FOREIGN KEY(product_id) REFERENCES products(product_id)
 class MyWindow(QWidget):
-    def __init__(self,kc_file,xt_log,name_log,file_path="lk.db"):
+    def __init__(self,user_name,kc_file,xt_log,file_path="lk.db"):
         super().__init__()
         self.ui = Ui_Form()  # UI类的实例化()
         self.ui.setupUi(self)
         self.kc_file=kc_file
         self.db = XSDataBase(file_path)
         self.bind()
-        self.log=XtContainer(1,xt_log,name_log)
+        self.log=XtContainer(1,xt_log,user_name)
 
 
     def bind(self):

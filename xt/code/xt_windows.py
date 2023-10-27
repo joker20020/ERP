@@ -765,6 +765,7 @@ class LogOut(NavigationPushButton):
         super().__init__(FluentIcon.SETTING,"用户设置",isSelectable=False, parent=parent)
         self.out = Action(text="退出登录")
         self.log = Action(text="导出操作日志")
+        self.chejian = Action(text="绘制车间图")
 
 
     def show_info(self) -> None:
@@ -772,6 +773,7 @@ class LogOut(NavigationPushButton):
         menu = RoundMenu()
         menu.addAction(self.out)
         menu.addAction(self.log)
+        menu.addAction(self.chejian)
         menu.exec(self.parent().mapToGlobal(self.pos()))
 
 class HomeWindow(QWidget):
@@ -1041,7 +1043,38 @@ class XTMainWindow(FluentWindow):
 
     def bind(self):
         self.logOut.log.triggered.connect(self.export_log)
+        self.logOut.chejian.triggered.connect(self.draw_chejian)
         self.home.pwdChanged.connect(self.change_user)
+
+    def draw_chejian(self):
+        try:
+            workers = self.xt.get_workers()
+            chejians = []
+            tree = Graph("车间-工作中心图", format="svg")
+            for worker in workers:
+                place = worker[4]
+                if "-" in place:
+                    chejian = place.split("-")[0]
+                    wc = place.split("-")[1]
+                    if chejian in chejians:
+                        chejians.append(chejian)
+                        tree.node("车间"+chejian)
+                    tree.node("工作中心"+wc)
+                    tree.edge("车间"+chejian,"工作中心"+wc)
+            tree.render(filename="车间-工作中心图",view=True)
+
+        except AuthorityError as e:
+            MessageBox("权限鉴定失败", "无该操作权限，如有疑问请联系管理员", self).exec()
+        except Exception as e:
+            InfoBar.error(
+                title='车间查看消息',
+                content="车间图片导出失败",
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.TOP_LEFT,
+                duration=2000,  # won't disappear automatically
+                parent=self
+            )
 
     def export_log(self):
         try:

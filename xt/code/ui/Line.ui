@@ -221,12 +221,12 @@
          </column>
          <column>
           <property name="text">
-           <string>工作中心</string>
+           <string>工序时长</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>工序时长</string>
+           <string>工作中心</string>
           </property>
          </column>
          <column>

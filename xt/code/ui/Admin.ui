@@ -15,47 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,4">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,2,0,0,0,0,0,0,1">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <item>
-        <widget class="StrongBodyLabel" name="workerCharacterL">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>角色操作框</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="ComboBox" name="workerCharacter"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="PushButton" name="characterNew">
-         <property name="text">
-          <string>新建角色</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="PrimaryPushButton" name="characterRemove">
-         <property name="text">
-          <string>删除角色</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="2,0,0,0,0,0,0,0,0,1">
      <item>
       <layout class="QFormLayout" name="formLayout_2">
        <property name="sizeConstraint">
@@ -185,6 +145,46 @@
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="StrongBodyLabel" name="workerCharacterL">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>角色操作框</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="ComboBox" name="workerCharacter"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="PushButton" name="characterNew">
+         <property name="text">
+          <string>新建角色</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="PrimaryPushButton" name="characterRemove">
+         <property name="text">
+          <string>删除角色</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="Line" name="line">
@@ -344,6 +344,11 @@
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
+   <class>PrimaryPushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
    <class>ComboBox</class>
    <extends>QComboBox</extends>
    <header>qfluentwidgets</header>
@@ -351,11 +356,6 @@
   <customwidget>
    <class>PasswordLineEdit</class>
    <extends>QLineEdit</extends>
-   <header>qfluentwidgets</header>
-  </customwidget>
-  <customwidget>
-   <class>PrimaryPushButton</class>
-   <extends>QPushButton</extends>
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>

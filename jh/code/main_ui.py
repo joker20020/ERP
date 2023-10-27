@@ -4,6 +4,7 @@ import os
 # 任何一个PySide界面程序都需要使用QApplication
 # 我们要展示一个普通的窗口，所以需要导入QWidget，用来让我们自己的类继承
 sys.path.append(os.path.abspath("../../xt/code"))
+sys.path.append(os.path.abspath("../../kc"))
 from PySide6.QtWidgets import QApplication, QWidget, QApplication, QTableWidget, QTableWidgetItem
 # 导入我们生成的界面
 from JH_SQL import JHDataBase
@@ -16,6 +17,9 @@ from table_paigong import table_paigong
 from table_lingliao import table_lingliao
 
 from xt_container import XtContainer,OperationCode
+from datetime import date, datetime, timedelta
+
+from inventory import InventoryManager
 
 '''
 UPDATE:数据库路径修改为传入,修改日志数据库路径为传入，避免错误 line 33
@@ -23,15 +27,23 @@ UPDATE:数据库路径修改为传入,修改日志数据库路径为传入，避
 
 
 # 继承QWidget类，以获取其属性和方法
-class MyWidget(QWidget):
-    def __init__(self, user_name, file_path="JHdatabase.db", log_path ="../../test.db" ):
+class JHWidget(QWidget):
+    def __init__(self, user_name, xt_file, xs_file, kc_file, cg_file, file_path="JHdatabase.db", log_path ="../../test.db"):
         super().__init__()
         # 设置界面为我们生成的界面
         self.ui = Ui_Form()
         self.ui.setupUi(self)
 
+        self.file_path = file_path
+        self.xt_file = xt_file
+        self.xs_file = xs_file
+        self.kc_file = kc_file
+        self.cg_file = cg_file
+        self.log_path = log_path
+        self.user_name = user_name
+
         # 数据库和日志库路径均改为传入参数
-        self.jh_db = JHDataBase(file_path)
+        self.jh_db = JHDataBase(file_path, xt_file, xs_file, kc_file, cg_file)
 
         self.log = XtContainer(1, log_path, user_name)
 
@@ -43,75 +55,180 @@ class MyWidget(QWidget):
         self.lingliao = table_lingliao1()
 
         self.bind()
-        self.loadin()
+        # self.loadin()
+
+
 
     def open(self):
+
         mode = self.ui.target.currentText()
         self.log.generate_log(OperationCode.JH_CHANGE)
+
+        start = self.ui.start.date.toPython()
+        ddl = self.ui.ddl.date.toPython()
+
         if mode == "MPS主生产计划":
+            MPS = self.jh_db.find_info("MPS_table", [])
+            row1 = len(MPS)
+            self.MPS.ui.tableWidget.setRowCount(row1)
+            for i in range(row1):
+                deadline = datetime.strptime(MPS[i][2], "%Y-%m-%d").date()
+                if deadline > start:
+                    if deadline <= ddl:
+                        for j in range(len(MPS[i])):
+                            self.MPS.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(MPS[i][j])))
             self.MPS.show()
+
         elif mode == "MRP物料需求计划":
+            MRP = self.jh_db.find_info("MRP_table", [])
+            row2 = len(MRP)
+            self.MRP.ui.tableWidget.setRowCount(row2)
+            for i in range(row2):
+                deadline = datetime.strptime(MRP[i][2], "%Y-%m-%d").date()
+                if deadline > start:
+                    if deadline <= ddl:
+                        for j in range(len(MRP[i])):
+                            self.MRP.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(MRP[i][j])))
             self.MRP.show()
+
         elif mode == "车间工作采购单":
             self.caigou.show()
+            caigou = self.jh_db.find_info("caigou_table", [])
+            row3 = len(caigou)
+            self.caigou.ui.tableWidget.setRowCount(row3)
+            for i in range(row3):
+                deadline = datetime.strptime(caigou[i][2], "%Y-%m-%d").date()
+                if deadline > start:
+                    if deadline <= ddl:
+                        for j in range(len(caigou[i])):
+                            self.caigou.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(caigou[i][j])))
+
+            self.caigou.show()
+
         elif mode == "车间工作作业计划":
             self.chejianzuoye.show()
+            zuoye = self.jh_db.find_info("zuoye_table", [])
+            row4 = len(zuoye)
+            self.chejianzuoye.ui.tableWidget.setRowCount(row4)
+            for i in range(row4):
+                deadline = datetime.strptime(zuoye[i][3], "%Y-%m-%d").date()
+                if deadline > start:
+                    if deadline <= ddl:
+                        for j in range(len(zuoye[i])):
+                            self.chejianzuoye.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(zuoye[i][j])))
+
+            self.chejianzuoye.show()
+
         elif mode == "派工单":
+            work_id = self.ui.workID.text()
+            if work_id != "":
+                paigong = self.jh_db.where("paigong_table", [], work_id=int(work_id))
+                self.paigong.ui.tableWidget.clearContents()
+                rows5 = len(paigong)
+                self.paigong.ui.tableWidget.setRowCount(rows5)
+                for i in range(rows5):
+                    deadline = datetime.strptime(paigong[i][3], "%Y-%m-%d").date()
+                    if deadline > start:
+                        if deadline <= ddl:
+                            for j in range(len(paigong[i])):
+                                self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong[i][j])))
+            else:
+                paigong_table = self.jh_db.find_info("paigong_table", [])
+                self.paigong.ui.tableWidget.clearContents()
+                rows5 = len(paigong_table)
+                self.paigong.ui.tableWidget.setRowCount(rows5)
+                for i in range(rows5):
+                    deadline = datetime.strptime(paigong_table[i][3], "%Y-%m-%d").date()
+                    if deadline > start:
+                        if deadline <= ddl:
+                            for j in range(len(paigong_table[i])):
+                                self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong_table[i][j])))
+
             self.paigong.show()
+
         elif mode == "领料单":
+            work_id = self.ui.workID.text()
+            if work_id != "":
+                lingliao = self.jh_db.where("lingliao_table", [], work_id=int(work_id))
+                self.lingliao.ui.tableWidget.clearContents()
+                rows6 = len(lingliao)
+                self.lingliao.ui.tableWidget.setRowCount(rows6)
+                for i in range(rows6):
+                    deadline = datetime.strptime(lingliao[i][3], "%Y-%m-%d").date()
+                    if deadline > start:
+                        if deadline <= ddl:
+                            for j in range(len(lingliao[i])):
+                                self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao[i][j])))
+            else:
+                lingliao_table = self.jh_db.find_info("lingliao_table", [])
+                self.lingliao.ui.tableWidget.clearContents()
+                rows5 = len(lingliao_table)
+                self.lingliao.ui.tableWidget.setRowCount(rows5)
+                for i in range(rows5):
+                    deadline = datetime.strptime(lingliao_table[i][3], "%Y-%m-%d").date()
+                    if deadline > start:
+                        if deadline <= ddl:
+                            for j in range(len(lingliao_table[i])):
+                                self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao_table[i][j])))
+
             self.lingliao.show()
+
+            lingliao = self.jh_db.find_info("lingliao_table", ["goods_id", "goods_amount", "needed_time"])
+            inventor_manager = InventoryManager()
+            for i in range(len(lingliao)):
+                inventor_manager.substact_inventory(lingliao[i][2], lingliao[i][0], int(lingliao[i][1]), self.user_name)
 
     def bind(self):
         self.ui.pushButton.clicked.connect(self.open)
 
-    def loadin(self):
-        MPS_table = self.jh_db.find_info("MPS_table", [])
-        self.MPS.ui.tableWidget.clearContents()
-        rows1 = len(MPS_table)
-        self.MPS.ui.tableWidget.setRowCount(rows1)
-        for i in range(rows1):
-            for j in range(len(MPS_table[i])):
-                self.MPS.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(MPS_table[i][j])))
+    # def loadin(self):
+        # MPS_table = self.jh_db.find_info("MPS_table", [])
+        # self.MPS.ui.tableWidget.clearContents()
+        # rows1 = len(MPS_table)
+        # self.MPS.ui.tableWidget.setRowCount(rows1)
+        # for i in range(rows1):
+        #     for j in range(len(MPS_table[i])):
+        #         self.MPS.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(MPS_table[i][j])))
 
-        MRP_table = self.jh_db.find_info("MRP_table", [])
-        self.MRP.ui.tableWidget.clearContents()
-        rows2 = len(MRP_table)
-        self.MRP.ui.tableWidget.setRowCount(rows2)
-        for i in range(rows2):
-            for j in range(len(MRP_table[i])):
-                self.MRP.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(MRP_table[i][j])))
+        # MRP_table = self.jh_db.find_info("MRP_table", [])
+        # self.MRP.ui.tableWidget.clearContents()
+        # rows2 = len(MRP_table)
+        # self.MRP.ui.tableWidget.setRowCount(rows2)
+        # for i in range(rows2):
+        #     for j in range(len(MRP_table[i])):
+        #         self.MRP.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(MRP_table[i][j])))
 
-        caigou_table = self.jh_db.find_info("caigou_table", [])
-        self.caigou.ui.tableWidget.clearContents()
-        rows3 = len(caigou_table)
-        self.caigou.ui.tableWidget.setRowCount(rows3)
-        for i in range(rows3):
-            for j in range(len(caigou_table[i])):
-                self.caigou.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(caigou_table[i][j])))
+        # caigou_table = self.jh_db.find_info("caigou_table", [])
+        # self.caigou.ui.tableWidget.clearContents()
+        # rows3 = len(caigou_table)
+        # self.caigou.ui.tableWidget.setRowCount(rows3)
+        # for i in range(rows3):
+        #     for j in range(len(caigou_table[i])):
+        #         self.caigou.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(caigou_table[i][j])))
+        #
+        # zuoye_table = self.jh_db.find_info("zuoye_table", [])
+        # self.chejianzuoye.ui.tableWidget.clearContents()
+        # rows4 = len(zuoye_table)
+        # self.chejianzuoye.ui.tableWidget.setRowCount(rows4)
+        # for i in range(rows4):
+        #     for j in range(len(zuoye_table[i])):
+        #         self.chejianzuoye.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(zuoye_table[i][j])))
 
-        zuoye_table = self.jh_db.find_info("zuoye_table", [])
-        self.chejianzuoye.ui.tableWidget.clearContents()
-        rows4 = len(zuoye_table)
-        self.chejianzuoye.ui.tableWidget.setRowCount(rows4)
-        for i in range(rows3):
-            for j in range(len(zuoye_table[i])):
-                self.chejianzuoye.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(zuoye_table[i][j])))
+        # paigong_table = self.jh_db.find_info("paigong_table", [])
+        # self.paigong.ui.tableWidget.clearContents()
+        # rows5 = len(paigong_table)
+        # self.paigong.ui.tableWidget.setRowCount(rows5)
+        # for i in range(rows5):
+        #     for j in range(len(paigong_table[i])):
+        #         self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong_table[i][j])))
 
-        paigong_table = self.jh_db.find_info("paigong_table", [])
-        self.paigong.ui.tableWidget.clearContents()
-        rows5 = len(paigong_table)
-        self.paigong.ui.tableWidget.setRowCount(rows5)
-        for i in range(rows5):
-            for j in range(len(caigou_table[i])):
-                self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong_table[i][j])))
-
-        lingliao_table = self.jh_db.find_info("lingliao_table", [])
-        self.lingliao.ui.tableWidget.clearContents()
-        rows6 = len(lingliao_table)
-        self.lingliao.ui.tableWidget.setRowCount(rows6)
-        for i in range(rows6):
-            for j in range(len(lingliao_table[i])):
-                self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao_table[i][j])))
+        # lingliao_table = self.jh_db.find_info("lingliao_table", [])
+        # self.lingliao.ui.tableWidget.clearContents()
+        # rows6 = len(lingliao_table)
+        # self.lingliao.ui.tableWidget.setRowCount(rows6)
+        # for i in range(rows6):
+        #     for j in range(len(lingliao_table[i])):
+        #         self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao_table[i][j])))
 
 class table_MPS1(QWidget):
     def __init__(self):
@@ -161,7 +278,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # 初始化并展示我们的界面组件
-    window = MyWidget("lzj")
+    window = JHWidget("lzj", "../../test.db", "../../xs/lk.db", "../../kc/inventory.db", "../../cg/cg_db/Purchase Detail.db")
     window.show()
 
     # 结束QApplication

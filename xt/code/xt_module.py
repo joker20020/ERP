@@ -216,6 +216,9 @@ class XtMemberModule(BaseModule):
     def get_worker(self,worker_id,name="worker"):
         return self.db.where(name,[],ID=worker_id)
 
+    def get_workers(self,name="worker"):
+        return self.db.find_info(name,[])
+
     def update_worker(self,worker_id,dicts,name="worker"):
         return self.db.update(name,dicts,ID=worker_id)
 

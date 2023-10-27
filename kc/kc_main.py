@@ -11,7 +11,7 @@ from PySide6.QtWidgets import QApplication, QWidget
 # 导入我们生成的界面
 from ui import Ui_kcwidget
 import sqlite3
-# from xt_container import OperationCode,XtContainer
+from xt_container import OperationCode,XtContainer
 
 '''
 UPDATE：修改构造函数，将数据库文件作为参数传入，避免错误 line 25
@@ -19,7 +19,7 @@ UPDATE：修改构造函数，将数据库文件作为参数传入，避免错�
 
 # 继承QWidget类，以获取其属性和方法
 class MykcWidget(QWidget):
-    def __init__(self,file_path,user_name):
+    def __init__(self,file_path,log_path,user_name):
         super().__init__()
         # 设置界面为我们生成的界面
         self.ui = Ui_kcwidget()
@@ -27,7 +27,7 @@ class MykcWidget(QWidget):
 
         # 将数据库文件作为参数传入，避免错误
         self.file_path = file_path
-        # self.container = XtContainer(1,"../test.db",user_name)
+        self.container = XtContainer(1,log_path,user_name)
         self.bindkc()
         self.bindruku()
         self.bindchuku()
@@ -56,7 +56,7 @@ class MykcWidget(QWidget):
 
         if mode == "壳体2":
             self.ui.lineEdit_chaxunid.setText("2")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -71,7 +71,7 @@ class MykcWidget(QWidget):
 
         if mode == "支架1":
             self.ui.lineEdit_chaxunid.setText("3")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -86,7 +86,7 @@ class MykcWidget(QWidget):
 
         if mode == "配件":
             self.ui.lineEdit_chaxunid.setText("4")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -101,7 +101,7 @@ class MykcWidget(QWidget):
 
         if mode == "左壳体1":
             self.ui.lineEdit_chaxunid.setText("5")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -116,7 +116,7 @@ class MykcWidget(QWidget):
 
         if mode == "右壳体1":
             self.ui.lineEdit_chaxunid.setText("6")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -131,7 +131,7 @@ class MykcWidget(QWidget):
 
         if mode == "密封圈2":
             self.ui.lineEdit_chaxunid.setText("7")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -146,7 +146,7 @@ class MykcWidget(QWidget):
 
         if mode == "活塞1":
             self.ui.lineEdit_chaxunid.setText("8")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -161,7 +161,7 @@ class MykcWidget(QWidget):
 
         if mode == "塑料套1":
             self.ui.lineEdit_chaxunid.setText("9")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -176,7 +176,7 @@ class MykcWidget(QWidget):
 
         if mode == "橡胶套1":
             self.ui.lineEdit_chaxunid.setText("10")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -191,7 +191,7 @@ class MykcWidget(QWidget):
 
         if mode == "放气螺栓1":
             self.ui.lineEdit_chaxunid.setText("11")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -206,7 +206,7 @@ class MykcWidget(QWidget):
 
         if mode == "防尘帽1":
             self.ui.lineEdit_chaxunid.setText("12")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -221,7 +221,7 @@ class MykcWidget(QWidget):
 
         if mode == "内六角螺栓1":
             self.ui.lineEdit_chaxunid.setText("13")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -236,7 +236,7 @@ class MykcWidget(QWidget):
 
         if mode == "摩擦片2":
             self.ui.lineEdit_chaxunid.setText("14")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -251,7 +251,7 @@ class MykcWidget(QWidget):
 
         if mode == "隔垫1":
             self.ui.lineEdit_chaxunid.setText("15")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -266,7 +266,7 @@ class MykcWidget(QWidget):
 
         if mode == "开口导向套管2":
             self.ui.lineEdit_chaxunid.setText("16")
-            conn = sqlite3.connect('inventory.db')
+            conn = sqlite3.connect(self.file_path)
             cursor = conn.cursor()
 
             cursor.execute("SELECT quantity FROM products WHERE name = ?", (mode,))
@@ -279,11 +279,11 @@ class MykcWidget(QWidget):
             cursor.close()
             conn.close()
 
-        # self.container.generate_log(OperationCode.KC_CHANGE)
+        self.container.generate_log(OperationCode.KC_CHANGE)
 
     # 入库函数
     def ruku(self):
-        conn = sqlite3.connect('inventory.db')
+        conn = sqlite3.connect(self.file_path)
         cursor = conn.cursor()
 
         cursor.execute('SELECT entry_time, product_id, quantity, operator FROM ruku LIMIT 16')
@@ -294,11 +294,11 @@ class MykcWidget(QWidget):
                 self.ui.tableWidget.setItem(row_num, col_num, QTableWidgetItem(str(data)))
 
         conn.close()
-        # self.container.generate_log(OperationCode.KC_CHANGE)
+        self.container.generate_log(OperationCode.KC_CHANGE)
 
     # 出库函数
     def chuku(self):
-        conn = sqlite3.connect('inventory.db')
+        conn = sqlite3.connect(self.file_path)
         cursor = conn.cursor()
 
         cursor.execute('SELECT exit_time, product_id, quantity, operator FROM chuku LIMIT 16')
@@ -309,7 +309,7 @@ class MykcWidget(QWidget):
                 self.ui.tableWidget_2.setItem(row_num, col_num, QTableWidgetItem(str(data)))
 
         conn.close()
-        # self.container.generate_log(OperationCode.KC_CHANGE)
+        self.container.generate_log(OperationCode.KC_CHANGE)
 
     def bindkc(self):
         self.ui.pushButton_chaxun.clicked.connect(self.chaxun)

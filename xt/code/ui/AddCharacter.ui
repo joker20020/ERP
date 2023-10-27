@@ -34,7 +34,19 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="PlainTextEdit" name="groupDes"/>
+      <widget class="PlainTextEdit" name="groupDes">
+       <property name="plainText">
+        <string>1——日志操作权限
+2——产品信息操作权限
+4——人员信息操作权限
+8——采购信息操作权限
+16——计划信息操作权限
+32——库存信息操作模块
+64——销售信息操作模块
+角色操作权限为所有权限代码之和
+</string>
+       </property>
+      </widget>
      </item>
      <item row="0" column="0">
       <widget class="BodyLabel" name="characterNameL">
