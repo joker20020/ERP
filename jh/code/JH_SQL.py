@@ -1,12 +1,12 @@
 import sys
 import os
 sys.path.append(os.path.abspath("../../xt/code"))
-from xt_sql import XTDataBase
 sys.path.append(os.path.abspath("../../xs"))
-from xs_sql import XSDataBase
 sys.path.append(os.path.abspath("../../kc"))
-from inventory import InventoryManager
 sys.path.append(os.path.abspath("../../cg"))
+from xt_sql import XTDataBase
+from xs_sql import XSDataBase
+from inventory import InventoryManager
 from cg_database import cg_database_entity
 
 import sqlite3 as sql
@@ -35,7 +35,7 @@ class JHDataBase:
     def MRP_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute('''CREATE TABLE IF NOT EXISTS {}(
-            product_id INTEGER PRIMARY KEY,
+            product_id INTEGER NOT NULL,
             planned_amount INTEGER NOT NULL,
             planned_deadline TIME
         );
@@ -45,7 +45,7 @@ class JHDataBase:
     def chejiancaigou_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-            caigoupin_id INTEGER PRIMARY KEY,
+            caigoupin_id INTEGER NOT NULL,
             caigou_amount INTEGER NOT NULL,
             ddl_time INTEGER
         );
@@ -55,7 +55,7 @@ class JHDataBase:
     def chejianzuoye_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-            chejian_id INTEGER PRIMARY KEY,
+            chejian_id INTEGER NOT NULL,
             product_id INTEGER NOT NULL,
             product_amount INTEGER NOT NULL,
             ddl_time INTERGER
@@ -217,12 +217,20 @@ class JHDataBase:
         for i in range(len(MRP)):
             db.delete("MRP_table", product_id=MRP[i][0])
 
-        for i in range(len(MPS)):
-            MPS_amount = self.where("MPS_table", ["planned_amount"], product_id=i+1)
-            if MPS_amount != []:
-                MRP_amount = MPS_amount[0][0]/12
-                self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                                  [i + 1, int(MRP_amount), date(2024, 1, 31)])
+        for i in range(12):
+            for j in range(len(MPS)):
+                MPS_amount = self.where("MPS_table", ["planned_amount"], product_id=MPS[j][0])
+                if MPS_amount != []:
+                    MRP_amount = MPS_amount[0][0]/12
+                    if i in (0, 2, 4, 6, 7, 9, 11):
+                        self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
+                                  [MPS[j][0], int(MRP_amount), date(2024, i+1, 31)])
+                    elif i == 1:
+                        self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
+                                          [MPS[j][0], int(MRP_amount), date(2024, i+1, 28)])
+                    else:
+                        self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
+                                          [MPS[j][0], int(MRP_amount), date(2024, i+1, 30)])
 
         # 计算物料需求量
         # 毛需求 = 独立需求 + 相关需求
@@ -248,11 +256,12 @@ class JHDataBase:
                 table_kc.append(each)
             parent = db1.where("xt_bom_大众自动钳BOM", ["PARENT"], ID=BOM1[i][0])
             relevent = self.where("MRP_table", ["planned_amount", "planned_deadline"], product_id=parent[0][0]) #相关需求
-            planned_amount1 = int(relevent[0][0] - table_kc[0][0] - table_kc[0][0] + table_kc[0][1])
-            MRP_date = datetime.strptime(relevent[0][1], "%Y-%m-%d")
-            cycle = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=parent[0][0])
-            MRP_ddl_date = MRP_date.date() - timedelta(weeks=cycle[0][0])
-            self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
+            for j in range(len(relevent)):
+                planned_amount1 = int(relevent[j][0] - table_kc[0][0] - table_kc[0][0] + table_kc[0][1])
+                MRP_date = datetime.strptime(relevent[j][1], "%Y-%m-%d")
+                cycle = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=parent[0][0])
+                MRP_ddl_date = MRP_date.date() - timedelta(weeks=cycle[0][0])
+                self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
                               [BOM1[i][0], int(planned_amount1), MRP_ddl_date])
 
     def chejianzuoye_cal(self):
@@ -263,12 +272,13 @@ class JHDataBase:
         BOM_zuoye = db1.where("xt_bom_大众自动钳BOM", ["ID"], BUY=0)
         for i in range(len(BOM_zuoye)):
             info = self.where("MRP_table", ["planned_amount", "planned_deadline"], product_id=BOM_zuoye[i][0])
-            zuoye_ddl = datetime.strptime(info[0][1], "%Y-%m-%d")
-            zuoye_ddl_date = zuoye_ddl.date()
-            line = db1.where("line_xt_bom_大众自动钳BOM", ["LINE_ID"], ID=BOM_zuoye[i][0])
-            chejian = db1.where("line", ["CHEJIAN"], LINE_ID=line[0][0])
-            self.insert_table("zuoye_table", ["chejian_id", "product_id", "product_amount", "ddl_time"],
-                              [chejian[0][0], BOM_zuoye[i][0], int(info[0][0]), zuoye_ddl_date])
+            for j in range(len(info)):
+                zuoye_ddl = datetime.strptime(info[j][1], "%Y-%m-%d")
+                zuoye_ddl_date = zuoye_ddl.date()
+                line = db1.where("line_xt_bom_大众自动钳BOM", ["LINE_ID"], ID=BOM_zuoye[i][0])
+                chejian = db1.where("line", ["CHEJIAN"], LINE_ID=line[0][0])
+                self.insert_table("zuoye_table", ["chejian_id", "product_id", "product_amount", "ddl_time"],
+                              [chejian[0][0], BOM_zuoye[i][0], int(info[j][0]), zuoye_ddl_date])
 
 
     def caigou_cal(self):
@@ -279,10 +289,11 @@ class JHDataBase:
         BOM_caigou = db1.where("xt_bom_大众自动钳BOM", ["ID"], BUY=1)
         for i in range(len(BOM_caigou)):
             info = self.where("MRP_table", ["planned_amount", "planned_deadline"], product_id=BOM_caigou[i][0])
-            caigou_ddl = datetime.strptime(info[0][1], "%Y-%m-%d")
-            caigou_ddl_date = caigou_ddl.date()
-            self.insert_table("caigou_table", ["caigoupin_id", "caigou_amount", "ddl_time"],
-                              [BOM_caigou[i][0], int(info[0][0]), caigou_ddl_date])
+            for j in range(len(info)):
+                caigou_ddl = datetime.strptime(info[j][1], "%Y-%m-%d")
+                caigou_ddl_date = caigou_ddl.date()
+                self.insert_table("caigou_table", ["caigoupin_id", "caigou_amount", "ddl_time"],
+                              [BOM_caigou[i][0], int(info[j][0]), caigou_ddl_date])
 
     def paigong_cal(self):
         paigong = self.find_info("paigong_table", ["work_id"])
@@ -294,16 +305,17 @@ class JHDataBase:
             people = db1.where("worker", ["ID"], PLACE=chejian[i][0])
             line = db1.where("line", ["LINE_ID"], CHEJIAN=chejian[i][0])
             work_ddl = self.where("zuoye_table", ["ddl_time"], chejian_id=chejian[i][0])
-            work_place_date = datetime.strptime(work_ddl[0][0], "%Y-%m-%d")
-            work_place_ddl_date = work_place_date.date()
-            for j in range(len(line)):
-                work_place = db1.find_info("work"+ str(line[0][0]), ["WC", "TIME", "WORK_ID"], WORK_ID="DESC")
-                if j == 0:
-                    self.insert_table("paigong_table", ["work_id", "product_id", "work_request", "work_time"],
+            for k in range(len(work_ddl)):
+                work_place_date = datetime.strptime(work_ddl[k][0], "%Y-%m-%d")
+                work_place_ddl_date = work_place_date.date()
+                for j in range(len(line)):
+                    work_place = db1.find_info("work"+ str(line[0][0]), ["WC", "TIME", "WORK_ID"], WORK_ID="DESC")
+                    if j == 0:
+                        self.insert_table("paigong_table", ["work_id", "product_id", "work_request", "work_time"],
                                       [work_place[j][0], chejian[i][1], int(work_place[j][1]/len(people)), work_place_ddl_date])
-                else:
-                    work_place_ddl_date -= timedelta(weeks=work_place[j-1][1])
-                    self.insert_table("paigong_table", ["work_id", "product_id", "work_request", "work_time"],
+                    else:
+                        work_place_ddl_date -= timedelta(weeks=work_place[j-1][1])
+                        self.insert_table("paigong_table", ["work_id", "product_id", "work_request", "work_time"],
                                       [work_place[j][0], chejian[i][1], int(work_place[j][1]/len(people)), work_place_ddl_date])
 
     def lingliao_cal(self):
@@ -337,7 +349,7 @@ if __name__ == "__main__":
     db.paigong_table("paigong_table")
     db.lingliao_table("lingliao_table")
 
-    # db.drop("lingliao_table")
+    # db.drop("caigou_table")
 
     # db.insert_table("MPS_table",["product_id","planned_amount","planned_deadline"],[1, 100, date(2024,12,31)])
 
