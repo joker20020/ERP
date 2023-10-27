@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>698</width>
+    <width>545</width>
     <height>419</height>
    </rect>
   </property>
@@ -31,7 +31,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="CaptionLabel" name="label">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -219,7 +219,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="LineEdit" name="lineEdit">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -326,7 +326,7 @@
   <customwidget>
    <class>CaptionLabel</class>
    <extends>QLabel</extends>
-   <header>qfluentwidgets</header>
+   <header location="global">qfluentwidgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

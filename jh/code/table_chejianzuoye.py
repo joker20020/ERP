@@ -44,12 +44,12 @@ class table_chejianzuoye(object):
         self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         __qtablewidgetitem3 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        if (self.tableWidget.rowCount() < 20):
-            self.tableWidget.setRowCount(20)
+        if (self.tableWidget.rowCount() < 1000):
+            self.tableWidget.setRowCount(1000)
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setStyleSheet(u"font: 18pt \"STKaiti\";")
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.tableWidget.setRowCount(20)
+        self.tableWidget.setRowCount(1000)
         self.tableWidget.horizontalHeader().setDefaultSectionSize(150)
 
         self.verticalLayout.addWidget(self.tableWidget)

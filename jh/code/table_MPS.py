@@ -42,12 +42,12 @@ class table_MPS(object):
         self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         __qtablewidgetitem2 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        if (self.tableWidget.rowCount() < 20):
-            self.tableWidget.setRowCount(20)
+        if (self.tableWidget.rowCount() < 1000):
+            self.tableWidget.setRowCount(1000)
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setStyleSheet(u"font: 18pt \"STKaiti\";")
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.tableWidget.setRowCount(20)
+        self.tableWidget.setRowCount(1000)
         self.tableWidget.setColumnCount(3)
         self.tableWidget.horizontalHeader().setDefaultSectionSize(200)
 
