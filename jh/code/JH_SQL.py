@@ -206,18 +206,10 @@ class JHDataBase:
             db.delete("MPS_table", product_id=MPS[i][0])
         db1 = XTDataBase(self.xt_file)
         BOM1 = db1.where("xt_bom_大众自动钳BOM", ["ID"], LAYER=1)
-        conn1 = sql.connect(self.xs_file, check_same_thread=False)
-        cursor1 = conn1.cursor()
 
         for i in range(len(BOM1)):
-            cursor1.execute(f'SELECT forcast FROM for WHERE f_id={BOM1[i][0]}')  # 采购量
-            cursor1.connection.commit()
-            table_forecast = []
-            for each in cursor1:
-                table_forecast.append(each)
-            for j in range(len(table_forecast)):
-                self.insert_table("MPS_table", ["product_id", "planned_amount", "planned_deadline"],
-                              [BOM1[i][0], table_forecast[j][0], date(2024, 12, 31)])
+            self.insert_table("MPS_table", ["product_id", "planned_amount", "planned_deadline"],
+                              [BOM1[i][0], 120000, date(2024, 12, 31)])
 
     def MRP_calculate(self):
         MPS = self.find_info("MPS_table", [])
