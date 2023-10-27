@@ -25,7 +25,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(545, 419)
+        Form.resize(698, 419)
         self.verticalLayout = QVBoxLayout(Form)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Preferred)
@@ -35,6 +35,11 @@ class Ui_Form(object):
         self.label = QLabel(Form)
         self.label.setObjectName(u"label")
         self.label.setEnabled(True)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
         font = QFont()
         font.setFamilies([u"Baoli SC"])
         font.setPointSize(64)
@@ -141,11 +146,11 @@ class Ui_Form(object):
 
         self.workID = LineEdit(Form)
         self.workID.setObjectName(u"workID")
-        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.workID.sizePolicy().hasHeightForWidth())
-        self.workID.setSizePolicy(sizePolicy)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.workID.sizePolicy().hasHeightForWidth())
+        self.workID.setSizePolicy(sizePolicy1)
         self.workID.setStyleSheet(u"font: 18pt \"STKaiti\";")
         self.workID.setFrame(True)
 

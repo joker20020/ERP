@@ -7,7 +7,6 @@ sys.path.append(os.path.abspath("./jh/code"))
 sys.path.append(os.path.abspath("./kc"))
 sys.path.append(os.path.abspath("./xs"))
 sys.path.append(os.path.abspath("./xt/code"))
-# print(os.getcwd())
 
 from PySide6.QtWidgets import QApplication, QWidget,QMessageBox, QTreeWidgetItem, QTableWidgetItem,QHeaderView
 from PySide6.QtCore import Qt,Signal
