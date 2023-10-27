@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>734</width>
-    <height>593</height>
+    <width>720</width>
+    <height>623</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,17 +17,72 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
        <string>请购单接收</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_15">
+      <layout class="QVBoxLayout" name="verticalLayout_14">
        <item>
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="1" column="0" colspan="3">
-          <widget class="QTableView" name="requisition_table_view">
+        <layout class="QVBoxLayout" name="verticalLayout_13">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_15">
+           <item>
+            <widget class="PrimaryPushButton" name="requisition_receipt_btn">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>读取采购请求</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="PrimaryPushButton" name="requisition_accept_btn">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>接收请求</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="TableView" name="requisition_table_view">
            <property name="contextMenuPolicy">
             <enum>Qt::DefaultContextMenu</enum>
            </property>
@@ -45,57 +100,6 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QPushButton" name="requisition_accept_btn">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>接收请求</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QPushButton" name="requisition_receipt_btn">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>读取采购请求</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>528</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
         </layout>
        </item>
       </layout>
@@ -104,614 +108,312 @@
       <attribute name="title">
        <string>采购订单管理</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
+        <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_10">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_2">
-               <item>
-                <widget class="QLabel" name="label">
-                 <property name="text">
-                  <string>采购明细号：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="order_detail_id">
-                 <property name="minimumSize">
-                  <size>
-                   <width>121</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>121</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_4">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>318</width>
-                   <height>15</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_3">
-               <item>
-                <widget class="QLabel" name="label_2">
-                 <property name="text">
-                  <string>采购清单号：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="order_requisition_id">
-                 <property name="minimumSize">
-                  <size>
-                   <width>121</width>
-                   <height>16</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_3">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>388</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>494</width>
-                 <height>13</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_6">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>494</width>
-                 <height>13</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <item>
-                <widget class="QLabel" name="label_10">
-                 <property name="text">
-                  <string>      订货商：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="order_supplier"/>
-               </item>
-               <item>
-                <widget class="QToolButton" name="order_supplier_btn">
-                 <property name="text">
-                  <string>...</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_7">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>282</width>
-                   <height>15</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_5">
-               <item>
-                <widget class="QLabel" name="label_7">
-                 <property name="text">
-                  <string>   收货单号：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="order_receipt_box">
-                 <property name="minimumSize">
-                  <size>
-                   <width>121</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_8">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>368</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_6">
-               <item>
-                <widget class="QLabel" name="label_8">
-                 <property name="text">
-                  <string>          备注：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QTextEdit" name="order_remarks"/>
-               </item>
-              </layout>
-             </item>
-            </layout>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <widget class="StrongBodyLabel" name="label_12">
+             <property name="minimumSize">
+              <size>
+               <width>96</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>采购明细预览：</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+            </widget>
            </item>
-           <item>
-            <spacer name="verticalSpacer_2">
+           <item row="0" column="1" colspan="2">
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>518</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="2">
+            <widget class="PrimaryToolButton" name="order_search">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>26</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>导入</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="PrimaryToolButton" name="order_save">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>26</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>保存</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="ToolButton" name="order_add">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>26</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>增加</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="ToolButton" name="order_delete">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>26</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>删除</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <spacer name="verticalSpacer">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
-               <height>338</height>
+               <height>98</height>
               </size>
              </property>
             </spacer>
            </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_7">
-               <item>
-                <widget class="QLabel" name="label_3">
-                 <property name="text">
-                  <string>物料编码：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="order_bom">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_9">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>49</width>
-                   <height>15</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_8">
-               <item>
-                <widget class="QLabel" name="label_6">
-                 <property name="text">
-                  <string>物料价格：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="order_price">
-                 <property name="minimumSize">
-                  <size>
-                   <width>96</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_9">
-               <item>
-                <widget class="QLabel" name="label_9">
-                 <property name="text">
-                  <string>订货批量：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="order_quantity">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>96</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_11">
-               <item>
-                <widget class="QLabel" name="label_11">
-                 <property name="text">
-                  <string>商品总价：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="order_total_price">
-                 <property name="minimumSize">
-                  <size>
-                   <width>96</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_10">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>188</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_16">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>188</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_11">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>188</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_12">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>188</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_13">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>188</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_14">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>188</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_15">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>188</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_17">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>188</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
+           <item row="1" column="0" rowspan="5" colspan="2">
+            <widget class="TableView" name="order_table_view"/>
            </item>
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
-            <spacer name="horizontalSpacer_18">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>778</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0" colspan="2">
+              <widget class="StrongBodyLabel" name="label">
+               <property name="text">
+                <string>采购明细号：</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="LineEdit" name="order_detail_id">
+               <property name="minimumSize">
+                <size>
+                 <width>121</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>121</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="StrongBodyLabel" name="label_10">
+               <property name="text">
+                <string>   供应商：</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4" colspan="2">
+              <widget class="LineEdit" name="order_supplier"/>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <widget class="StrongBodyLabel" name="label_2">
+               <property name="text">
+                <string>预计到货时间：</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="DateTimeEdit" name="dateTimeEdit"/>
+             </item>
+             <item row="1" column="3" colspan="2">
+              <widget class="StrongBodyLabel" name="label_7">
+               <property name="text">
+                <string>   收货单号：</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="5">
+              <widget class="LineEdit" name="order_receipt_box"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="BodyLabel" name="label_8">
+               <property name="text">
+                <string>          备注：</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="5">
+              <widget class="TextEdit" name="order_remarks">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>300</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_12">
-             <item>
-              <widget class="QLabel" name="label_12">
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0">
+              <widget class="BodyLabel" name="label_3">
+               <property name="text">
+                <string>物料编码：</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="2">
+              <widget class="LineEdit" name="order_bom"/>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <widget class="BodyLabel" name="label_6">
+               <property name="text">
+                <string>物料价格：</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="LineEdit" name="order_price">
                <property name="minimumSize">
                 <size>
                  <width>96</width>
                  <height>0</height>
                 </size>
                </property>
+              </widget>
+             </item>
+             <item row="2" column="0" colspan="2">
+              <widget class="BodyLabel" name="label_9">
                <property name="text">
-                <string>采购明细预览：</string>
+                <string>订货批量：</string>
                </property>
                <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
-             <item>
-              <spacer name="horizontalSpacer_19">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+             <item row="2" column="2">
+              <widget class="LineEdit" name="order_quantity">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
-               <property name="sizeHint" stdset="0">
+               <property name="minimumSize">
                 <size>
-                 <width>628</width>
-                 <height>17</height>
+                 <width>96</width>
+                 <height>0</height>
                 </size>
                </property>
-              </spacer>
+              </widget>
              </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_13">
-             <item>
-              <widget class="QTableView" name="order_table_view"/>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_3">
-               <item>
-                <widget class="QToolButton" name="order_add">
-                 <property name="text">
-                  <string>增</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QToolButton" name="order_delete">
-                 <property name="text">
-                  <string>删</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QToolButton" name="order_save">
-                 <property name="text">
-                  <string>存</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QToolButton" name="order_search">
-                 <property name="text">
-                  <string>查</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="verticalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>24</width>
-                   <height>13</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_14">
-             <item>
-              <spacer name="horizontalSpacer_20">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+             <item row="3" column="0" colspan="2">
+              <widget class="BodyLabel" name="label_11">
+               <property name="text">
+                <string>商品总价：</string>
                </property>
-               <property name="sizeHint" stdset="0">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="LineEdit" name="order_total_price">
+               <property name="minimumSize">
                 <size>
-                 <width>328</width>
-                 <height>20</height>
+                 <width>96</width>
+                 <height>0</height>
                 </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="order_preview">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>预览</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="order_print">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>打印</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="order_pdf_save">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>保存</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="order_cancel">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>取消</string>
                </property>
               </widget>
              </item>
@@ -727,248 +429,265 @@
       <attribute name="title">
        <string>到货接收</string>
       </attribute>
-      <widget class="QTableView" name="receive_table_view">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>201</y>
-         <width>601</width>
-         <height>341</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_13">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>采购明细号：</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_17">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>54</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>收货单号：</string>
-       </property>
-      </widget>
-      <widget class="QDateTimeEdit" name="receive_time">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>80</y>
-         <width>194</width>
-         <height>22</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_18">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>80</y>
-         <width>54</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>到货时间：</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_19">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>110</y>
-         <width>54</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>到货量：</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_20">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>140</y>
-         <width>54</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>合格品数：</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_21">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>170</y>
-         <width>54</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>入库状态：</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="receive_status">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>170</y>
-         <width>79</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>已入库</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_22">
-       <property name="geometry">
-        <rect>
-         <x>320</x>
-         <y>10</y>
-         <width>54</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>备注：</string>
-       </property>
-      </widget>
-      <widget class="QTextBrowser" name="receive_remarks">
-       <property name="geometry">
-        <rect>
-         <x>360</x>
-         <y>10</y>
-         <width>311</width>
-         <height>121</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="receive_item">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>10</y>
-         <width>113</width>
-         <height>20</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="receive_id">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>40</y>
-         <width>113</width>
-         <height>20</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="receive_quantity">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>110</y>
-         <width>113</width>
-         <height>20</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="receive_qualified">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>140</y>
-         <width>113</width>
-         <height>20</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="receive_delete">
-       <property name="geometry">
-        <rect>
-         <x>620</x>
-         <y>280</y>
-         <width>75</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>删除</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</iconset>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="receive_add">
-       <property name="geometry">
-        <rect>
-         <x>620</x>
-         <y>240</y>
-         <width>75</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>增加</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</iconset>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="receive_save">
-       <property name="geometry">
-        <rect>
-         <x>620</x>
-         <y>320</y>
-         <width>75</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>保存</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</iconset>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="receive_search">
-       <property name="geometry">
-        <rect>
-         <x>620</x>
-         <y>200</y>
-         <width>76</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>读取</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</iconset>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="0">
+            <widget class="StrongBodyLabel" name="label_5">
+             <property name="text">
+              <string>到货接收：</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" colspan="2">
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>558</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="0" rowspan="5" colspan="2">
+            <widget class="TableView" name="receive_table_view"/>
+           </item>
+           <item row="1" column="2">
+            <widget class="PrimaryPushButton" name="receive_search">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>26</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>读取</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="PrimaryPushButton" name="receive_save">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>26</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>保存</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="PushButton" name="receive_add">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>26</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>增加</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="PushButton" name="receive_delete">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>26</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>删除</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>168</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_5">
+             <item row="0" column="0">
+              <widget class="StrongBodyLabel" name="label_17">
+               <property name="text">
+                <string>收货单号：</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="LineEdit" name="receive_id"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="StrongBodyLabel" name="label_13">
+               <property name="text">
+                <string>物料编码：</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="LineEdit" name="receive_item"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="StrongBodyLabel" name="label_18">
+               <property name="text">
+                <string>到货时间：</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="DateTimeEdit" name="receive_time"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="StrongBodyLabel" name="label_19">
+               <property name="text">
+                <string>到货量：</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="LineEdit" name="receive_quantity"/>
+             </item>
+             <item row="4" column="0">
+              <widget class="StrongBodyLabel" name="label_20">
+               <property name="text">
+                <string>合格品数：</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="LineEdit" name="receive_qualified"/>
+             </item>
+             <item row="5" column="0">
+              <widget class="StrongBodyLabel" name="label_21">
+               <property name="text">
+                <string>入库状态：</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="CheckBox" name="receive_status">
+               <property name="text">
+                <string>已入库</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="gridLayout_6">
+             <item row="0" column="0">
+              <widget class="BodyLabel" name="label_22">
+               <property name="text">
+                <string>备注：</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="PrimaryPushButton" name="receive_btn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>75</width>
+                 <height>26</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>入库操作</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" rowspan="2">
+              <widget class="TextEdit" name="receive_remarks">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>150</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
@@ -982,7 +701,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <item>
-              <widget class="QLabel" name="label_4">
+              <widget class="StrongBodyLabel" name="label_4">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -992,13 +711,13 @@
                <property name="minimumSize">
                 <size>
                  <width>60</width>
-                 <height>16</height>
+                 <height>30</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>16</height>
+                 <height>30</height>
                 </size>
                </property>
                <property name="text">
@@ -1007,17 +726,17 @@
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="supplier_choose_box">
+              <widget class="ComboBox" name="supplier_choose_box">
                <property name="minimumSize">
                 <size>
                  <width>151</width>
-                 <height>22</height>
+                 <height>30</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>22</height>
+                 <height>30</height>
                 </size>
                </property>
               </widget>
@@ -1060,17 +779,23 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QLabel" name="supplier_location">
+                  <widget class="BodyLabel" name="supplier_location">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>211</width>
-                     <height>31</height>
+                     <height>50</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>31</height>
+                     <height>60</height>
                     </size>
                    </property>
                    <property name="text">
@@ -1089,7 +814,7 @@
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_17">
                  <item>
-                  <widget class="QLabel" name="label_14">
+                  <widget class="StrongBodyLabel" name="label_14">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1108,7 +833,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="supplier_id">
+                  <widget class="BodyLabel" name="supplier_id">
                    <property name="minimumSize">
                     <size>
                      <width>131</width>
@@ -1131,7 +856,7 @@
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_18">
                  <item>
-                  <widget class="QLabel" name="label_15">
+                  <widget class="StrongBodyLabel" name="label_15">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1156,7 +881,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="supplier_tel">
+                  <widget class="BodyLabel" name="supplier_tel">
                    <property name="minimumSize">
                     <size>
                      <width>141</width>
@@ -1202,7 +927,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_19">
              <item>
-              <widget class="QLabel" name="label_16">
+              <widget class="BodyLabel" name="label_16">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -1218,7 +943,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QTextBrowser" name="supplier_profile">
+              <widget class="PlainTextEdit" name="supplier_profile">
                <property name="minimumSize">
                 <size>
                  <width>331</width>
@@ -1245,7 +970,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="supplier_list">
+              <widget class="PrimaryPushButton" name="supplier_list">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1258,7 +983,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="supplier_evaluate">
+              <widget class="PushButton" name="supplier_evaluate">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1314,7 +1039,7 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_25">
            <item>
-            <widget class="QPushButton" name="query_choose_btn">
+            <widget class="PrimaryPushButton" name="query_choose_btn">
              <property name="text">
               <string>选择文件</string>
              </property>
@@ -1325,7 +1050,18 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="query_add">
+            <widget class="PrimaryPushButton" name="query_save">
+             <property name="text">
+              <string>保存</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="PushButton" name="query_add">
              <property name="text">
               <string>增加</string>
              </property>
@@ -1336,20 +1072,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="query_delete">
+            <widget class="PushButton" name="query_delete">
              <property name="text">
               <string>删除</string>
-             </property>
-             <property name="icon">
-              <iconset>
-               <normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</normaloff>E:/.designer/backup/python/pyQT-sqlite-gui/icons/sc_refresh.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="query_save">
-             <property name="text">
-              <string>保存</string>
              </property>
              <property name="icon">
               <iconset>
@@ -1373,7 +1098,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QTableView" name="query_list_view"/>
+          <widget class="TableView" name="query_list_view"/>
          </item>
         </layout>
        </item>
@@ -1383,6 +1108,73 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TableView</class>
+   <extends>QTableView</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PrimaryPushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>CheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PlainTextEdit</class>
+   <extends>QTextBrowser</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>BodyLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>StrongBodyLabel</class>
+   <extends>QLabel</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>ToolButton</class>
+   <extends>QToolButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>DateTimeEdit</class>
+   <extends>QDateTimeEdit</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PrimaryToolButton</class>
+   <extends>QToolButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
