@@ -4,6 +4,7 @@ import os
 # 任何一个PySide界面程序都需要使用QApplication
 # 我们要展示一个普通的窗口，所以需要导入QWidget，用来让我们自己的类继承
 sys.path.append(os.path.abspath("../../xt/code"))
+sys.path.append(os.path.abspath("../../kc"))
 from PySide6.QtWidgets import QApplication, QWidget, QApplication, QTableWidget, QTableWidgetItem
 # 导入我们生成的界面
 from JH_SQL import JHDataBase
@@ -17,7 +18,7 @@ from table_lingliao import table_lingliao
 
 from xt_container import XtContainer,OperationCode
 
-sys.path.append(os.path.abspath("../../kc"))
+
 from inventory import InventoryManager
 
 '''
