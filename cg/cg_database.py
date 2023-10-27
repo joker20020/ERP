@@ -154,7 +154,7 @@ class cg_receipt_inspection(cg_database_entity):
 class cg_supplier_item # 供应商供货明细
     ├── 'cg_item_name' 物料名称，TEXT，20字节，必填
     │
-    ├── 'material_code' 物料编码，INT，必填，主键
+    ├── 'material_code' 物料编码，INT，必填
     │
     ├── 'cg_item_price' 物料价格，REAL，必填
     │
@@ -162,8 +162,8 @@ class cg_supplier_item # 供应商供货明细
 '''
 class cg_supplier_item(cg_database_entity):
     table_schema = '''
+        material_code INT NOT NULL PRIMARY KEY,
         cg_item_name TEXT(20) NOT NULL,
-        material_code INT NOT NULL,
         cg_item_price REAL NOT NULL,
         cg_remarks TEXT(200)
     '''
@@ -174,40 +174,30 @@ class cg_supplier_item(cg_database_entity):
 if __name__ == '__main__':
 
     # 访问路径及名称，此处访问 Detail of January.db
-    database_name = os.path.join(db_folder, "Purchase Receipt.db")
+    database_name = os.path.join(db_folder, "Purchase Item.db")
    
     # 判断是否有文件存在，如果有就读取进行操作，如果没有就新建一个表
     if os.path.exists(os.path.join(db_folder, database_name)):
         # cg_sup_item = cg_supplier_item(database_name)
         # cg_sup_info = cg_supplier_info(database_name)
-        cg_rec_ins = cg_receipt_inspection(database_name)
+        # cg_rec_ins = cg_receipt_inspection(database_name)
         # cg_pur_det = cg_purchase_detail(database_name, 'cg_purchase_detail', 'cg_purchase_detail_id')
+        cg_sup_ite = cg_supplier_item(database_name)
     else:
         # cg_sup_item = cg_supplier_item(database_name)
         # cg_sup_item.create_table(cg_supplier_item.table_schema)
-        cg_rec_ins = cg_receipt_inspection(database_name)
-        cg_rec_ins.create_table(cg_receipt_inspection.table_schema)
+        # cg_rec_ins = cg_receipt_inspection(database_name)
+        # cg_rec_ins.create_table(cg_receipt_inspection.table_schema)
         # cg_pur_det = cg_purchase_detail(database_name, 'cg_purchase_detail', 'cg_purchase_detail_id')
         # cg_pur_det.create_table(cg_purchase_detail.table_schema)
+        cg_sup_ite = cg_supplier_item(database_name)
+        cg_sup_ite.create_table(cg_supplier_item.table_schema)
 
-    for i in range(1, 10):
-        pdid = 40002001 + i
-        if (i > 10):
-            status = 1
-            arrival_time = "2023-10"
-        else: 
-            status = 0
-            arrival_time = None
-        orlo = random.randint(10, 300)
-        tapr = orlo * 12.5
-        
-        cg_rec_ins.add_item(
-            cg_receipt_id = pdid,
-            material_code = i,
-            cg_arrival_quantity = orlo,
-            cg_quelified_products = orlo - 10,
-            cg_inbound_status = status
-        ) 
+    cg_sup_ite.add_item(
+        material_code = 6,
+        cg_item_name = '右壳体',
+        cg_item_price = 112.31,
+    )
 
 
 """     for i in range(1, 17):

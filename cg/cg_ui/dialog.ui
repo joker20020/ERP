@@ -19,21 +19,21 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QPushButton" name="supplier_item_add">
+        <widget class="PushButton" name="supplier_item_add">
          <property name="text">
           <string>增加</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="supplier_item_delete">
+        <widget class="PushButton" name="supplier_item_delete">
          <property name="text">
           <string>删除</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="supplier_item_save">
+        <widget class="PrimaryPushButton" name="supplier_item_save">
          <property name="text">
           <string>保存</string>
          </property>
@@ -42,12 +42,29 @@
       </layout>
      </item>
      <item>
-      <widget class="QTableView" name="supplier_table_view"/>
+      <widget class="TableView" name="supplier_table_view"/>
      </item>
     </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PrimaryPushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TableView</class>
+   <extends>QTableView</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
