@@ -88,11 +88,11 @@ class BomWindow(QWidget):
 
         self.draw_action = Action(text="输出树状图")
 
-        self.head = ["ID","bom层级","零件名称","父零件ID","零件成本","零件生产周期","是否外购","注释"]
+        self.head = ["ID","bom层级","零件名称","父零件ID","零件数量","零件成本","零件生产周期","是否外购","注释"]
 
         self.ui.bomTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Custom)
 
-        self.data_type = [int,int,str,int,float,float,BOOL,str]
+        self.data_type = [int,int,str,int,int,float,float,BOOL,str]
         # self.refresh_boms()
         self.bind()
 

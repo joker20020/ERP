@@ -124,6 +124,11 @@
        </column>
        <column>
         <property name="text">
+         <string>零件数量</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
          <string>零件成本</string>
         </property>
        </column>

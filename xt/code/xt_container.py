@@ -125,13 +125,13 @@ class XtContainer(BaseContainer):
     def update_bom(self,name,data):
         if not self.production.is_activity():
             raise AuthorityError("受限制的访问权限")
-        head = ["ID","LAYER","NAME","PARENT","COST","CYCLE","BUY","ANNOTATION"]
+        head = ["ID","LAYER","NAME","PARENT","NUM","COST","CYCLE","BUY","ANNOTATION"]
         ids = self.get_ids(name)
         for i in range(len(ids)):
             ids[i] = ids[i][0]
 
         for i in range(len(data)):
-            str_null(data[i],[None,None,None,None,None,None,None,""])
+            str_null(data[i],[None,None,None,None,None,None,None,None,""])
             if data[i][0] in ids:
                 dicts={}
 

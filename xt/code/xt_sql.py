@@ -142,6 +142,7 @@ class XTDataBase:
         LAYER INTEGER NOT NULL,
         NAME TEXT NOT NULL,
         PARENT INTEGER NOT NULL,
+        NUM INTEGER NOT NULL,
         COST REAL NOT NULL,
         CYCLE REAL NOT NULL,
         BUY INTEGER NOT NULL,
@@ -387,8 +388,15 @@ class Logger(XTDataBase):
 
 if __name__ == "__main__":
     db = XTDataBase("test.db")
-    logger = Logger("test.db")
-    logger.generate("jdy","test operation")
+    db.xt_bom_create_table("xt_bom_大众自动钳BOM")
+    print(db.find_info("xt_bom_大众自动钳BOM", []))
+    db.xt_bom_create_table("xt_bom_大众自动钳BOM")
+    while 1 :
+        cmd = input()
+        print(db.sql_cmd(cmd))
+        print(db.find_info("xt_bom_大众自动钳BOM", []))
+    # logger = Logger("test.db")
+    # logger.generate("jdy","test operation")
     # print(db.sql_cmd("SELECT name FROM sqlite_master"))
     # print(db.sql_cmd('PRAGMA table_info(bom1)'))
     # db.insert_table("xt_bom_1",["LAYER","NAME","NUM","DESC","COST","CYCLE","BUY"],[1,"BOM1_TEST",2,"This is a test!!!",4.5,3.4,True])
