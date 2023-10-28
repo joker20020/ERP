@@ -524,7 +524,7 @@ class Ui_cg_sector(object):
         self.verticalLayout_11.addWidget(self.tabWidget)
 
         self.retranslateUi(cg_sector)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(cg_sector)
 
     def retranslateUi(self, cg_sector):

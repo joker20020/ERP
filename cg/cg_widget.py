@@ -51,7 +51,7 @@ from inventory import InventoryManager
 # 这是生成采购部门模块的类
 class cg_widget(QWidget):
     # 继承父类，并执行类的方法，一些基础的设定
-    def __init__(self, detail_file, list_file, receipt_file, supplier_file, user_name, xt_log):
+    def __init__(self, detail_file, list_file, receipt_file, supplier_file, item_file, user_name, xt_log):
         super().__init__()
         # 定义窗体大小
         self.resize(800, 480)
@@ -64,6 +64,7 @@ class cg_widget(QWidget):
         self.receipt_file = receipt_file
         self.list_file = list_file
         self.supplier_file = supplier_file
+        self.item_file = item_file
 
         # OC = OperationCode()
         self.log = XtContainer(1, xt_log, user_name)
@@ -178,7 +179,7 @@ class cg_widget(QWidget):
         # TODO: 写这个代码块的注释
         # 设置tableView的模型以及表的名称
         self.model = QSqlTableModel(self, self.database)
-        self.model.setTable('MPS_table')
+        self.model.setTable('caigou_table')
 
         self.model.setHeaderData(0, Qt.Horizontal, "物料编码")
         self.model.setHeaderData(1, Qt.Horizontal, "计划订购量")
@@ -475,7 +476,7 @@ class cg_widget(QWidget):
             self.ui.supplier_profile.setPlainText(remarks)
 
             # 同时，加载该供应商的logo图片，图片储存在cg_gr中
-            self.load_supplier_logo(company_id)  
+            self.load_supplier_logo(company_id)
             self.ui.supplier_list.clicked.connect(lambda: self.supplier_table_view(company_id))
             # if self.ui.supplier_list.clicked:
             #   print("OKKKKKK!!!! This is: ", company_id)
@@ -501,13 +502,10 @@ class cg_widget(QWidget):
         del logo_pixmap
         del scene
 
+    @Slot()
     def supplier_table_view(self, company_id):
-        sup1 = os.path.abspath("cg/cg_db/40004001.db")
-        sup2 = os.path.abspath("cg/cg_db/40004002.db")
-        sup3 = os.path.abspath("cg/cg_db/40004003.db")
-        sup4 = os.path.abspath("cg/cg_db/40004004.db")
-        sup5 = os.path.abspath("cg/cg_db/40004005.db")
-        dialog = supplier_form(company_id, sup1, sup2, sup3, sup4, sup5)
+        print("the company id is: ", company_id)
+        dialog = supplier_form(company_id, self.item_file)
         dialog.exec()
 
     # TODO: 写这个代码块
@@ -620,18 +618,18 @@ class supplier_eval(QThread):
             self.quit()
 
 class supplier_form(QDialog):
-    def __init__(self, company_id, sup1, sup2, sup3, sup4, sup5):
+    def __init__(self, company_id, item_file):
         super(supplier_form, self).__init__()
         self.ui = Ui_cg_form()
         self.ui.setupUi(self)
         self.company_id = company_id
+        self.item_file = item_file
         self.init_table()
-        self.supplier_table = sup1
     
     def init_table(self):
         company_id = self.company_id
         self.database = QSqlDatabase.addDatabase("QSQLITE")
-        filename = self.supplier_table
+        filename = self.item_file
         self.database.setDatabaseName(filename)
         if not self.database.open():
             print("Error: Could not open the database")
@@ -641,8 +639,8 @@ class supplier_form(QDialog):
             model = QSqlTableModel(self, self.database)
             model.setTable(table_name)
 
-            model.setHeaderData(0, Qt.Horizontal, "物料名称")
-            model.setHeaderData(1, Qt.Horizontal, "物料编码")
+            model.setHeaderData(0, Qt.Horizontal, "物料编码")
+            model.setHeaderData(1, Qt.Horizontal, "物料名称")
             model.setHeaderData(2, Qt.Horizontal, "物料价格")
             model.setHeaderData(3, Qt.Horizontal, "备注")
             model.select()
@@ -657,11 +655,14 @@ class supplier_form(QDialog):
 
     def detect_table_name(self):
         tables = self.database.tables()
-        if tables:
-            return tables[0]
-        else:
-            print("No such tables.")
-            return None
+        print("the table is:", tables)
+        sup_id = f"_{self.company_id}"
+        print("the id is: ", sup_id)
+        for i in range(5):
+            if sup_id == tables[i]:
+                return sup_id
+        if sup_id:
+            print("Error, could not find the table.")
 
     def item_add(self):
         print("add")
@@ -693,11 +694,12 @@ if __name__ == '__main__':
     list_file = os.path.abspath("jh/code/JHdatabase.db")
     receipt_file = os.path.abspath("cg/cg_db/Purchase Receipt.db")
     supplier_file = os.path.abspath("cg/cg_db/Purchase Supplier.db")
+    item_file = os.path.abspath("cg/cg_db/Purchase Item.db")
 
     # 创建一个名为app的实例，代表应用本身，用于设置GUI并处理事件
     app = QApplication(sys.argv)
     # 实例化MyWindow
-    widget = cg_widget(detail_file, list_file, receipt_file, supplier_file, '../test.db', "采购")
+    widget = cg_widget(detail_file, list_file, receipt_file, supplier_file, item_file, '../test.db', "采购")
     # 在屏幕上显示QWiget窗口
     widget.show()
     # 启动QApplication的循环，直到用户关闭窗口
