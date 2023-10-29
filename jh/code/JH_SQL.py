@@ -261,7 +261,7 @@ class JHDataBase:
                 planned_amount1 = int(relevent[j][0] - table_kc[0][0] - table_kc[0][0] + table_kc[0][1])
                 MRP_date = datetime.strptime(relevent[j][1], "%Y-%m-%d")
                 cycle = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=parent[0][0])
-                MRP_ddl_date = MRP_date.date() - timedelta(weeks=cycle[0][0])
+                MRP_ddl_date = MRP_date.date() - timedelta(days=cycle[0][0]*planned_amount1/1440)
                 self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
                               [BOM1[i][0], int(planned_amount1), MRP_ddl_date])
 
@@ -316,7 +316,7 @@ class JHDataBase:
                             self.insert_table("paigong_table", ["work_id", "product_id", "product_amount", "work_request", "work_time"],
                                       [work_place[a][0], chejian[i][1], int(chejian[i][2]), int(work_place[a][1]/len(people)), work_place_ddl_date])
                         else:
-                            work_place_ddl_date -= timedelta(weeks=work_place[a-1][1])
+                            work_place_ddl_date -= timedelta(days=work_place[a-1][1]*chejian[i][2]/1440)
                             self.insert_table("paigong_table", ["work_id", "product_id", "product_amount", "work_request", "work_time"],
                                       [work_place[a][0], chejian[i][1], int(chejian[i][2]), int(work_place[a][1]/len(people)), work_place_ddl_date])
 
