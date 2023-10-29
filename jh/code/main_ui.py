@@ -25,7 +25,6 @@ from inventory import InventoryManager
 UPDATE:数据库路径修改为传入,修改日志数据库路径为传入，避免错误 line 33
 '''
 
-
 # 继承QWidget类，以获取其属性和方法
 class JHWidget(QWidget):
     def __init__(self, user_name, xt_file, xs_file, kc_file, cg_file, file_path="JHdatabase.db", log_path ="../../test.db"):
@@ -70,52 +69,89 @@ class JHWidget(QWidget):
         if mode == "MPS主生产计划":
             MPS = self.jh_db.find_info("MPS_table", [])
             row1 = len(MPS)
-            self.MPS.ui.tableWidget.setRowCount(row1)
+
+            t = 0
+            k = 0
             for i in range(row1):
                 deadline = datetime.strptime(MPS[i][2], "%Y-%m-%d").date()
                 if deadline > start:
                     if deadline <= ddl:
+                        t = t+1
+            self.MPS.ui.tableWidget.setRowCount(t)
+
+            for i in range(row1):
+                deadline = datetime.strptime(MPS[i][2], "%Y-%m-%d").date()
+                if deadline > start:
+                    if deadline <= ddl:
+                        k = k+1
                         for j in range(len(MPS[i])):
-                            self.MPS.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(MPS[i][j])))
+                            self.MPS.ui.tableWidget.setItem(k-1, j, QTableWidgetItem(str(MPS[i][j])))
+
             self.MPS.show()
 
         elif mode == "MRP物料需求计划":
             MRP = self.jh_db.find_info("MRP_table", [])
             row2 = len(MRP)
-            self.MRP.ui.tableWidget.setRowCount(row2)
+            t = 0
+            k = 0
             for i in range(row2):
                 deadline = datetime.strptime(MRP[i][2], "%Y-%m-%d").date()
                 if deadline > start:
                     if deadline <= ddl:
+                        t = t+1
+            self.MRP.ui.tableWidget.setRowCount(t)
+
+            for i in range(row2):
+                deadline = datetime.strptime(MRP[i][2], "%Y-%m-%d").date()
+                if deadline > start:
+                    if deadline <= ddl:
+                        k = k+1
                         for j in range(len(MRP[i])):
-                            self.MRP.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(MRP[i][j])))
+                            self.MRP.ui.tableWidget.setItem(k-1, j, QTableWidgetItem(str(MRP[i][j])))
+
             self.MRP.show()
 
         elif mode == "车间工作采购单":
-            self.caigou.show()
             caigou = self.jh_db.find_info("caigou_table", [])
             row3 = len(caigou)
-            self.caigou.ui.tableWidget.setRowCount(row3)
+            t = 0
+            k = 0
             for i in range(row3):
                 deadline = datetime.strptime(caigou[i][2], "%Y-%m-%d").date()
                 if deadline > start:
                     if deadline <= ddl:
+                        t = t+1
+            self.caigou.ui.tableWidget.setRowCount(t)
+
+            for i in range(row3):
+                deadline = datetime.strptime(caigou[i][2], "%Y-%m-%d").date()
+                if deadline > start:
+                    if deadline <= ddl:
+                        k = k+1
                         for j in range(len(caigou[i])):
-                            self.caigou.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(caigou[i][j])))
+                            self.caigou.ui.tableWidget.setItem(k-1, j, QTableWidgetItem(str(caigou[i][j])))
 
             self.caigou.show()
 
         elif mode == "车间工作作业计划":
-            self.chejianzuoye.show()
             zuoye = self.jh_db.find_info("zuoye_table", [])
             row4 = len(zuoye)
-            self.chejianzuoye.ui.tableWidget.setRowCount(row4)
+            t = 0
+            k = 0
             for i in range(row4):
                 deadline = datetime.strptime(zuoye[i][3], "%Y-%m-%d").date()
                 if deadline > start:
                     if deadline <= ddl:
+                        t = t+1
+            self.chejianzuoye.ui.tableWidget.setRowCount(t)
+
+            for i in range(row4):
+                deadline = datetime.strptime(zuoye[i][3], "%Y-%m-%d").date()
+                if deadline > start:
+                    if deadline <= ddl:
+                        k = k+1
                         for j in range(len(zuoye[i])):
-                            self.chejianzuoye.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(zuoye[i][j])))
+                            self.chejianzuoye.ui.tableWidget.setItem(k-1, j, QTableWidgetItem(str(zuoye[i][j])))
 
             self.chejianzuoye.show()
 
@@ -124,25 +160,44 @@ class JHWidget(QWidget):
             if work_id != "":
                 paigong = self.jh_db.where("paigong_table", [], work_id=int(work_id))
                 self.paigong.ui.tableWidget.clearContents()
-                rows5 = len(paigong)
-                self.paigong.ui.tableWidget.setRowCount(rows5)
-                for i in range(rows5):
-                    deadline = datetime.strptime(paigong[i][3], "%Y-%m-%d").date()
+                row5 = len(paigong)
+                t = 0
+                k = 0
+                for i in range(row5):
+                    deadline = datetime.strptime(paigong[i][4], "%Y-%m-%d").date()
                     if deadline > start:
                         if deadline <= ddl:
+                            t = t+1
+                self.paigong.ui.tableWidget.setRowCount(t)
+
+                for i in range(row5):
+                    deadline = datetime.strptime(paigong[i][4], "%Y-%m-%d").date()
+                    if deadline > start:
+                        if deadline <= ddl:
+                            k = k + 1
                             for j in range(len(paigong[i])):
-                                self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong[i][j])))
+                                self.paigong.ui.tableWidget.setItem(k-1, j, QTableWidgetItem(str(paigong[i][j])))
+
             else:
                 paigong_table = self.jh_db.find_info("paigong_table", [])
                 self.paigong.ui.tableWidget.clearContents()
-                rows5 = len(paigong_table)
-                self.paigong.ui.tableWidget.setRowCount(rows5)
-                for i in range(rows5):
-                    deadline = datetime.strptime(paigong_table[i][3], "%Y-%m-%d").date()
+                row5 = len(paigong_table)
+                t = 0
+                k = 0
+                for i in range(row5):
+                    deadline = datetime.strptime(paigong_table[i][4], "%Y-%m-%d").date()
                     if deadline > start:
                         if deadline <= ddl:
+                            t = t+1
+                self.paigong.ui.tableWidget.setRowCount(t)
+
+                for i in range(row5):
+                    deadline = datetime.strptime(paigong_table[i][4], "%Y-%m-%d").date()
+                    if deadline > start:
+                        if deadline <= ddl:
+                            k = k+1
                             for j in range(len(paigong_table[i])):
-                                self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong_table[i][j])))
+                                self.paigong.ui.tableWidget.setItem(k-1, j, QTableWidgetItem(str(paigong_table[i][j])))
 
             self.paigong.show()
 
@@ -151,26 +206,44 @@ class JHWidget(QWidget):
             if work_id != "":
                 lingliao = self.jh_db.where("lingliao_table", [], work_id=int(work_id))
                 self.lingliao.ui.tableWidget.clearContents()
-                rows6 = len(lingliao)
-                self.lingliao.ui.tableWidget.setRowCount(rows6)
-                for i in range(rows6):
+                row6 = len(lingliao)
+                t = 0
+                k = 0
+                for i in range(row6):
                     deadline = datetime.strptime(lingliao[i][3], "%Y-%m-%d").date()
                     if deadline > start:
                         if deadline <= ddl:
+                            t = t+1
+                self.lingliao.ui.tableWidget.setRowCount(t)
+
+                for i in range(row6):
+                    deadline = datetime.strptime(lingliao[i][3], "%Y-%m-%d").date()
+                    if deadline > start:
+                        if deadline <= ddl:
+                            k = k+1
                             for j in range(len(lingliao[i])):
-                                self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao[i][j])))
+                                self.lingliao.ui.tableWidget.setItem(k-1, j, QTableWidgetItem(str(lingliao[i][j])))
+
             else:
                 lingliao_table = self.jh_db.find_info("lingliao_table", [])
                 self.lingliao.ui.tableWidget.clearContents()
-                rows5 = len(lingliao_table)
-                self.lingliao.ui.tableWidget.setRowCount(rows5)
-                for i in range(rows5):
+                row6 = len(lingliao_table)
+                t = 0
+                k = 0
+                for i in range(row6):
                     deadline = datetime.strptime(lingliao_table[i][3], "%Y-%m-%d").date()
                     if deadline > start:
                         if deadline <= ddl:
-                            for j in range(len(lingliao_table[i])):
-                                self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao_table[i][j])))
+                            t = t+1
+                self.lingliao.ui.tableWidget.setRowCount(t)
 
+                for i in range(row6):
+                    deadline = datetime.strptime(lingliao_table[i][3], "%Y-%m-%d").date()
+                    if deadline > start:
+                        if deadline <= ddl:
+                            k = k+1
+                            for j in range(len(lingliao_table[i])):
+                                self.lingliao.ui.tableWidget.setItem(k-1, j, QTableWidgetItem(str(lingliao_table[i][j])))
             self.lingliao.show()
 
             lingliao = self.jh_db.find_info("lingliao_table", ["goods_id", "goods_amount", "needed_time"])

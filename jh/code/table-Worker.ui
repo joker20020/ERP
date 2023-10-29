@@ -73,6 +73,11 @@
      </column>
      <column>
       <property name="text">
+       <string>产量</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>工人工作时间</string>
       </property>
      </column>
