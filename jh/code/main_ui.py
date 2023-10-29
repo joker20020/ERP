@@ -159,7 +159,7 @@ class JHWidget(QWidget):
         elif mode == "派工单":
             work_id = self.ui.workID.text()
             if work_id != "":
-                paigong = self.jh_db.where("paigong_table", [], work_id=int(work_id))
+                paigong = self.jh_db.where("paigong_table", [], work_id=str(work_id))
                 self.paigong.ui.tableWidget.clearContents()
                 row5 = len(paigong)
                 t = 0
@@ -205,7 +205,7 @@ class JHWidget(QWidget):
         elif mode == "领料单":
             work_id = self.ui.workID.text()
             if work_id != "":
-                lingliao = self.jh_db.where("lingliao_table", [], work_id=int(work_id))
+                lingliao = self.jh_db.where("lingliao_table", [], work_id=str(work_id))
                 self.lingliao.ui.tableWidget.clearContents()
                 row6 = len(lingliao)
                 t = 0
