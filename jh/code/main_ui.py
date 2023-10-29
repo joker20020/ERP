@@ -25,6 +25,7 @@ from inventory import InventoryManager
 UPDATE:数据库路径修改为传入,修改日志数据库路径为传入，避免错误 line 33
 '''
 
+
 # 继承QWidget类，以获取其属性和方法
 class JHWidget(QWidget):
     def __init__(self, user_name, xt_file, xs_file, kc_file, cg_file, file_path="JHdatabase.db", log_path ="../../test.db"):

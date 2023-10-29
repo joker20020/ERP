@@ -314,11 +314,11 @@ class JHDataBase:
                         people = db1.where("worker", ["ID"], PLACE=str(chejian[i][0])+"-"+str(work_place[a][0]))
                         if a == 0:
                             self.insert_table("paigong_table", ["work_id", "product_id", "product_amount", "work_request", "work_time"],
-                                      [work_place[a][0], chejian[i][1], int(chejian[i][2]), int(work_place[a][1]/len(people)), work_place_ddl_date])
+                                      [work_place[a][0], chejian[i][1], int(chejian[i][2]), int(work_place[a][1]*chejian[i][2]/len(people)), work_place_ddl_date])
                         else:
                             work_place_ddl_date -= timedelta(days=work_place[a-1][1]*chejian[i][2]/1440)
                             self.insert_table("paigong_table", ["work_id", "product_id", "product_amount", "work_request", "work_time"],
-                                      [work_place[a][0], chejian[i][1], int(chejian[i][2]), int(work_place[a][1]/len(people)), work_place_ddl_date])
+                                      [work_place[a][0], chejian[i][1], int(chejian[i][2]), int(work_place[a][1]*chejian[i][2]/len(people)), work_place_ddl_date])
 
     def lingliao_cal(self):
         lingliao = self.find_info("lingliao_table", ["work_id"])
