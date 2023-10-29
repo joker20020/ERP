@@ -66,7 +66,7 @@ class table_paigong(object):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.label.setText(QCoreApplication.translate("Form", u"\u6d3e\u5de5\u5355", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("Form", u"\u5de5\u4f5c\u4e2d\u5fc3ID", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("Form", u"\u5de5\u4f5c\u4e2d\u5fc3ID-\u5de5\u5e8f", None));
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("Form", u"\u751f\u4ea7\u54c1ID", None));
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)

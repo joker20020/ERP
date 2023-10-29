@@ -66,7 +66,7 @@ class JHDataBase:
     def paigong_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-            work_id INTEGER NOT NULL,
+            work_id TEXT NOT NULL,
             product_id INTEGER NOT NULL,
             product_amount INTEGER,
             work_request INTEGER NOT NULL,
@@ -78,7 +78,7 @@ class JHDataBase:
     def lingliao_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-            work_id INTEGER NOT NULL,
+            work_id TEXT NOT NULL,
             goods_id INTEGER NOT NULL,
             goods_amount INTEGER NOT NULL,
             needed_time DATE NOT NULL
@@ -303,22 +303,67 @@ class JHDataBase:
         chejian = self.find_info("zuoye_table", ["chejian_id", "product_id", "product_amount"])
         db1 = XTDataBase(self.xt_file)
         for i in range(len(chejian)):
-            line = db1.where("line", ["LINE_ID"], CHEJIAN=chejian[i][0])
-            work_ddl = self.where("zuoye_table", ["ddl_time"], chejian_id=chejian[i][0])
-            for k in range(len(work_ddl)):
-                work_place_date = datetime.strptime(work_ddl[k][0], "%Y-%m-%d")
-                work_place_ddl_date = work_place_date.date()
-                for j in range(len(line)):
-                    work_place = db1.find_info("work"+ str(line[j][0]), ["WC", "TIME", "WORK_ID"], WORK_ID="DESC")
-                    for a in range(len(work_place)):
-                        people = db1.where("worker", ["ID"], PLACE=str(chejian[i][0])+"-"+str(work_place[a][0]))
-                        if a == 0:
-                            self.insert_table("paigong_table", ["work_id", "product_id", "product_amount", "work_request", "work_time"],
-                                      [work_place[a][0], chejian[i][1], int(chejian[i][2]), int(work_place[a][1]/len(people)), work_place_ddl_date])
-                        else:
-                            work_place_ddl_date -= timedelta(days=work_place[a-1][1]*chejian[i][2]/1440)
-                            self.insert_table("paigong_table", ["work_id", "product_id", "product_amount", "work_request", "work_time"],
-                                      [work_place[a][0], chejian[i][1], int(chejian[i][2]), int(work_place[a][1]/len(people)), work_place_ddl_date])
+            if i >= 1:
+                if chejian[i][0] != p_id:
+                    line = db1.where("line", ["LINE_ID"], CHEJIAN=chejian[i][0])
+                    work_ddl = self.where("zuoye_table", ["ddl_time"], chejian_id=chejian[i][0])
+                    p_id = chejian[i][1]
+                    p_amount = chejian[i][2]
+                    for k in range(len(work_ddl)):
+                        work_place_date = datetime.strptime(work_ddl[k][0], "%Y-%m-%d")
+                        work_place_ddl_date = work_place_date.date()
+                        for j in range(len(line)):
+                            work_place = db1.find_info("work" + str(line[j][0]), ["WC", "TIME", "WORK_ID"],
+                                                       WORK_ID="DESC")
+                            for a in range(len(work_place)):
+                                people = db1.where("worker", ["ID"],
+                                                   PLACE=str(chejian[i][0]) + "-" + str(work_place[a][0]))
+                                if a == 0:
+                                    self.insert_table("paigong_table",
+                                                      ["work_id", "product_id", "product_amount", "work_request",
+                                                       "work_time"],
+                                                      [str(work_place[a][0]) + "-" + str(work_place[a][2]), p_id,
+                                                       int(p_amount), int(work_place[a][1] * p_amount / len(people)),
+                                                       work_place_ddl_date])
+                                else:
+                                    work_place_ddl_date1 = work_place_ddl_date - timedelta(
+                                        days=work_place[a - 1][1] * chejian[i][2] / 1440)
+                                    self.insert_table("paigong_table",
+                                                      ["work_id", "product_id", "product_amount", "work_request",
+                                                       "work_time"],
+                                                      [str(work_place[a][0]) + "-" + str(work_place[a][2]), p_id,
+                                                       int(p_amount), int(work_place[a][1] * p_amount / len(people)),
+                                                       work_place_ddl_date1])
+            else:
+                line = db1.where("line", ["LINE_ID"], CHEJIAN=chejian[i][0])
+                work_ddl = self.where("zuoye_table", ["ddl_time"], chejian_id=chejian[i][0])
+                p_id = chejian[i][1]
+                p_amount = chejian[i][2]
+                for k in range(len(work_ddl)):
+                    work_place_date = datetime.strptime(work_ddl[k][0], "%Y-%m-%d")
+                    work_place_ddl_date = work_place_date.date()
+                    for j in range(len(line)):
+                        work_place = db1.find_info("work" + str(line[j][0]), ["WC", "TIME", "WORK_ID"], WORK_ID="DESC")
+                        for a in range(len(work_place)):
+                            people = db1.where("worker", ["ID"], PLACE=str(chejian[i][0]) + "-" + str(work_place[a][0]))
+                            if a == 0:
+                                self.insert_table("paigong_table",
+                                                  ["work_id", "product_id", "product_amount", "work_request",
+                                                   "work_time"],
+                                                  [str(work_place[a][0]) + "-" + str(work_place[a][2]), p_id,
+                                                   int(p_amount), int(work_place[a][1] * p_amount / len(people)),
+                                                   work_place_ddl_date])
+                            else:
+                                work_place_ddl_date1 = work_place_ddl_date - timedelta(
+                                    days=work_place[a - 1][1] * chejian[i][2] / 1440)
+                                self.insert_table("paigong_table",
+                                                  ["work_id", "product_id", "product_amount", "work_request",
+                                                   "work_time"],
+                                                  [str(work_place[a][0]) + "-" + str(work_place[a][2]), p_id,
+                                                   int(p_amount), int(work_place[a][1] * p_amount / len(people)),
+                                                   work_place_ddl_date1])
+
+
 
     def lingliao_cal(self):
         lingliao = self.find_info("lingliao_table", ["work_id"])
@@ -333,7 +378,7 @@ class JHDataBase:
             product_time = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=work_place[i][1])
             work_place_date = datetime.strptime(work_place[i][4], "%Y-%m-%d")
             date = work_place_date.date()
-            lingliao_ddl_date = date - timedelta(product_time[0][0])
+            lingliao_ddl_date = date - timedelta(days=product_time[0][0]*work_place[i][2]/1440)
             for j in range(len(lingliao_id)):
                 self.insert_table("lingliao_table", ["work_id", "goods_id", "goods_amount", "needed_time"],
                               [work_place[i][0], lingliao_id[j][0], int(work_place[i][2]), lingliao_ddl_date])
