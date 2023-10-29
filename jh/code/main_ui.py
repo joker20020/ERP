@@ -25,6 +25,7 @@ from inventory import InventoryManager
 UPDATE:数据库路径修改为传入,修改日志数据库路径为传入，避免错误 line 33
 '''
 
+
 # 继承QWidget类，以获取其属性和方法
 class JHWidget(QWidget):
     def __init__(self, user_name, xt_file, xs_file, kc_file, cg_file, file_path="JHdatabase.db", log_path ="../../test.db"):
@@ -158,7 +159,7 @@ class JHWidget(QWidget):
         elif mode == "派工单":
             work_id = self.ui.workID.text()
             if work_id != "":
-                paigong = self.jh_db.where("paigong_table", [], work_id=int(work_id))
+                paigong = self.jh_db.where("paigong_table", [], work_id=str(work_id))
                 self.paigong.ui.tableWidget.clearContents()
                 row5 = len(paigong)
                 t = 0
@@ -204,7 +205,7 @@ class JHWidget(QWidget):
         elif mode == "领料单":
             work_id = self.ui.workID.text()
             if work_id != "":
-                lingliao = self.jh_db.where("lingliao_table", [], work_id=int(work_id))
+                lingliao = self.jh_db.where("lingliao_table", [], work_id=str(work_id))
                 self.lingliao.ui.tableWidget.clearContents()
                 row6 = len(lingliao)
                 t = 0
