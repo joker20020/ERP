@@ -57,7 +57,7 @@ class JHDataBase:
     def chejianzuoye_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-            chejian_id INTEGER PRIMARY KEY,
+            chejian_id INTEGER NOT NULL,
             product_id INTEGER NOT NULL,
             product_amount INTEGER NOT NULL,
             ddl_time DATE
