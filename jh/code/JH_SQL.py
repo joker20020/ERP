@@ -258,7 +258,7 @@ class JHDataBase:
             parent = db1.where("xt_bom_大众自动钳BOM", ["PARENT"], ID=BOM1[i][0])
             relevent = self.where("MRP_table", ["planned_amount", "planned_deadline"], product_id=parent[0][0]) #相关需求
             for j in range(len(relevent)):
-                planned_amount1 = int(relevent[j][0] - table_kc[0][0] - table_kc[0][0] + table_kc[0][1])
+                planned_amount1 = int(relevent[j][0] - table_kc[0][0] - table_cg[0][0] + table_kc[0][1])
                 MRP_date = datetime.strptime(relevent[j][1], "%Y-%m-%d")
                 cycle = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=parent[0][0])
                 MRP_ddl_date = MRP_date.date() - timedelta(days=cycle[0][0]*planned_amount1/1440)

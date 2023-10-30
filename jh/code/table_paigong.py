@@ -16,8 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QHeaderView, QLabel,
-    QSizePolicy, QTableWidget, QTableWidgetItem, QVBoxLayout,
-    QWidget)
+    QSizePolicy, QTableWidgetItem, QVBoxLayout, QWidget)
+
+from qfluentwidgets import TableWidget
 
 class table_paigong(object):
     def setupUi(self, Form):
@@ -28,12 +29,12 @@ class table_paigong(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.label = QLabel(Form)
         self.label.setObjectName(u"label")
-        self.label.setStyleSheet(u"font: 36pt \"Baoli SC\";")
+        self.label.setStyleSheet(u"font: 36pt \"\u534e\u6587\u96b6\u4e66\";")
         self.label.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout.addWidget(self.label)
 
-        self.tableWidget = QTableWidget(Form)
+        self.tableWidget = TableWidget(Form)
         if (self.tableWidget.columnCount() < 5):
             self.tableWidget.setColumnCount(5)
         __qtablewidgetitem = QTableWidgetItem()

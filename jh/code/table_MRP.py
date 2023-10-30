@@ -16,8 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QHeaderView, QLabel,
-    QSizePolicy, QTableWidget, QTableWidgetItem, QVBoxLayout,
-    QWidget)
+    QSizePolicy, QTableWidgetItem, QVBoxLayout, QWidget)
+
+from qfluentwidgets import TableWidget
 
 class table_MRP(object):
     def setupUi(self, Form):
@@ -29,14 +30,17 @@ class table_MRP(object):
         self.label = QLabel(Form)
         self.label.setObjectName(u"label")
         font = QFont()
-        font.setFamilies([u"Baoli SC"])
+        font.setFamilies([u"\u534e\u6587\u96b6\u4e66"])
         font.setPointSize(36)
+        font.setBold(False)
+        font.setItalic(False)
         self.label.setFont(font)
+        self.label.setStyleSheet(u"font: 36pt \"\u534e\u6587\u96b6\u4e66\";")
         self.label.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout.addWidget(self.label)
 
-        self.tableWidget = QTableWidget(Form)
+        self.tableWidget = TableWidget(Form)
         if (self.tableWidget.columnCount() < 3):
             self.tableWidget.setColumnCount(3)
         __qtablewidgetitem = QTableWidgetItem()
@@ -45,12 +49,12 @@ class table_MRP(object):
         self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         __qtablewidgetitem2 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        if (self.tableWidget.rowCount() < 1000):
-            self.tableWidget.setRowCount(1000)
+        if (self.tableWidget.rowCount() < 20):
+            self.tableWidget.setRowCount(20)
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setStyleSheet(u"font: 18pt \"STKaiti\";")
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.tableWidget.setRowCount(1000)
+        self.tableWidget.setRowCount(20)
         self.tableWidget.horizontalHeader().setDefaultSectionSize(150)
 
         self.verticalLayout.addWidget(self.tableWidget)

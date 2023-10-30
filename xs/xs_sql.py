@@ -1,7 +1,7 @@
 import sqlite3 as sql
 import sys
 import time
-from PySide6.QtWidgets import QApplication, QWidget,QLineEdit,QVBoxLayout,QTableWidgetItem,QTextBrowser
+from PySide6.QtWidgets import QApplication, QWidget,QLineEdit,QVBoxLayout,QTableWidgetItem,QTextBrowser,QHeaderView
 # PySide6-uic demo.ui -o ui_demo.py
 from xs2 import Ui_Form
 
@@ -251,6 +251,11 @@ class MyWindow(QWidget):
         self.db = XSDataBase(file_path)
         self.bind()
         self.log=XtContainer(1,xt_log,user_name)
+        header = self.ui.tableWidget_2.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        header = self.ui.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+
 
 
     def bind(self):
@@ -382,6 +387,7 @@ class MyWindow(QWidget):
             self.ui.textBrowser_3.clear()
             d_sid = self.ui.lineEdit_7.text()
             self.db.delete('sale',salesperson_id=d_sid)
+            self.db.delete('per', saleman_id=d_sid)
             self.ui.lineEdit_7.clear()
             self.ui.textBrowser_3.setText("操作成功")
         if self.ui.radioButton_8.isChecked():
@@ -409,6 +415,7 @@ class MyWindow(QWidget):
 
    #销售产品管理
     def get_btn5_text(self):
+        self.ui.lineEdit_13.clear()
         p_id = self.ui.lineEdit_12.text()
         p_sid = self.ui.lineEdit_14.text()
         p_cpassword = self.ui.lineEdit_15.text()
@@ -428,6 +435,9 @@ class MyWindow(QWidget):
                 for i in range(3):
                     self.ui.tableWidget.setItem(0, i, QTableWidgetItem(str(per[0][i])))
                     self.ui.tableWidget.setItem(0,3,QTableWidgetItem(str(10)))
+        self.ui.lineEdit_12.clear()
+        self.ui.lineEdit_14.clear()
+        self.ui.lineEdit_15.clear()
 
 
 #销售订单管理
@@ -593,27 +603,28 @@ class MyWindow(QWidget):
 
 
 if __name__ == '__main__':
-    app = QApplication([])  # 启动一个应用
-    window = MyWindow('../kc/inventory.db','../test.db',"销售")  # 实例化主窗口
-    window.show()  # 展示主窗口
-    app.exec()  # 避免程序执行到这一行后直接退出"""
+    # app = QApplication([])  # 启动一个应用
+    # window = MyWindow('../kc/inventory.db','../test.db',"销售")  # 实例化主窗口
+    # window.show()  # 展示主窗口
+    # app.exec()  # 避免程序执行到这一行后直接退出"""
 
     kc = XSDataBase('../kc/inventory.db')
+
     # i=kc.find_info('products',[])
     # print(i)
     # kc.find_info('',[])
-    # salespersons = XSDataBase('lk.db')
-    # salespersons.xs_salespersons_create_table('sale')
-    # products = XSDataBase('lk.db')
-    # products.xs_products_create_table('pod')
-    # customer = XSDataBase('lk.db')
-    # customer.xs_customer_create_table('cust')
-    # order = XSDataBase('lk.db')
-    # order.xs_sales_orders_create_table('ordr')
-    # performance = XSDataBase('lk.db')
-    # performance.xs_sale_performance_create_table('per')
-    # forcast = XSDataBase('lk.db')
-    # forcast.xs_sales_forcast_create_table('for')
+    salespersons = XSDataBase('lk.db')
+    salespersons.xs_salespersons_create_table('sale')
+    products = XSDataBase('lk.db')
+    products.xs_products_create_table('pod')
+    customer = XSDataBase('lk.db')
+    customer.xs_customer_create_table('cust')
+    order = XSDataBase('lk.db')
+    order.xs_sales_orders_create_table('ordr')
+    performance = XSDataBase('lk.db')
+    performance.xs_sale_performance_create_table('per')
+    forcast = XSDataBase('lk.db')
+    forcast.xs_sales_forcast_create_table('for')
     # salespersons.insert_table('sale',['salesperson_id','name'],[20374105,'舒琛'])
     # salespersons.insert_table('sale', ['salesperson_id', 'name'], [20374103, '吴哥'])
     # print(salespersons.find_info('sale',[]))

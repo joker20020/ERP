@@ -34,7 +34,7 @@ sys.path.append(os.path.abspath("jh/code"))
 from PySide6.QtWidgets import (QApplication, QWidget, QComboBox,
 QPushButton, QLabel, QLineEdit, QHBoxLayout, QVBoxLayout, QDialog,
 QGroupBox, QMainWindow, QRadioButton, QGridLayout, QTableView,
-QFormLayout, QStackedLayout, QScrollArea, QFileDialog, 
+QFormLayout, QStackedLayout, QScrollArea, QFileDialog, QHeaderView,
 QGraphicsView, QGraphicsScene, QGraphicsPixmapItem)
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import Qt, QThread, Signal, Slot, QModelIndex, QDateTime
@@ -68,6 +68,7 @@ class cg_widget(QWidget):
         self.list_file = list_file
         self.supplier_file = supplier_file
         self.item_file = item_file
+        self.user_name = user_name
 
         # OC = OperationCode()
         self.log = XtContainer(1, xt_log, user_name)
@@ -77,6 +78,7 @@ class cg_widget(QWidget):
         # self.setWindowIcon(icon)
         # 定义一个线程的状态
         self.thread_running = None
+        self.rec_fun_is_running = None
         self.selected_data = []
 
     # 一些初始化操作
@@ -190,7 +192,7 @@ class cg_widget(QWidget):
         self.model.select()
         # 显示表格
         self.ui.requisition_table_view.setModel(self.model)
-        self.ui.requisition_table_view.resizeColumnsToContents()
+        self.ui.requisition_table_view.resizeColumnToContents(2)
 
         # 嵌套了一个槽函数，对选择的行进行判断        
         self.selected_row = None
@@ -228,15 +230,15 @@ class cg_widget(QWidget):
     @Slot()
     def accept_requisition(self):
         if self.selected_row is not None:
-            print("table: ", detail_file)
+            print("table: ", self.detail_file)
             # You can now use self.selected_row to access the selected row
             print(f"Selected Row: {self.selected_row}")
             print(f"selected data is: ", self.selected_data)
-            conn = sqlite3.connect(detail_file)
+            conn = sqlite3.connect(self.detail_file)
             cursor = conn.cursor()
             cursor.execute("SELECT MAX(cg_purchase_detail_id) FROM cg_purchase_detail")
             max_id = cursor.fetchone()[0]
-            add_requisition = cg_purchase_detail(detail_file, 'cg_purchase_detail', 'cg_purchase_detail_id')
+            add_requisition = cg_purchase_detail(self.detail_file, 'cg_purchase_detail', 'cg_purchase_detail_id')
             add_requisition.add_item(
                 cg_purchase_detail_id = max_id + 1,
                 material_code = self.selected_data[0][0],
@@ -269,8 +271,11 @@ class cg_widget(QWidget):
             model.select()
             # 显示表格
             self.ui.order_table_view.setModel(model)
-            self.ui.order_table_view.resizeColumnsToContents()
-        
+            self.ui.order_table_view.resizeColumnToContents(0)
+            self.ui.order_table_view.resizeColumnToContents(4)
+            self.ui.order_table_view.resizeColumnToContents(5)
+            self.ui.order_table_view.resizeColumnToContents(6)
+
         self.ui.order_table_view.selectionModel().selectionChanged.connect(self.order_table_changed)
         self.log.generate_log(OperationCode.CG_CHANGE)
 
@@ -362,7 +367,8 @@ class cg_widget(QWidget):
             model.select()
             # 显示表格
             self.ui.receive_table_view.setModel(model)
-            self.ui.receive_table_view.resizeColumnsToContents()
+            self.ui.receive_table_view.resizeColumnToContents(0)
+            self.ui.receive_table_view.resizeColumnToContents(2)
 
         self.ui.receive_table_view.selectionModel().selectionChanged.connect(self.receive_table_changed)
         self.log.generate_log(OperationCode.CG_CHANGE)
@@ -374,8 +380,8 @@ class cg_widget(QWidget):
         model.submitAll()
         result = model.insertRows(model.rowCount(), 1)
 
-        if not result:
-            self.error_check(model)
+        # vif not result:
+        #     self.error_check(model)
 
     # 3的槽函数
     def receive_delete_table(self):
@@ -395,18 +401,20 @@ class cg_widget(QWidget):
 
     @Slot()
     def receive_to_inver(self):
+        #if not self.rec_fun_is_running:
         row = self.index
-        # if not self.is_btn_receive_connected:
-        #     self.ui.receive_btn.clicked.disconnect(self.receive_to_inver)
-        #     self.is_btn_receive_connected = True
+            # if not self.is_btn_receive_connected:
+            #     self.ui.receive_btn.clicked.disconnect(self.receive_to_inver)
+            #     self.is_btn_receive_connected = True
         if self.ui.receive_status.isChecked():
             print("ok, the row is: ", row)
             print("the data is:", self.selected_data)
 
             rec_to_inv = InventoryManager('kc/inventory.db')
-            rec_to_inv.add_inventory(self.selected_data[0][0], self.selected_data[0][1], self.selected_data[0][2], "采购")
+            rec_to_inv.add_inventory(self.selected_data[0][0], self.selected_data[0][1], self.selected_data[0][2], self.user_name)
         else:
             print("not be chosen")
+            # self.rec_fun_is_running = True
 
     @Slot()
     def receive_table_changed(self, selected, deselected):

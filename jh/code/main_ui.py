@@ -5,7 +5,7 @@ import os
 # 我们要展示一个普通的窗口，所以需要导入QWidget，用来让我们自己的类继承
 sys.path.append(os.path.abspath("../../xt/code"))
 sys.path.append(os.path.abspath("../../kc"))
-from PySide6.QtWidgets import QApplication, QWidget, QApplication, QTableWidget, QTableWidgetItem
+from PySide6.QtWidgets import QApplication, QWidget, QApplication, QTableWidget, QTableWidgetItem, QHeaderView
 # 导入我们生成的界面
 from JH_SQL import JHDataBase
 from window_chaxun import Ui_Form
@@ -56,6 +56,8 @@ class JHWidget(QWidget):
 
         self.bind()
         # self.loadin()
+
+
 
 
 
@@ -112,6 +114,11 @@ class JHWidget(QWidget):
 
             self.MRP.show()
 
+            MRP = self.jh_db.find_info("MPS_table", ["product_id", "planned_amount", "planned_deadline"])
+            inventor_manager = InventoryManager(self.kc_file)
+            for i in range(len(MRP)):
+                inventor_manager.add_inventory(MRP[i][2], MRP[i][0], int(MRP[i][1]), self.user_name)
+
         elif mode == "车间工作采购单":
             caigou = self.jh_db.find_info("caigou_table", [])
             row3 = len(caigou)
@@ -156,10 +163,15 @@ class JHWidget(QWidget):
 
             self.chejianzuoye.show()
 
+            zuoye = self.jh_db.find_info("zuoye_table", ["product_id", "product_amount", "ddl_time"])
+            inventor_manager = InventoryManager(self.kc_file)
+            for i in range(len(zuoye)):
+                inventor_manager.add_inventory(zuoye[i][2], zuoye[i][0], int(zuoye[i][1]), self.user_name)
+
         elif mode == "派工单":
             work_id = self.ui.workID.text()
             if work_id != "":
-                paigong = self.jh_db.where("paigong_table", [], work_id=str(work_id))
+                paigong = self.jh_db.sql_cmd(f"SELECT * FROM paigong_table WHERE work_id LIKE '{work_id}-%'")
                 self.paigong.ui.tableWidget.clearContents()
                 row5 = len(paigong)
                 t = 0
@@ -205,7 +217,7 @@ class JHWidget(QWidget):
         elif mode == "领料单":
             work_id = self.ui.workID.text()
             if work_id != "":
-                lingliao = self.jh_db.where("lingliao_table", [], work_id=str(work_id))
+                lingliao = self.jh_db.sql_cmd(f"SELECT * FROM lingliao_table WHERE work_id LIKE '{work_id}-%'")
                 self.lingliao.ui.tableWidget.clearContents()
                 row6 = len(lingliao)
                 t = 0
@@ -310,6 +322,8 @@ class table_MPS1(QWidget):
         # 设置界面为我们生成的界面
         self.ui = table_MPS()
         self.ui.setupUi(self)
+        header = self.ui.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
 class table_MRP1(QWidget):
     def __init__(self):
@@ -317,6 +331,8 @@ class table_MRP1(QWidget):
         # 设置界面为我们生成的界面
         self.ui = table_MRP()
         self.ui.setupUi(self)
+        header = self.ui.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
 class table_caigou1(QWidget):
     def __init__(self):
@@ -324,6 +340,8 @@ class table_caigou1(QWidget):
         # 设置界面为我们生成的界面
         self.ui = table_caigou()
         self.ui.setupUi(self)
+        header = self.ui.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
 class table_chejianzuoye1(QWidget):
     def __init__(self):
@@ -331,6 +349,8 @@ class table_chejianzuoye1(QWidget):
         # 设置界面为我们生成的界面
         self.ui = table_chejianzuoye()
         self.ui.setupUi(self)
+        header = self.ui.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
 class table_paigong1(QWidget):
     def __init__(self):
@@ -338,6 +358,8 @@ class table_paigong1(QWidget):
         # 设置界面为我们生成的界面
         self.ui = table_paigong()
         self.ui.setupUi(self)
+        header = self.ui.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
 class table_lingliao1(QWidget):
     def __init__(self):
@@ -345,6 +367,8 @@ class table_lingliao1(QWidget):
         # 设置界面为我们生成的界面
         self.ui = table_lingliao()
         self.ui.setupUi(self)
+        header = self.ui.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
 # 程序入口
 if __name__ == "__main__":

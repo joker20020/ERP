@@ -286,7 +286,7 @@ class MykcWidget(QWidget):
         conn = sqlite3.connect(self.file_path)
         cursor = conn.cursor()
 
-        cursor.execute('SELECT entry_time, product_id, quantity, operator FROM ruku LIMIT 16')
+        cursor.execute('SELECT entry_time, product_id, quantity, operator FROM ruku')
         rows = cursor.fetchall()
 
         for row_num, row_data in enumerate(rows):
@@ -301,7 +301,7 @@ class MykcWidget(QWidget):
         conn = sqlite3.connect(self.file_path)
         cursor = conn.cursor()
 
-        cursor.execute('SELECT exit_time, product_id, quantity, operator FROM chuku LIMIT 16')
+        cursor.execute('SELECT exit_time, product_id, quantity, operator FROM chuku')
         rows = cursor.fetchall()
 
         for row_num, row_data in enumerate(rows):

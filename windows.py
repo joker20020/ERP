@@ -28,7 +28,7 @@ class MainWindow(XTMainWindow):
         # setTheme(Theme.DARK)
 
         if authority & 8:
-            self.cg = cgUI("cg/cg_db/Purchase Detail.db","cg/cg_db/Purchase List.db","cg/cg_db/Purchase Receipt.db","cg/cg_db/Purchase Supplier.db","cg/cg_db/Purchase Item.db",self.user_name,"test.db")
+            self.cg = cgUI("cg/cg_db/Purchase Detail.db","jh/code/JHdatabase.db","cg/cg_db/Purchase Receipt.db","cg/cg_db/Purchase Supplier.db","cg/cg_db/Purchase Item.db",self.user_name,"test.db")
             self.cg.setObjectName("cj")
             self.addSubInterface(self.cg, FluentIcon.MARKET, "采购管理", position=NavigationItemPosition.SCROLL)
         if authority & 16:

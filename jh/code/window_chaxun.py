@@ -25,7 +25,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(545, 419)
+        Form.resize(698, 419)
         self.verticalLayout = QVBoxLayout(Form)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Preferred)
@@ -41,7 +41,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
         font = QFont()
-        font.setFamilies([u"Baoli SC"])
+        font.setFamilies([u"\u96b6\u4e66"])
         font.setPointSize(64)
         self.label.setFont(font)
         self.label.setAlignment(Qt.AlignCenter)
@@ -77,6 +77,12 @@ class Ui_Form(object):
         self.target.addItem("")
         self.target.setObjectName(u"target")
         self.target.setEnabled(True)
+        font2 = QFont()
+        font2.setFamilies([u"STKaiti"])
+        font2.setPointSize(18)
+        font2.setBold(False)
+        font2.setItalic(False)
+        self.target.setFont(font2)
         self.target.setStyleSheet(u"font: 18pt \"STKaiti\";")
         # self.target.setFrame(True)
 
@@ -127,10 +133,10 @@ class Ui_Form(object):
         self.lineEdit = LineEdit(Form)
         self.lineEdit.setObjectName(u"lineEdit")
         self.lineEdit.setEnabled(False)
-        font2 = QFont()
-        font2.setFamilies([u"STKaiti"])
-        font2.setPointSize(18)
-        self.lineEdit.setFont(font2)
+        font3 = QFont()
+        font3.setFamilies([u"STKaiti"])
+        font3.setPointSize(18)
+        self.lineEdit.setFont(font3)
 
         self.verticalLayout.addWidget(self.lineEdit)
 
@@ -167,6 +173,12 @@ class Ui_Form(object):
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.pushButton = PrimaryPushButton(Form)
         self.pushButton.setObjectName(u"pushButton")
+        font4 = QFont()
+        font4.setFamilies([u"STKaiti"])
+        font4.setPointSize(24)
+        font4.setBold(False)
+        font4.setItalic(False)
+        self.pushButton.setFont(font4)
         self.pushButton.setStyleSheet(u"font: 24pt \"STKaiti\";")
 
         self.horizontalLayout_5.addWidget(self.pushButton)

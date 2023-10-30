@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>545</width>
+    <width>698</width>
     <height>419</height>
    </rect>
   </property>
@@ -43,7 +43,7 @@
      </property>
      <property name="font">
       <font>
-       <family>Baoli SC</family>
+       <family>隶书</family>
        <pointsize>64</pointsize>
       </font>
      </property>
@@ -101,6 +101,14 @@
       <widget class="ComboBox" name="target">
        <property name="enabled">
         <bool>true</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>STKaiti</family>
+         <pointsize>18</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
@@ -290,6 +298,14 @@
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <widget class="PrimaryPushButton" name="pushButton">
+       <property name="font">
+        <font>
+         <family>STKaiti</family>
+         <pointsize>24</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">font: 24pt &quot;STKaiti&quot;;</string>
        </property>
@@ -326,7 +342,7 @@
   <customwidget>
    <class>CaptionLabel</class>
    <extends>QLabel</extends>
-   <header location="global">qfluentwidgets</header>
+   <header>qfluentwidgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

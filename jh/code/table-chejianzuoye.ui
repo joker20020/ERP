@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="styleSheet">
-      <string notr="true">font: 36pt &quot;Baoli SC&quot;;</string>
+      <string notr="true">font: 36pt &quot;华文隶书&quot;;</string>
      </property>
      <property name="text">
       <string>车间工作作业计划</string>
@@ -28,7 +28,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableWidget" name="tableWidget">
+    <widget class="TableWidget" name="tableWidget">
      <property name="styleSheet">
       <string notr="true">font: 18pt &quot;STKaiti&quot;;</string>
      </property>
@@ -85,6 +85,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TableWidget</class>
+   <extends>QTableWidget</extends>
+   <header location="global">qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
