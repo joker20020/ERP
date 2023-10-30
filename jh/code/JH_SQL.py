@@ -12,15 +12,17 @@ from cg_database import cg_database_entity
 import sqlite3 as sql
 
 from datetime import date, datetime, timedelta
+import time
 
 class JHDataBase:
-    def __init__(self, file_path, xt_file, xs_file, kc_file, cg_file):
+    def __init__(self, user_name, file_path, xt_file, xs_file, kc_file, cg_file):
         self.connection = sql.connect(file_path)
         self.file_path = file_path
         self.xt_file = xt_file
         self.xs_file = xs_file
         self.kc_file = kc_file
         self.cg_file = cg_file
+        self.user_name = user_name
 
     def MPS_table(self, name):
         cursor = self.connection.cursor()
@@ -35,7 +37,7 @@ class JHDataBase:
     def MRP_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute('''CREATE TABLE IF NOT EXISTS {}(
-            product_id INTEGER NOT NULL,
+            product_id INTEGER PRIMARY KEY,
             planned_amount INTEGER NOT NULL,
             planned_deadline DATE
         );
@@ -45,7 +47,7 @@ class JHDataBase:
     def chejiancaigou_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-            caigoupin_id INTEGER NOT NULL,
+            caigoupin_id INTEGER PRIMARY KEY,
             caigou_amount INTEGER NOT NULL,
             ddl_time DATE
         );
@@ -55,7 +57,7 @@ class JHDataBase:
     def chejianzuoye_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-            chejian_id INTEGER NOT NULL,
+            chejian_id INTEGER PRIMARY KEY,
             product_id INTEGER NOT NULL,
             product_amount INTEGER NOT NULL,
             ddl_time DATE
@@ -204,7 +206,7 @@ class JHDataBase:
     def MPS_insert(self):
         MPS = self.find_info("MPS_table", ["product_id"])
         for i in range(len(MPS)):
-            db.delete("MPS_table", product_id=MPS[i][0])
+            self.delete("MPS_table", product_id=MPS[i][0])
         db1 = XTDataBase(self.xt_file)
         BOM1 = db1.where("xt_bom_大众自动钳BOM", ["ID"], LAYER=1)
 
@@ -216,59 +218,68 @@ class JHDataBase:
         MPS = self.find_info("MPS_table", [])
         MRP = self.find_info("MRP_table", ["product_id"])
         for i in range(len(MRP)):
-            db.delete("MRP_table", product_id=MRP[i][0])
+            self.delete("MRP_table", product_id=MRP[i][0])
 
-        for i in range(12):
-            for j in range(len(MPS)):
-                MPS_amount = self.where("MPS_table", ["planned_amount"], product_id=MPS[j][0])
-                if MPS_amount != []:
-                    MRP_amount = MPS_amount[0][0]/12
-                    if i in (0, 2, 4, 6, 7, 9, 11):
-                        self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                                  [MPS[j][0], int(MRP_amount), date(2024, i+1, 31)])
-                    elif i == 1:
-                        self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                                          [MPS[j][0], int(MRP_amount), date(2024, i+1, 28)])
-                    else:
-                        self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                                          [MPS[j][0], int(MRP_amount), date(2024, i+1, 30)])
+        x = time.localtime().tm_mon
+        for i in range(len(MPS)):
+            MPS_amount = self.where("MPS_table", ["planned_amount"], product_id=MPS[i][0])
+            if MPS_amount != []:
+                MRP_amount = MPS_amount[0][0]/12
+                if x in (0, 2, 4, 6, 7, 9, 11):
+                    self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
+                                      [MPS[i][0], MRP_amount, date(2024, x+1, 31)])
+                elif x == 1:
+                    self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
+                                      [MPS[i][0], MRP_amount, date(2024, x+1, 29)])
+                else:
+                    self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
+                                      [MPS[i][0], MRP_amount, date(2024, x+1, 30)])
 
-        # 计算物料需求量
-        # 毛需求 = 独立需求 + 相关需求
-        # 计划库存量 = 上期库存量 + 本期订单产出量 + 本期预计入库量 - 毛需求量
-        # 净需求量 = 本期毛需求量 - 上期库存量 - 本期预计入库量 + 安全库存量
+                # 计算物料需求量
+                # 毛需求 = 独立需求 + 相关需求
+                # 计划库存量 = 上期库存量 + 本期订单产出量 + 本期预计入库量 - 毛需求量
+                # 净需求量 = 本期毛需求量 - 上期库存量 - 本期预计入库量 + 安全库存量
 
-        db1 = XTDataBase(self.xt_file)
-        BOM1 = db1.sql_cmd("SELECT ID, parent FROM xt_bom_大众自动钳BOM WHERE LAYER >= 2")
-        conn1 = sql.connect(self.cg_file, check_same_thread=False)
-        cursor1 = conn1.cursor()
-        conn2 = sql.connect(self.kc_file, check_same_thread=False)
-        cursor2 = conn2.cursor()
-        for i in range(len(BOM1)):
-            cursor1.execute(f'SELECT cg_order_lot FROM cg_purchase_detail WHERE material_code={BOM1[i][0]}')  # 采购量
-            cursor1.connection.commit()
-            table_cg = []
-            for each in cursor1:
-                table_cg.append(each)
-            cursor2.execute(f'SELECT quantity, safe_inventory FROM products WHERE product_id={BOM1[i][0]}') #库存，安全库存
-            cursor2.connection.commit()
-            table_kc = []
-            for each in cursor2:
-                table_kc.append(each)
-            parent = db1.where("xt_bom_大众自动钳BOM", ["PARENT"], ID=BOM1[i][0])
-            relevent = self.where("MRP_table", ["planned_amount", "planned_deadline"], product_id=parent[0][0]) #相关需求
-            for j in range(len(relevent)):
-                planned_amount1 = int(relevent[j][0] - table_kc[0][0] - table_cg[0][0] + table_kc[0][1])
-                MRP_date = datetime.strptime(relevent[j][1], "%Y-%m-%d")
-                cycle = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=parent[0][0])
-                MRP_ddl_date = MRP_date.date() - timedelta(days=cycle[0][0]*planned_amount1/1440)
-                self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                              [BOM1[i][0], int(planned_amount1), MRP_ddl_date])
+                db1 = XTDataBase(self.xt_file)
+                BOM1 = db1.sql_cmd("SELECT ID, parent FROM xt_bom_大众自动钳BOM WHERE LAYER >= 2")
+                conn1 = sql.connect(self.cg_file, check_same_thread=False)
+                cursor1 = conn1.cursor()
+                conn2 = sql.connect(self.kc_file, check_same_thread=False)
+                cursor2 = conn2.cursor()
+                for j in range(len(BOM1)):
+                    cursor1.execute(f'SELECT cg_order_lot FROM cg_purchase_detail WHERE material_code={BOM1[j][0]}')  # 采购量
+                    cursor1.connection.commit()
+                    table_cg = []
+                    for each in cursor1:
+                        table_cg.append(each)
+                    cursor2.execute(f'SELECT quantity, safe_inventory FROM products WHERE product_id={BOM1[j][0]}') #库存，安全库存
+                    cursor2.connection.commit()
+                    table_kc = []
+                    for each in cursor2:
+                        table_kc.append(each)
+                    parent = db1.where("xt_bom_大众自动钳BOM", ["PARENT"], ID=BOM1[j][0])
+                    relevent = self.where("MRP_table", ["planned_amount", "planned_deadline"], product_id=parent[0][0]) #相关需求
+
+                    planned_amount1 = int(relevent[0][0] - table_kc[0][0] - table_cg[0][0] + table_kc[0][1])
+                    if planned_amount1 < 0:
+                        planned_amount1 = 0
+                    MRP_date = datetime.strptime(relevent[0][1], "%Y-%m-%d")
+                    cycle = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=parent[0][0])
+                    MRP_ddl_date = MRP_date.date() - timedelta(days=cycle[0][0]*planned_amount1/1440)
+                    self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
+                              [BOM1[j][0], int(planned_amount1), MRP_ddl_date])
+
+                    buy = db1.where("xt_bom_大众自动钳BOM", ["BUY"], ID=BOM1[j][0])
+                    if buy[0][0] == 0:
+                        inventor_manager = InventoryManager(self.kc_file)
+                        inventor_manager.add_inventory(MRP_ddl_date, BOM1[j][0], int(planned_amount1),
+                                                       self.user_name)
+
 
     def chejianzuoye_cal(self):
         zuoye= self.find_info("zuoye_table", ["chejian_id"])
         for i in range(len(zuoye)):
-            db.delete("zuoye_table", chejian_id=zuoye[i][0])
+            self.delete("zuoye_table", chejian_id=zuoye[i][0])
         db1 = XTDataBase(self.xt_file)
         BOM_zuoye = db1.where("xt_bom_大众自动钳BOM", ["ID"], BUY=0)
         for i in range(len(BOM_zuoye)):
@@ -285,7 +296,7 @@ class JHDataBase:
     def caigou_cal(self):
         caigou = self.find_info("caigou_table", ["caigoupin_id"])
         for i in range(len(caigou)):
-            db.delete("caigou_table", caigoupin_id=caigou[i][0])
+            self.delete("caigou_table", caigoupin_id=caigou[i][0])
         db1 = XTDataBase(self.xt_file)
         BOM_caigou = db1.where("xt_bom_大众自动钳BOM", ["ID"], BUY=1)
         for i in range(len(BOM_caigou)):
@@ -299,7 +310,7 @@ class JHDataBase:
     def paigong_cal(self):
         paigong = self.find_info("paigong_table", ["work_id"])
         for i in range(len(paigong)):
-            db.delete("paigong_table", work_id=paigong[i][0])
+            self.delete("paigong_table", work_id=paigong[i][0])
         chejian = self.find_info("zuoye_table", ["chejian_id", "product_id", "product_amount"])
         db1 = XTDataBase(self.xt_file)
         for i in range(len(chejian)):
@@ -368,7 +379,7 @@ class JHDataBase:
     def lingliao_cal(self):
         lingliao = self.find_info("lingliao_table", ["work_id"])
         for i in range(len(lingliao)):
-            db.delete("lingliao_table", work_id=lingliao[i][0])
+            self.delete("lingliao_table", work_id=lingliao[i][0])
         work_place = self.find_info("paigong_table", [])
         db1 = XTDataBase(self.xt_file)
         BOM = db1.find_info("xt_bom_大众自动钳BOM", ["ID", "PARENT"])
@@ -387,7 +398,7 @@ class JHDataBase:
 
 
 if __name__ == "__main__":
-    db = JHDataBase("JHdatabase.db", "../../test.db", "../../xs/lk.db", "../../kc/inventory.db", "../../cg/cg_db/Purchase Detail.db")
+    db = JHDataBase("JHdatabase.db", "lzj", "../../test.db", "../../xs/lk.db", "../../kc/inventory.db", "../../cg/cg_db/Purchase Detail.db")
 
     db.MPS_table("MPS_table")
     db.MRP_table("MRP_table")
@@ -396,7 +407,7 @@ if __name__ == "__main__":
     db.paigong_table("paigong_table")
     db.lingliao_table("lingliao_table")
 
-    # db.drop("paigong_table")
+    # db.drop("MRP_table")
 
     # db.insert_table("MPS_table",["product_id","planned_amount","planned_deadline"],[1, 100, date(2024,12,31)])
 

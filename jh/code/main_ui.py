@@ -43,9 +43,17 @@ class JHWidget(QWidget):
         self.user_name = user_name
 
         # 数据库和日志库路径均改为传入参数
-        self.jh_db = JHDataBase(file_path, xt_file, xs_file, kc_file, cg_file)
+        self.jh_db = JHDataBase(file_path, self.user_name, xt_file, xs_file, kc_file, cg_file)
 
         self.log = XtContainer(1, log_path, user_name)
+
+        self.jh_db.MPS_table("MPS_table")
+        self.jh_db.MRP_table("MRP_table")
+        self.jh_db.chejiancaigou_table("caigou_table")
+        self.jh_db.chejianzuoye_table("zuoye_table")
+        self.jh_db.paigong_table("paigong_table")
+        self.jh_db.lingliao_table("lingliao_table")
+
 
         self.MPS = table_MPS1()
         self.MRP = table_MRP1()
@@ -62,6 +70,13 @@ class JHWidget(QWidget):
 
 
     def open(self):
+
+        self.jh_db.MPS_insert()
+        self.jh_db.MRP_calculate()
+        self.jh_db.caigou_cal()
+        self.jh_db.chejianzuoye_cal()
+        self.jh_db.paigong_cal()
+        self.jh_db.lingliao_cal()
 
         mode = self.ui.target.currentText()
         self.log.generate_log(OperationCode.JH_CHANGE)
@@ -113,11 +128,6 @@ class JHWidget(QWidget):
                             self.MRP.ui.tableWidget.setItem(k-1, j, QTableWidgetItem(str(MRP[i][j])))
 
             self.MRP.show()
-
-            MRP = self.jh_db.find_info("MPS_table", ["product_id", "planned_amount", "planned_deadline"])
-            inventor_manager = InventoryManager(self.kc_file)
-            for i in range(len(MRP)):
-                inventor_manager.add_inventory(MRP[i][2], MRP[i][0], int(MRP[i][1]), self.user_name)
 
         elif mode == "车间工作采购单":
             caigou = self.jh_db.find_info("caigou_table", [])
@@ -259,10 +269,10 @@ class JHWidget(QWidget):
                                 self.lingliao.ui.tableWidget.setItem(k-1, j, QTableWidgetItem(str(lingliao_table[i][j])))
             self.lingliao.show()
 
-            lingliao = self.jh_db.find_info("lingliao_table", ["goods_id", "goods_amount", "needed_time"])
-            inventor_manager = InventoryManager(self.kc_file)
-            for i in range(len(lingliao)):
-                inventor_manager.substact_inventory(lingliao[i][2], lingliao[i][0], int(lingliao[i][1]), self.user_name)
+            # lingliao = self.jh_db.find_info("lingliao_table", ["goods_id", "goods_amount", "needed_time"])
+            # inventor_manager = InventoryManager(self.kc_file)
+            # for i in range(len(lingliao)):
+            #     inventor_manager.substact_inventory(lingliao[i][2], lingliao[i][0], int(lingliao[i][1]), self.user_name)
 
     def bind(self):
         self.ui.pushButton.clicked.connect(self.open)

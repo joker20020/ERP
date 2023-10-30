@@ -1056,11 +1056,11 @@ class XTMainWindow(FluentWindow):
                 if "-" in place:
                     chejian = place.split("-")[0]
                     wc = place.split("-")[1]
-                    if chejian in chejians:
+                    if chejian not in chejians:
                         chejians.append(chejian)
                         tree.node("车间"+chejian)
-                    tree.node("工作中心"+wc)
-                    tree.edge("车间"+chejian,"工作中心"+wc)
+                    tree.node("车间"+chejian+"工作中心"+wc)
+                    tree.edge("车间"+chejian, "车间"+chejian+"工作中心"+wc)
             tree.render(filename="车间-工作中心图",view=True)
 
         except AuthorityError as e:

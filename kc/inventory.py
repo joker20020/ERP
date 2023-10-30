@@ -142,7 +142,7 @@ class InventoryManager:
 # 示例用法
 if __name__ == "__main__":
     manager = InventoryManager('inventory.db')
-    # manager.c.execute("DROP TABLE chuku")
+    # manager.c.execute("DROP TABLE products")
 
     # 查询使用方法：
     db = InventoryManager('inventory.db')
