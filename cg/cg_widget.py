@@ -23,6 +23,9 @@ UPDATE: 所有图标等资源文件建议放入项目根目录下res文件夹再
 import sys
 import os
 import time
+import pandas as pd
+import sqlite3
+import matplotlib.pyplot as plt
 
 sys.path.append(os.path.abspath("xt/code"))
 sys.path.append(os.path.abspath("kc"))
@@ -73,7 +76,7 @@ class cg_widget(QWidget):
         # icon = QIcon(os.path.abspath(icon))
         # self.setWindowIcon(icon)
         # 定义一个线程的状态
-        self.thread_running = False
+        self.thread_running = None
         self.selected_data = []
 
     # 一些初始化操作
@@ -400,8 +403,8 @@ class cg_widget(QWidget):
             print("ok, the row is: ", row)
             print("the data is:", self.selected_data)
 
-            rec_to_inv = InventoryManager()
-            rec_to_inv.add_inventory(self.selected_data[0][0], self.selected_data[0][0], self.selected_data[0][0], "采购")
+            rec_to_inv = InventoryManager('kc/inventory.db')
+            rec_to_inv.add_inventory(self.selected_data[0][0], self.selected_data[0][1], self.selected_data[0][2], "采购")
         else:
             print("not be chosen")
 
@@ -480,6 +483,7 @@ class cg_widget(QWidget):
             self.ui.supplier_list.clicked.connect(lambda: self.supplier_table_view(company_id))
             # if self.ui.supplier_list.clicked:
             #   print("OKKKKKK!!!! This is: ", company_id)
+        self.supplier_id = company_id
         self.log.generate_log(OperationCode.CG_CHANGE)
     
     # TODO: 写这个代码块的注释
@@ -513,34 +517,47 @@ class cg_widget(QWidget):
     # 4的槽函数，点击后执行子线程，对该供应商进行综合评价，生成3张图标，显示在窗体中
     @Slot()
     def supplier_evaluation(self):
-        if not self.thread_running:
-            self.supplier_thread = supplier_eval()
-            self.supplier_thread.image_generated.connect(self.supplier_diaplay_image)
-            self.supplier_thread.finished.connect(self.on_thread_finished)
+        if not self.thread_running or not self.thread_running.isRunning():
+            self.supplier_thread = supplier_eval(self.supplier_file, str(self.supplier_id))
+            self.supplier_thread.evaluation_completed.connect(self.supplier_diaplay_image)
             self.supplier_thread.start()
-
-            self.thread_running = True
-        else:
-            print(f"Evaluation is already in progress")
-
-    # 不知道这个槽函数是否需要
-    @Slot()
-    def on_thread_finished(self):
-        self.thread_running = False
-        print("Thread finished.")
-
 
     # TODO: 写这个代码块
     # 4的槽函数，紧跟在supplier_evaluation后面，访问路径并显示图像    
     def supplier_diaplay_image(self, image_file_name):
-        logo_path = image_file_name
-        logo_pixmap = QPixmap(logo_path)
+        directory = os.path.dirname(image_file_name)
+        second_name = f"{self.supplier_id}_2.png"
+        second_path = os.path.join(directory, second_name)
+        third_name = f"{self.supplier_id}_3.png"
+        third_path = os.path.join(directory, third_name)
+        print(second_path)
 
-        scene = QGraphicsScene()
-        item = QGraphicsPixmapItem(logo_pixmap)
-        scene.addItem(item)
+        first_path = image_file_name
+        first_pixmap = QPixmap(first_path)
+        second_pixmap = QPixmap(second_path)
+        third_pixmap = QPixmap(third_path)
 
-        self.ui.supplier_graphic_1.setScene(scene)
+        first_scene = QGraphicsScene()
+        first_item = QGraphicsPixmapItem(first_pixmap)
+        first_scene.addItem(first_item)
+
+        second_scene = QGraphicsScene()
+        second_item = QGraphicsPixmapItem(second_pixmap)
+        second_scene.addItem(second_item)
+
+        third_scene = QGraphicsScene()
+        third_item = QGraphicsPixmapItem(third_pixmap)
+        third_scene.addItem(third_item)
+
+        self.ui.supplier_graphic_1.setScene(first_scene)
+        self.ui.supplier_graphic_1.fitInView(QGraphicsPixmapItem(QPixmap(first_pixmap)))
+
+        self.ui.supplier_graphic_2.setScene(second_scene)
+        self.ui.supplier_graphic_2.fitInView(QGraphicsPixmapItem(QPixmap(second_pixmap)))
+
+        self.ui.supplier_graphic_3.setScene(third_scene)
+        self.ui.supplier_graphic_3.fitInView(QGraphicsPixmapItem(QPixmap(third_pixmap)))
+
 
     # 5的槽函数，点击选择文件后，弹出选择文件的对话框，进行文件的选择
     # TODO: 可能需要优化一下界面以及交互
@@ -601,21 +618,100 @@ class cg_widget(QWidget):
 # TODO: 这里是子线程函数
 # 4的子线程，在点击供应商评估后完成对供应商数据的计算，生成图表并展示在窗体上
 class supplier_eval(QThread):
-    # 自定义一个信号
-    image_generated = Signal(str)
+    evaluation_completed = Signal(str)
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, supplier_file, supplier_id):
+        super(supplier_eval, self).__init__()
+        self.supplier_file = supplier_file
+        self.supplier_id = supplier_id
+        # print("line 627, this is suppleir id: ", self.supplier_id)
 
     def run(self):
-        try:
-            image_file_name = "D:/Python/ERPProject/cg_gr/40004001.png"
+        evaluation_result = self.simulate_evaluation(self.supplier_id, self.supplier_file)
+        self.evaluation_completed.emit(evaluation_result)   
 
-            self.image_generated.emit(image_file_name)
+    def simulate_evaluation(self, supplier_id, supplier_file):
+        evaluation_result = []
+        try:
+            # 连接数据库，取出三组数据
+            conn = sqlite3.connect(supplier_file)
+            query = f"SELECT arrive_lot, qualified, supposed_date, arrive_date, delivery_on_time, delivery_delay_days FROM cg_supplier_evaluation WHERE supplier_id = {supplier_id}"
+
+            # 读取数列
+            df = pd.read_sql_query(query, conn)
+            # print(df)
+
+            # 计算产出率
+            total_lots = df['arrive_lot'].sum()
+            qualified_lots = df['qualified'].sum()
+            print(f"total_lots: {total_lots}\nqualified retrieved: {qualified_lots}")
+            reject_lots = total_lots - qualified_lots
+
+            # 计算到货准时量
+            on_time_deliveries = (df['delivery_on_time']==1).sum()
+            late_deliveries = (df['delivery_on_time']==0).sum()
+
+            # 计算延迟收货的平均天数
+            avg_delay_days = df['delivery_delay_days'].mean()
+
+            # 开始画第一个图
+            labels = ['Pass Rate', 'Reject Rate']
+            sizes = [qualified_lots, reject_lots]
+            colors = ['#2878B5', '#C82423']
+            explode = (0.1, 0)  # Explode the first slice (Pass Rate)
+
+            plt.figure(figsize=(4, 3))
+            plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, explode=explode)
+
+            plt.title(f'Quality Evaluation for Supplier {supplier_id}')
+
+            # Save the pie chart as an image
+            # image_path = f'{supplier_id}_1.png'
+            # plt.savefig(image_path)
+            directory = os.path.dirname(os.path.dirname(self.supplier_file))
+            first_image = f'cg_gr/{supplier_id}_1.png'
+            evaluation_result = os.path.join(directory, first_image)
+            plt.savefig(evaluation_result)
+            plt.close()  # Close the Matplotlib figure
+
+            # 画第二个图
+            categories = ['On-Time', 'Late']
+            counts = [on_time_deliveries, late_deliveries]
+            # plt.figure(figsize=(4, 3))
+            plt.bar(categories, counts, color=['#9AC9DB', '#C82423'])
+            plt.xlabel('Delivery Status')
+            plt.ylabel('Number of Deliveries')
+            plt.title(f'Delivery Status for Supplier {supplier_id}')
+
+            # Save the bar chart as an image
+            second_image_path = f'cg_gr/{supplier_id}_2.png'
+            plt.savefig(os.path.join(directory, second_image_path))
+            plt.close()
+                
+            # 画第三个图
+            plt.figure(figsize=(4, 3))
+            plt.bar(0, avg_delay_days, color = '#F8AC8C', width=0.8)
+            plt.axis('off')  # Turn off axes
+            plt.gca().spines['top'].set_visible(False)
+            plt.gca().spines['right'].set_visible(False)
+            plt.gca().spines['bottom'].set_visible(False)
+            plt.gca().spines['left'].set_visible(False)
+
+            # Add the text description with a large font
+            plt.text(0, -1, f'Average Delay: {avg_delay_days:.2f} days', fontsize=16, va='center', ha='center')
+
+            # Save the image without whitespace
+            image_path = f'cg_gr/{supplier_id}_3.png'
+            plt.savefig(os.path.join(directory, image_path), bbox_inches='tight', pad_inches=0)
+            plt.close()          
+
+            # 关闭数据库连接
+            conn.close()
+            
         except Exception as e:
-            print(f"Exception during evaluation: {str(e)}")
-        finally:
-            self.quit()
+            evaluation_result = str(e)
+        
+        return evaluation_result
 
 class supplier_form(QDialog):
     def __init__(self, company_id, item_file):
