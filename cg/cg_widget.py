@@ -16,6 +16,7 @@ TODO:
 3.界面美化，使用qfluetwidget库重新生成ui(完成)
 
 FIXME: 库存模块的类传入时，路径好像有问题 LINE402 LINE403
+FIXME: 主要问题就是update_info函数的逻辑 LINE485
 UPDATE: 数据库文件采用绝对路径传入 line50
 UPDATE: 所有图标等资源文件建议放入项目根目录下res文件夹再使用
 '''
@@ -58,10 +59,6 @@ class cg_widget(QWidget):
         super().__init__()
         # 定义窗体大小
         self.resize(800, 480)
-        # 执行初始化方法
-        self.init_ui()
-        # 设定左上角标题
-        self.setWindowTitle("采购模块")
 
         self.detail_file = detail_file
         self.receipt_file = receipt_file
@@ -69,6 +66,11 @@ class cg_widget(QWidget):
         self.supplier_file = supplier_file
         self.item_file = item_file
         self.user_name = user_name
+        
+        # 执行初始化方法
+        self.init_ui()
+        # 设定左上角标题
+        self.setWindowTitle("采购模块")
 
         # OC = OperationCode()
         self.log = XtContainer(1, xt_log, user_name)
@@ -87,6 +89,44 @@ class cg_widget(QWidget):
         # 实例化Ui_cg_sector
         self.ui = Ui_cg_sector()
         self.ui.setupUi(self)
+
+        # model的初始化
+        self.model = QSqlTableModel()
+
+        # 1的槽函数
+        self.ui.requisition_receipt_btn.clicked.connect(self.view_requisition_list)
+        self.ui.requisition_accept_btn.clicked.connect(self.accept_requisition)
+        self.ui.requisition_table_view.setModel(self.model)
+        self.ui.requisition_table_view.selectionModel().selectionChanged.connect(self.handle_selection_change)
+
+        # 2的槽函数
+        self.ui.order_search.clicked.connect(self.order_table)
+        self.ui.order_add.clicked.connect(self.order_add_table)
+        self.ui.order_delete.clicked.connect(self.order_delete_table)
+        self.ui.order_save.clicked.connect(self.order_save_table)
+        self.ui.order_table_view.setModel(self.model)
+        self.ui.order_table_view.selectionModel().selectionChanged.connect(self.order_table_changed)
+
+        # 3的槽函数
+        self.ui.receive_search.clicked.connect(self.receive_table)
+        self.ui.receive_add.clicked.connect(self.receive_add_table)
+        self.ui.receive_delete.clicked.connect(self.receive_delete_table)
+        self.ui.receive_save.clicked.connect(self.receive_save_table)
+        self.ui.receive_btn.clicked.connect(self.receive_to_inver)
+        self.ui.receive_table_view.setModel(self.model)
+        self.ui.receive_table_view.selectionModel().selectionChanged.connect(self.receive_table_changed)
+
+        # 4的槽函数
+        self.ui.supplier_choose_box.currentTextChanged.connect(self.update_info)
+        # self.ui.supplier_list.clicked.connect(self.supplier_table_view)
+        self.ui.supplier_evaluate.clicked.connect(self.supplier_evaluation)
+        # self.supplier_thread.evaluation_completed.connect(self.supplier_diaplay_image)
+
+        # 5的槽函数
+        self.ui.query_choose_btn.clicked.connect(self.query_table)
+        self.ui.query_add.clicked.connect(self.query_add_table)
+        self.ui.query_delete.clicked.connect(self.query_delete_table)
+        self.ui.query_save.clicked.connect(self.query_save_table)
 
         # 现在可以直接绑定槽函数
         self.ui.tabWidget.currentChanged.connect(self.tab_changed)
@@ -112,30 +152,20 @@ class cg_widget(QWidget):
 
     # 1.请购单接收页面
     def init_requisition(self):
-        # 直接绑定函数
-        self.ui.requisition_receipt_btn.clicked.connect(self.view_requisition_list)
-        self.ui.requisition_accept_btn.clicked.connect(self.accept_requisition)
+        self.model.clear()
 
     # 2.采购订单页面
     def init_order(self):
         # TODO: 设定信号，绑定函数
-        self.ui.order_search.clicked.connect(self.order_table)
-        self.ui.order_add.clicked.connect(self.order_add_table)
-        self.ui.order_delete.clicked.connect(self.order_delete_table)
-        self.ui.order_save.clicked.connect(self.order_save_table)
-
+        self.model.clear()
     # 3.到货接收页面
     # TODO: 到货接收页面
     def init_recieve(self):
         # 直接绑定槽函数
-        self.ui.receive_search.clicked.connect(self.receive_table)
-        self.ui.receive_add.clicked.connect(self.receive_add_table)
-        self.ui.receive_delete.clicked.connect(self.receive_delete_table)
-        self.ui.receive_save.clicked.connect(self.receive_save_table)
-        self.ui.receive_btn.clicked.connect(self.receive_to_inver)
-
+        self.model.clear()
     # 4.供应商管理与评价页面
     def init_supplier(self):
+        # 4模块的一个初始化
         # 连接数据库，因为有一个下拉菜单的内容需要访问数据库
         # 设定数据库类型
         self.supplier_database = QSqlDatabase.addDatabase("QSQLITE")
@@ -156,18 +186,10 @@ class cg_widget(QWidget):
             self.ui.supplier_choose_box.addItem(data)
         self.ui.supplier_choose_box.show()
 
-        self.ui.supplier_choose_box.currentTextChanged.connect(self.update_info)
-        # self.ui.supplier_list.clicked.connect(self.supplier_table_view)
-        self.ui.supplier_evaluate.clicked.connect(self.supplier_evaluation)        
-
     # TODO: 采购业务页面的编写
     # 5.采购业务页面
     def init_query(self):
-        self.ui.query_choose_btn.clicked.connect(self.query_table)
-        self.ui.query_add.clicked.connect(self.query_add_table)
-        self.ui.query_delete.clicked.connect(self.query_delete_table)
-        self.ui.query_save.clicked.connect(self.query_save_table)
-
+        self.model.clear()
 
     # 以下是各个页面初始化后需要用到的一些槽函数操作
     # 已经按页面顺序和运行的顺序排好
@@ -196,7 +218,7 @@ class cg_widget(QWidget):
 
         # 嵌套了一个槽函数，对选择的行进行判断        
         self.selected_row = None
-        self.ui.requisition_table_view.selectionModel().selectionChanged.connect(self.handle_selection_change)
+        # self.ui.requisition_table_view.selectionModel().selectionChanged.connect(self.handle_selection_change)
 
         self.log.generate_log(OperationCode.CG_CHANGE)
 
@@ -257,26 +279,26 @@ class cg_widget(QWidget):
 
         table_name = self.detect_table_name()
         if table_name:
-            model = QSqlTableModel(self, self.database)
-            model.setTable(table_name)
+            self.model = QSqlTableModel(self, self.database)
+            self.model.setTable(table_name)
 
-            model.setHeaderData(0, Qt.Horizontal, "采购明细号")
-            model.setHeaderData(1, Qt.Horizontal, "物料编码")
-            model.setHeaderData(2, Qt.Horizontal, "订货批量")
-            model.setHeaderData(3, Qt.Horizontal, "商品总价")
-            model.setHeaderData(4, Qt.Horizontal, "收货单号")
-            model.setHeaderData(5, Qt.Horizontal, "预计到货时间")
-            model.setHeaderData(6, Qt.Horizontal, "供应商")
-            model.setHeaderData(7, Qt.Horizontal, "备注")
-            model.select()
+            self.model.setHeaderData(0, Qt.Horizontal, "采购明细号")
+            self.model.setHeaderData(1, Qt.Horizontal, "物料编码")
+            self.model.setHeaderData(2, Qt.Horizontal, "订货批量")
+            self.model.setHeaderData(3, Qt.Horizontal, "商品总价")
+            self.model.setHeaderData(4, Qt.Horizontal, "收货单号")
+            self.model.setHeaderData(5, Qt.Horizontal, "预计到货时间")
+            self.model.setHeaderData(6, Qt.Horizontal, "供应商")
+            self.model.setHeaderData(7, Qt.Horizontal, "备注")
+            self.model.select()
             # 显示表格
-            self.ui.order_table_view.setModel(model)
+            self.ui.order_table_view.setModel(self.model)
             self.ui.order_table_view.resizeColumnToContents(0)
             self.ui.order_table_view.resizeColumnToContents(4)
             self.ui.order_table_view.resizeColumnToContents(5)
             self.ui.order_table_view.resizeColumnToContents(6)
 
-        self.ui.order_table_view.selectionModel().selectionChanged.connect(self.order_table_changed)
+        # self.ui.order_table_view.selectionModel().selectionChanged.connect(self.order_table_changed)
         self.log.generate_log(OperationCode.CG_CHANGE)
 
     # 2的槽函数
@@ -354,23 +376,23 @@ class cg_widget(QWidget):
 
         table_name = self.detect_table_name()
         if table_name:
-            model = QSqlTableModel(self, self.database)
-            model.setTable(table_name)
+            self.model = QSqlTableModel(self, self.database)
+            self.model.setTable(table_name)
 
-            model.setHeaderData(0, Qt.Horizontal, "收货单号")
-            model.setHeaderData(1, Qt.Horizontal, "物料编码")
-            model.setHeaderData(2, Qt.Horizontal, "到货时间")
-            model.setHeaderData(3, Qt.Horizontal, "到货量")
-            model.setHeaderData(4, Qt.Horizontal, "合格品数")
-            model.setHeaderData(5, Qt.Horizontal, "入库状态")
-            model.setHeaderData(6, Qt.Horizontal, "备注")
-            model.select()
+            self.model.setHeaderData(0, Qt.Horizontal, "收货单号")
+            self.model.setHeaderData(1, Qt.Horizontal, "物料编码")
+            self.model.setHeaderData(2, Qt.Horizontal, "到货时间")
+            self.model.setHeaderData(3, Qt.Horizontal, "到货量")
+            self.model.setHeaderData(4, Qt.Horizontal, "合格品数")
+            self.model.setHeaderData(5, Qt.Horizontal, "入库状态")
+            self.model.setHeaderData(6, Qt.Horizontal, "备注")
+            self.model.select()
             # 显示表格
-            self.ui.receive_table_view.setModel(model)
+            self.ui.receive_table_view.setModel(self.model)
             self.ui.receive_table_view.resizeColumnToContents(0)
             self.ui.receive_table_view.resizeColumnToContents(2)
 
-        self.ui.receive_table_view.selectionModel().selectionChanged.connect(self.receive_table_changed)
+        # self.ui.receive_table_view.selectionModel().selectionChanged.connect(self.receive_table_changed)
         self.log.generate_log(OperationCode.CG_CHANGE)
 
     # 3的槽函数
@@ -463,7 +485,7 @@ class cg_widget(QWidget):
             self.ui.receive_status.clear()
             self.selected_data = []
 
-    # FIXME: 有bug，但是暂时不想改了
+    # FIXME: 就是这个函数有问题
     # 4的槽函数：列举供应商信息
     def update_info(self):
         # 读取选取的供应商名字
@@ -583,12 +605,12 @@ class cg_widget(QWidget):
         table_name = self.detect_table_name()
         if table_name:
             # 设置tableView的模型以及表的名称
-            model = QSqlTableModel(self, self.database)
-            model.setTable(table_name)
+            self.model = QSqlTableModel(self, self.database)
+            self.model.setTable(table_name)
 
-            model.select()
+            self.model.select()
             # 显示表格
-            self.ui.query_list_view.setModel(model)
+            self.ui.query_list_view.setModel(self.model)
             self.ui.query_list_view.resizeColumnsToContents() 
         self.log.generate_log(OperationCode.CG_CHANGE)
 
