@@ -248,7 +248,7 @@ class JHWidget(QWidget):
             self.lingliao.show()
 
             lingliao = self.jh_db.find_info("lingliao_table", ["goods_id", "goods_amount", "needed_time"])
-            inventor_manager = InventoryManager()
+            inventor_manager = InventoryManager(self.kc_file)
             for i in range(len(lingliao)):
                 inventor_manager.substact_inventory(lingliao[i][2], lingliao[i][0], int(lingliao[i][1]), self.user_name)
 
