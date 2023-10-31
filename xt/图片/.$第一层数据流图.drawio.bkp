@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-10-30T13:52:27.489Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.3 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="LdKPuSFEuV9smwlUBnYd" version="22.0.3" type="device">
+<mxfile host="Electron" modified="2023-09-14T00:47:07.175Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.5.1 Chrome/112.0.5615.204 Electron/24.6.0 Safari/537.36" etag="ilrYmk1f0I_Y-JU5Z5JH" version="21.5.1" type="device">
   <diagram name="第 1 页" id="C6JDFu4nFcjzCjHWrtkS">
-    <mxGraphModel dx="1206" dy="702" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="941" dy="692" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -84,16 +84,19 @@
           <mxGeometry x="160" y="310" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="h-28niLDpaxI3-z9iNYk-33" value="root权限" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="354" y="350" width="60" height="30" as="geometry" />
+          <mxGeometry x="360" y="435" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="h-28niLDpaxI3-z9iNYk-34" value="root权限" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="100" y="405" width="140" height="30" as="geometry" />
+          <mxGeometry x="410" y="470" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="h-28niLDpaxI3-z9iNYk-37" value="root权限" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="360" y="550" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="h-28niLDpaxI3-z9iNYk-41" value="root权限与admin权限" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="390" y="430" width="60" height="30" as="geometry" />
+          <mxGeometry x="354" y="310" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="h-28niLDpaxI3-z9iNYk-43" value="root权限与admin权限" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="460" y="470" width="60" height="30" as="geometry" />
+          <mxGeometry x="130" y="405" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="h-28niLDpaxI3-z9iNYk-44" value="root权限&amp;gt;admin权限&lt;br&gt;root用户具有最高操作权限" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="40" y="580" width="160" height="30" as="geometry" />
@@ -157,9 +160,6 @@
             <mxPoint y="130" as="sourcePoint" />
             <mxPoint as="targetPoint" />
           </mxGeometry>
-        </mxCell>
-        <mxCell id="ukYgVqE2C4jNZa9390Un-1" value="root权限与admin权限" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="370" y="555" width="60" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
