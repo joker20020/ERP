@@ -52,6 +52,7 @@ class LoginWindow(XTLoginWindow):
     def __init__(self,icon,background,file_path,title="login window"):
         super().__init__(icon,background,file_path,title)
         self.icon = icon
+        self.ui.label.setText(title)
 
     def check(self):
         user = self.ui.userName.text()

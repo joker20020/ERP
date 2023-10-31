@@ -29,7 +29,7 @@ class table_chejianzuoye(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.label = QLabel(Form)
         self.label.setObjectName(u"label")
-        self.label.setStyleSheet(u"font: 36pt \"\u534e\u6587\u96b6\u4e66\";")
+        self.label.setStyleSheet(u"font: 700 36pt \"Kaiti SC\";")
         self.label.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout.addWidget(self.label)

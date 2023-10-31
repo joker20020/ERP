@@ -18,14 +18,14 @@
     <widget class="QLabel" name="label">
      <property name="font">
       <font>
-       <family>华文隶书</family>
+       <family>Kaiti SC</family>
        <pointsize>36</pointsize>
        <italic>false</italic>
-       <bold>false</bold>
+       <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">font: 36pt &quot;华文隶书&quot;;</string>
+      <string notr="true">font: 700 36pt &quot;Kaiti SC&quot;;</string>
      </property>
      <property name="text">
       <string>MRP物料需求计划</string>

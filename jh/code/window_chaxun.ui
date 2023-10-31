@@ -40,8 +40,9 @@
      </property>
      <property name="font">
       <font>
-       <family>隶书</family>
+       <family>Kaiti SC</family>
        <pointsize>64</pointsize>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -289,11 +290,11 @@
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="PushButton" name="pushButton_2">
      <property name="font">
       <font>
        <family>Kaiti SC</family>
-       <pointsize>24</pointsize>
+       <pointsize>18</pointsize>
        <italic>false</italic>
        <bold>false</bold>
       </font>
@@ -304,26 +305,33 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
-     <item>
-      <widget class="PrimaryPushButton" name="pushButton">
-       <property name="font">
-        <font>
-         <family>Kaiti SC</family>
-         <pointsize>24</pointsize>
-         <italic>false</italic>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font: 700 24pt &quot;Kaiti SC&quot;;</string>
-       </property>
-       <property name="text">
-        <string>查询</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <spacer name="verticalSpacer_7">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="PrimaryPushButton" name="pushButton">
+     <property name="font">
+      <font>
+       <family>Kaiti SC</family>
+       <pointsize>18</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>查询</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5"/>
    </item>
    <item>
     <spacer name="verticalSpacer_3">
@@ -365,6 +373,11 @@
    <class>CaptionLabel</class>
    <extends>QLabel</extends>
    <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PushButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">qfluentwidgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

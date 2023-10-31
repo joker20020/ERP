@@ -11,7 +11,7 @@ import os
 from PySide6.QtWidgets import QApplication, QWidget, QTreeWidgetItem, QTableWidgetItem,QHeaderView
 from PySide6.QtCore import Qt,Signal
 from PySide6.QtGui import QIcon,QPixmap
-from qfluentwidgets import RoundMenu,FluentWindow,FluentIcon,Action,NavigationItemPosition,NavigationPushButton,NavigationTreeWidget,SplitTitleBar,MessageBox,InfoBar,InfoBarIcon,InfoBarPosition
+from qfluentwidgets import RoundMenu,FluentWindow,FluentIcon,Action,NavigationItemPosition,NavigationPushButton,NavigationTreeWidget,SplitTitleBar,MessageBox,InfoBar,InfoBarIcon,InfoBarPosition,MessageDialog
 from qframelesswindow import AcrylicWindow
 from graphviz import Graph
 
@@ -168,6 +168,9 @@ class BomWindow(QWidget):
     def remove_bom(self):
         try:
             name = self.ui.bomList.currentItem().text()
+            sure = MessageBox("删除",f"是否删除BOM表{name}",self).exec()
+            if not sure:
+                return
             self.xt.remove_boms(name)
             self.refresh_boms()
         except AuthorityError as e:
@@ -212,6 +215,9 @@ class BomWindow(QWidget):
     def del_bom(self):
         try:
             id = int(self.ui.bomTable.item(self.ui.bomTable.currentRow(), 0).text())
+            sure = MessageBox("删除", f"是否删除id为{id}的零件", self).exec()
+            if not sure:
+                return
             self.ui.bomTable.removeRow(self.ui.bomTable.currentRow())
             name = self.ui.bomList.currentItem().text()
             self.xt.delete_bom(name,id)
@@ -344,6 +350,9 @@ class LineWindow(QWidget):
 
     def del_line(self):
         id = int(self.ui.lineTable.item(self.ui.lineTable.currentRow(), 0).text())
+        sure = MessageBox("删除", f"是否删除id为{id}的工艺路线", self).exec()
+        if not sure:
+            return
         self.ui.lineTable.removeRow(self.ui.lineTable.currentRow())
         self.container.del_line(id)
 
@@ -397,6 +406,9 @@ class LineWindow(QWidget):
 
     def del_work(self):
         id = int(self.ui.workTable.item(self.ui.workTable.currentRow(), 0).text())
+        sure = MessageBox("删除", f"是否删除id为{id}的工序", self).exec()
+        if not sure:
+            return
         self.ui.workTable.removeRow(self.ui.workTable.currentRow())
         self.container.del_work(self.ui.lineTable.item(self.ui.lineTable.currentRow(),0).text(),id)
 
@@ -707,12 +719,18 @@ class AdminWindow(QWidget):
         self.ui.workerCharacter.setCurrentIndex(0)
 
     def del_group(self):
+        sure = MessageBox("删除", f"是否删除组织{self.ui.groupTree.currentItem().text(0)}", self).exec()
+        if not sure:
+            return
         self.del_tree(self.ui.groupTree.currentItem())
         self.refresh_group()
 
     def rem_character(self):
         try:
             character = self.ui.workerCharacter.currentText()
+            sure = MessageBox("删除", f"是否删除角色{character}", self).exec()
+            if not sure:
+                return
             self.xt.rem_character(character)
             self.refresh_character()
             self.refresh_combo()
@@ -723,6 +741,9 @@ class AdminWindow(QWidget):
         try:
             character = self.ui.characterList.currentItem().text()
             worker_id = int(self.ui.workerID.text())
+            sure = MessageBox("删除", f"是否为id为{worker_id}的人员删除角色{character}", self).exec()
+            if not sure:
+                return
             self.xt.del_character(worker_id,character)
             self.refresh_character()
         except AuthorityError as e:
@@ -730,6 +751,9 @@ class AdminWindow(QWidget):
 
     def del_worker(self):
         worker_id = int(self.ui.workerID.text())
+        sure = MessageBox("删除", f"是否删除id为{worker_id}的人员", self).exec()
+        if not sure:
+            return
         self.xt.del_worker(worker_id)
         self.refresh_group()
         self.clear_all()
