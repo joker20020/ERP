@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QSizePolicy,
-    QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
+    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
 from qfluentwidgets import (CalendarPicker, CaptionLabel, ComboBox, LineEdit,
     PrimaryPushButton)
@@ -25,10 +25,10 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(698, 419)
+        Form.resize(685, 498)
         self.verticalLayout = QVBoxLayout(Form)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Preferred)
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer_4)
 
@@ -165,26 +165,41 @@ class Ui_Form(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_4)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Preferred)
+        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.verticalLayout.addItem(self.verticalSpacer_3)
+        self.verticalLayout.addItem(self.verticalSpacer_6)
+
+        self.pushButton_2 = QPushButton(Form)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+        font4 = QFont()
+        font4.setFamilies([u"Kaiti SC"])
+        font4.setPointSize(24)
+        font4.setBold(False)
+        font4.setItalic(False)
+        self.pushButton_2.setFont(font4)
+
+        self.verticalLayout.addWidget(self.pushButton_2)
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.pushButton = PrimaryPushButton(Form)
         self.pushButton.setObjectName(u"pushButton")
-        font4 = QFont()
-        font4.setFamilies([u"STKaiti"])
-        font4.setPointSize(24)
-        font4.setBold(False)
-        font4.setItalic(False)
-        self.pushButton.setFont(font4)
-        self.pushButton.setStyleSheet(u"font: 24pt \"STKaiti\";")
+        font5 = QFont()
+        font5.setFamilies([u"Kaiti SC"])
+        font5.setPointSize(24)
+        font5.setBold(True)
+        font5.setItalic(False)
+        self.pushButton.setFont(font5)
+        self.pushButton.setStyleSheet(u"font: 700 24pt \"Kaiti SC\";")
 
         self.horizontalLayout_5.addWidget(self.pushButton)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout_5)
+
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer_3)
 
 
         self.retranslateUi(Form)
@@ -207,6 +222,7 @@ class Ui_Form(object):
         self.label_5.setText(QCoreApplication.translate("Form", u"\u622a\u6b62\u65f6\u95f4\uff1a", None))
         self.lineEdit.setText(QCoreApplication.translate("Form", u"\u82e5\u67e5\u8be2\u76ee\u6807\u4e3a\u6d3e\u5de5\u5355\u6216\u9886\u6599\u5355\uff0c\u8bf7\u8f93\u5165\u9700\u67e5\u8be2\u7684\u5de5\u4f5c\u4e2d\u5fc3ID\u3002", None))
         self.label_3.setText(QCoreApplication.translate("Form", u"\u5de5\u4f5c\u4e2d\u5fc3ID\uff1a", None))
+        self.pushButton_2.setText(QCoreApplication.translate("Form", u"\u751f\u6210\u8ba1\u5212", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"\u67e5\u8be2", None))
     # retranslateUi
 

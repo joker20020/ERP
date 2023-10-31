@@ -65,18 +65,18 @@ class JHWidget(QWidget):
         self.bind()
         # self.loadin()
 
-
-
-
-
-    def open(self):
-
+    def jihua(self):
         self.jh_db.MPS_insert()
         self.jh_db.MRP_calculate()
         self.jh_db.caigou_cal()
         self.jh_db.chejianzuoye_cal()
         self.jh_db.paigong_cal()
         self.jh_db.lingliao_cal()
+
+
+
+
+    def open(self):
 
         mode = self.ui.target.currentText()
         self.log.generate_log(OperationCode.JH_CHANGE)
@@ -276,6 +276,7 @@ class JHWidget(QWidget):
 
     def bind(self):
         self.ui.pushButton.clicked.connect(self.open)
+        self.ui.pushButton_2.clicked.connect(self.jihua)
 
     # def loadin(self):
         # MPS_table = self.jh_db.find_info("MPS_table", [])
