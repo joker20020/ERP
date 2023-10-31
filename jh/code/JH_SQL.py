@@ -30,7 +30,7 @@ class JHDataBase:
         cursor.execute('''CREATE TABLE IF NOT EXISTS {}(
             product_id INTEGER NOT NULL,
             planned_amount INTEGER NOT NULL,
-            planned_deadline DATE
+            planned_deadline INTEGER NOT NULL
         );
         '''.format(name))
         self.connection.commit()
@@ -339,16 +339,15 @@ class JHDataBase:
                                           ["work_id", "product_id", "product_amount", "work_request",
                                            "work_time"],
                                           [str(work_place[a][0]) + "-" + str(work_place[a][2]), chejian[i][1],
-                                           int(chejian[i][2]), int(work_place[a][1] * chejian[i][2] / len(people)),
+                                           int(chejian[i][2]), int(work_place[a][1] * chejian[i][2] / (len(people)*3600)),
                                            work_place_ddl_date])
                     else:
-                        work_place_ddl_date1 = work_place_ddl_date - timedelta(
-                            days=work_place[a - 1][1] * chejian[i][2] / 86400)
+                        work_place_ddl_date1 = work_place_ddl_date - timedelta(days=work_place[a - 1][1] * chejian[i][2] / 86400)
                         self.insert_table("paigong_table",
                                           ["work_id", "product_id", "product_amount", "work_request",
                                            "work_time"],
                                           [str(work_place[a][0]) + "-" + str(work_place[a][2]), chejian[i][1],
-                                           int(chejian[i][2]), int(work_place[a][1] * chejian[i][2] / len(people)),
+                                           int(chejian[i][2]), int(work_place[a][1] * chejian[i][2] / (len(people)*3600)),
                                                work_place_ddl_date1])
             # else:
             #     line = db1.where("line", ["LINE_ID"], CHEJIAN=chejian[i][0])
