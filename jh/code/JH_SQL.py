@@ -391,15 +391,8 @@ class JHDataBase:
                 if work_place[i][1] != work_place[i-1][1]:
                     db1 = XTDataBase(self.xt_file)
                     lingliao_id = db1.where("xt_bom_大众自动钳BOM", ["ID"], PARENT=work_place[i][1])
-                    # product_time = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=work_place[i][1])
-                    # work_place_date = datetime.strptime(work_place[i][4], "%Y-%m-%d")
-                    # date = work_place_date.date()
-                    # lingliao_ddl_date = date - timedelta(days=product_time[0][0] * work_place[i][2] / 86400)
-                    # work_id1 = work_place[i-1][0].split("-")
                     work_id = work_place[i][0].split("-")
-                    # if work_id[0] != work_id1[0]:
                     lingliao = self.sql_cmd(f"SELECT product_amount FROM paigong_table WHERE work_id LIKE '{work_id[0]}-%'")
-                    # amount = lingliao[0][0]
                     for h in range(len(lingliao_id)):
                         ddl = self.where("MRP_table", ["planned_deadline"], product_id=lingliao_id[h][0])
                         date = datetime.strptime(str(ddl[0][0]), "%Y-%m-%d").date()
@@ -408,15 +401,9 @@ class JHDataBase:
             else:
                 db1 = XTDataBase(self.xt_file)
                 lingliao_id = db1.where("xt_bom_大众自动钳BOM", ["ID"], PARENT=work_place[i][1])
-                # product_time = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=work_place[i][1])
-                # work_place_date = datetime.strptime(work_place[i][4], "%Y-%m-%d")
-                # date = work_place_date.date()
-                # lingliao_ddl_date = date - timedelta(days=product_time[0][0] * work_place[i][2] / 86400)
-                # work_id1 = work_place[i-1][0].split("-")
                 work_id = work_place[i][0].split("-")
                 # if work_id[0] != work_id1[0]:
                 lingliao = self.sql_cmd(f"SELECT product_amount FROM paigong_table WHERE work_id LIKE '{work_id[0]}-%'")
-                # amount = lingliao[0][0]
                 for h in range(len(lingliao_id)):
                     ddl = self.where("MRP_table", ["planned_deadline"], product_id=lingliao_id[h][0])
                     date = datetime.strptime(str(ddl[0][0]), "%Y-%m-%d").date()
