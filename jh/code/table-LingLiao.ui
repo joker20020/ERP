@@ -63,7 +63,7 @@
      <row/>
      <column>
       <property name="text">
-       <string>工作中心ID-工序</string>
+       <string>工作中心ID</string>
       </property>
      </column>
      <column>
