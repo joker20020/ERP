@@ -89,6 +89,7 @@ class JHWidget(QWidget):
                 parent=self
             )
         except Exception as e:
+            print(e)
             InfoBar.error(
                 title="计划失败",
                 content="计划未生成",
