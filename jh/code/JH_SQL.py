@@ -80,7 +80,7 @@ class JHDataBase:
     def lingliao_table(self, name):
         cursor = self.connection.cursor()
         cursor.execute("""CREATE TABLE IF NOT EXISTS {} (
-            work_id TEXT NOT NULL,
+            work_id INTEGER NOT NULL,
             goods_id INTEGER NOT NULL,
             goods_amount INTEGER NOT NULL,
             needed_time DATE NOT NULL
@@ -315,7 +315,7 @@ class JHDataBase:
         db1 = XTDataBase(self.xt_file)
         for i in range(len(chejian)):
             if i >= 1:
-                if chejian[i][0] != p_id:
+                if chejian[i][0] != chejian[i-1][0]:
                     line = db1.where("line", ["LINE_ID"], CHEJIAN=chejian[i][0])
                     work_ddl = self.where("zuoye_table", ["ddl_time"], chejian_id=chejian[i][0])
                     p_id = chejian[i][1]
@@ -381,18 +381,37 @@ class JHDataBase:
         for i in range(len(lingliao)):
             self.delete("lingliao_table", work_id=lingliao[i][0])
         work_place = self.find_info("paigong_table", [])
-        db1 = XTDataBase(self.xt_file)
-        BOM = db1.find_info("xt_bom_大众自动钳BOM", ["ID", "PARENT"])
-        db1 = XTDataBase(self.xt_file)
         for i in range(len(work_place)):
-            lingliao_id = db1.where("xt_bom_大众自动钳BOM", ["ID"], PARENT=work_place[i][1])
-            product_time = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=work_place[i][1])
-            work_place_date = datetime.strptime(work_place[i][4], "%Y-%m-%d")
-            date = work_place_date.date()
-            lingliao_ddl_date = date - timedelta(days=product_time[0][0]*work_place[i][2]/1440)
-            for j in range(len(lingliao_id)):
-                self.insert_table("lingliao_table", ["work_id", "goods_id", "goods_amount", "needed_time"],
-                              [work_place[i][0], lingliao_id[j][0], int(work_place[i][2]), lingliao_ddl_date])
+            if i >= 1:
+                db1 = XTDataBase(self.xt_file)
+                lingliao_id = db1.where("xt_bom_大众自动钳BOM", ["ID"], PARENT=work_place[i][1])
+                product_time = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=work_place[i][1])
+                work_place_date = datetime.strptime(work_place[i][4], "%Y-%m-%d")
+                date = work_place_date.date()
+                lingliao_ddl_date = date - timedelta(days=product_time[0][0] * work_place[i][2] / 1440)
+                work_id1 = work_place[i-1][0].split("-")
+                work_id = work_place[i][0].split("-")
+                if work_id[0] != work_id1[0]:
+                    lingliao = self.sql_cmd(f"SELECT product_amount FROM paigong_table WHERE work_id LIKE '{work_id[0]}-%'")
+                    amount = lingliao[0][0]
+                    for h in range(len(lingliao_id)):
+                        self.insert_table("lingliao_table", ["work_id", "goods_id", "goods_amount", "needed_time"],
+                                      [work_id[0], lingliao_id[h][0], int(amount), lingliao_ddl_date])
+            else:
+                db1 = XTDataBase(self.xt_file)
+                lingliao_id = db1.where("xt_bom_大众自动钳BOM", ["ID"], PARENT=work_place[i][1])
+                product_time = db1.where("xt_bom_大众自动钳BOM", ["CYCLE"], ID=work_place[i][1])
+                work_place_date = datetime.strptime(work_place[i][4], "%Y-%m-%d")
+                date = work_place_date.date()
+                lingliao_ddl_date = date - timedelta(days=product_time[0][0] * work_place[i][2] / 1440)
+                work_id = work_place[i][0].split("-")
+                lingliao = self.sql_cmd(f"SELECT product_amount FROM paigong_table WHERE work_id LIKE '{work_id[0]}-%'")
+                amount = lingliao[0][0]
+                # db1 = XTDataBase(self.xt_file)
+                # BOM = db1.find_info("xt_bom_大众自动钳BOM", ["ID", "PARENT"])
+                for h in range(len(lingliao_id)):
+                    self.insert_table("lingliao_table", ["work_id", "goods_id", "goods_amount", "needed_time"],
+                                          [work_id[0], lingliao_id[h][0], int(amount), lingliao_ddl_date])
 
 
 
@@ -400,22 +419,22 @@ class JHDataBase:
 if __name__ == "__main__":
     db = JHDataBase("JHdatabase.db", "lzj", "../../test.db", "../../xs/lk.db", "../../kc/inventory.db", "../../cg/cg_db/Purchase Detail.db")
 
-    db.MPS_table("MPS_table")
-    db.MRP_table("MRP_table")
-    db.chejiancaigou_table("caigou_table")
-    db.chejianzuoye_table("zuoye_table")
-    db.paigong_table("paigong_table")
-    db.lingliao_table("lingliao_table")
+    # db.MPS_table("MPS_table")
+    # db.MRP_table("MRP_table")
+    # db.chejiancaigou_table("caigou_table")
+    # db.chejianzuoye_table("zuoye_table")
+    # db.paigong_table("paigong_table")
+    # db.lingliao_table("lingliao_table")
 
     # db.drop("MRP_table")
 
     # db.insert_table("MPS_table",["product_id","planned_amount","planned_deadline"],[1, 100, date(2024,12,31)])
 
-    db.MPS_insert()
-    db.MRP_calculate()
-    db.chejianzuoye_cal()
-    db.caigou_cal()
-    db.paigong_cal()
+    # db.MPS_insert()
+    # db.MRP_calculate()
+    # db.chejianzuoye_cal()
+    # db.caigou_cal()
+    # db.paigong_cal()
     db.lingliao_cal()
 
     # for i in range (20):
