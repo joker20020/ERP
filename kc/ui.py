@@ -25,9 +25,9 @@ class Ui_kcwidget(object):
         if not kcwidget.objectName():
             kcwidget.setObjectName(u"kcwidget")
         kcwidget.resize(588, 463)
-        self.horizontalLayout_2 = QHBoxLayout(kcwidget)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(20, 9, 20, 30)
+        self.verticalLayout_2 = QVBoxLayout(kcwidget)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(20, 9, 20, 30)
         self.tabWidget = QTabWidget(kcwidget)
         self.tabWidget.setObjectName(u"tabWidget")
         self.tab_2 = QWidget()
@@ -45,8 +45,8 @@ class Ui_kcwidget(object):
         self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         __qtablewidgetitem3 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        if (self.tableWidget.rowCount() < 45):
-            self.tableWidget.setRowCount(45)
+        if (self.tableWidget.rowCount() < 60):
+            self.tableWidget.setRowCount(60)
         self.tableWidget.setObjectName(u"tableWidget")
 
         self.horizontalLayout.addWidget(self.tableWidget)
@@ -72,8 +72,8 @@ class Ui_kcwidget(object):
         self.tableWidget_2.setHorizontalHeaderItem(2, __qtablewidgetitem6)
         __qtablewidgetitem7 = QTableWidgetItem()
         self.tableWidget_2.setHorizontalHeaderItem(3, __qtablewidgetitem7)
-        if (self.tableWidget_2.rowCount() < 45):
-            self.tableWidget_2.setRowCount(45)
+        if (self.tableWidget_2.rowCount() < 60):
+            self.tableWidget_2.setRowCount(60)
         self.tableWidget_2.setObjectName(u"tableWidget_2")
 
         self.horizontalLayout_3.addWidget(self.tableWidget_2)
@@ -183,8 +183,74 @@ class Ui_kcwidget(object):
         self.verticalLayout.addWidget(self.pushButton_shancbu)
 
         self.tabWidget.addTab(self.tab, "")
+        self.tab_4 = QWidget()
+        self.tab_4.setObjectName(u"tab_4")
+        self.verticalLayout_3 = QVBoxLayout(self.tab_4)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.label_2 = QLabel(self.tab_4)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setFont(font)
 
-        self.horizontalLayout_2.addWidget(self.tabWidget)
+        self.verticalLayout_3.addWidget(self.label_2)
+
+        self.label_4 = QLabel(self.tab_4)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setFont(font2)
+
+        self.verticalLayout_3.addWidget(self.label_4)
+
+        self.lineEdit_shoudongdaohuoshijian = QLineEdit(self.tab_4)
+        self.lineEdit_shoudongdaohuoshijian.setObjectName(u"lineEdit_shoudongdaohuoshijian")
+
+        self.verticalLayout_3.addWidget(self.lineEdit_shoudongdaohuoshijian)
+
+        self.label_5 = QLabel(self.tab_4)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setFont(font2)
+
+        self.verticalLayout_3.addWidget(self.label_5)
+
+        self.lineEdit_shoudongdaohuoid = QLineEdit(self.tab_4)
+        self.lineEdit_shoudongdaohuoid.setObjectName(u"lineEdit_shoudongdaohuoid")
+
+        self.verticalLayout_3.addWidget(self.lineEdit_shoudongdaohuoid)
+
+        self.label_3 = QLabel(self.tab_4)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setFont(font2)
+
+        self.verticalLayout_3.addWidget(self.label_3)
+
+        self.lineEdit_shoudongdaohuoshuliang = QLineEdit(self.tab_4)
+        self.lineEdit_shoudongdaohuoshuliang.setObjectName(u"lineEdit_shoudongdaohuoshuliang")
+
+        self.verticalLayout_3.addWidget(self.lineEdit_shoudongdaohuoshuliang)
+
+        self.label_9 = QLabel(self.tab_4)
+        self.label_9.setObjectName(u"label_9")
+        self.label_9.setFont(font2)
+
+        self.verticalLayout_3.addWidget(self.label_9)
+
+        self.lineEdit_shoudongdaohuocaozuoyuan = QLineEdit(self.tab_4)
+        self.lineEdit_shoudongdaohuocaozuoyuan.setObjectName(u"lineEdit_shoudongdaohuocaozuoyuan")
+
+        self.verticalLayout_3.addWidget(self.lineEdit_shoudongdaohuocaozuoyuan)
+
+        self.pushButton = QPushButton(self.tab_4)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setFont(font2)
+
+        self.verticalLayout_3.addWidget(self.pushButton)
+
+        self.label_10 = QLabel(self.tab_4)
+        self.label_10.setObjectName(u"label_10")
+
+        self.verticalLayout_3.addWidget(self.label_10)
+
+        self.tabWidget.addTab(self.tab_4, "")
+
+        self.verticalLayout_2.addWidget(self.tabWidget)
 
 
         self.retranslateUi(kcwidget)
@@ -243,5 +309,13 @@ class Ui_kcwidget(object):
         self.label_7.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1ID", None))
         self.pushButton_shancbu.setText(QCoreApplication.translate("kcwidget", u"\u786e\u8ba4\u5220\u9664", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("kcwidget", u"\u67e5\u8be2\u589e\u6539", None))
+        self.label_2.setText(QCoreApplication.translate("kcwidget", u"\u624b\u52a8\u5165\u5e93", None))
+        self.label_4.setText(QCoreApplication.translate("kcwidget", u"\u5230\u8d27\u65f6\u95f4", None))
+        self.label_5.setText(QCoreApplication.translate("kcwidget", u"\u5546\u54c1ID", None))
+        self.label_3.setText(QCoreApplication.translate("kcwidget", u"\u5230\u8d27\u6570\u91cf", None))
+        self.label_9.setText(QCoreApplication.translate("kcwidget", u"\u64cd\u4f5c\u5458", None))
+        self.pushButton.setText(QCoreApplication.translate("kcwidget", u"\u624b\u52a8\u5165\u5e93", None))
+        self.label_10.setText("")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("kcwidget", u"\u624b\u52a8\u5165\u5e93", None))
     # retranslateUi
 

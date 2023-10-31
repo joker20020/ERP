@@ -10,6 +10,7 @@ from PySide6.QtWidgets import QTableWidgetItem
 from PySide6.QtWidgets import QApplication, QWidget
 # 导入我们生成的界面
 from ui import Ui_kcwidget
+from inventory import InventoryManager
 import sqlite3
 from xt_container import OperationCode,XtContainer
 
@@ -31,7 +32,40 @@ class MykcWidget(QWidget):
         self.bindkc()
         self.bindruku()
         self.bindchuku()
+        self.bindshoudongruku()
 
+    # 手动入库函数
+    def shoudongruku(self):
+        try:
+            product_id = int(self.ui.lineEdit_shoudongdaohuoid.text())
+            quantity = int(self.ui.lineEdit_shoudongdaohuoshuliang.text())
+        except ValueError:
+            print("请输入有效的数字！")
+            return
+
+        entry_time = self.ui.lineEdit_shoudongdaohuoshijian.text()
+        operator = self.ui.lineEdit_shoudongdaohuocaozuoyuan.text()
+
+        inventory_manager = InventoryManager(self.file_path)
+        inventory_manager.add_inventory(entry_time, product_id, quantity, operator)
+        self.container.generate_log(OperationCode.KC_CHANGE)
+
+    # #  入库函数
+    # def add_inventory(self, entry_time, product_id, quantity, operator):
+    #     # 添加入库记录
+    #     self.c.execute('''
+    #         INSERT INTO ruku (entry_time, product_id, quantity, operator)
+    #         VALUES (?, ?, ?, ?)
+    #         ''', (entry_time, product_id, quantity, operator))
+    #
+    #     # 更新库存表
+    #     self.c.execute('''
+    #         UPDATE products
+    #         SET quantity = quantity + ?
+    #         WHERE ID = ?
+    #         ''', (quantity, product_id))
+    #
+    #     self.conn.commit()
 
     # 查询函数
     def chaxun(self):
@@ -288,6 +322,7 @@ class MykcWidget(QWidget):
 
         cursor.execute('SELECT entry_time, product_id, quantity, operator FROM ruku')
         rows = cursor.fetchall()
+        self.ui.tableWidget.setRowCount(len(rows))
 
         for row_num, row_data in enumerate(rows):
             for col_num, data in enumerate(row_data):
@@ -303,6 +338,7 @@ class MykcWidget(QWidget):
 
         cursor.execute('SELECT exit_time, product_id, quantity, operator FROM chuku')
         rows = cursor.fetchall()
+        self.ui.tableWidget.setRowCount(len(rows))
 
         for row_num, row_data in enumerate(rows):
             for col_num, data in enumerate(row_data):
@@ -319,6 +355,9 @@ class MykcWidget(QWidget):
 
     def bindchuku(self):
         self.ui.pushButton_chukugx.clicked.connect(self.chuku)
+
+    def bindshoudongruku(self):
+        self.ui.pushButton.clicked.connect(self.shoudongruku)
 
 # 程序入口
 if __name__ == "__main__":

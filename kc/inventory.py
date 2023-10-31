@@ -3,7 +3,6 @@ import sqlite3
 class InventoryManager:
     def __init__(self,file_path):
         # 创建或连接到库存数据库
-
         self.file_path=file_path
         self.conn = sqlite3.connect(self.file_path)
         self.c = self.conn.cursor()
@@ -76,7 +75,7 @@ class InventoryManager:
     def _initialize_products(self):
         """初始化商品列表"""
         products = [
-            ("大众自动钳", 30000, 1, 1000),
+            ("大众自动钳", 30000, 1, 10000),
             ("壳体2", 3000, 2, 1000),
             ("支架1", 3000, 3, 1000),
             ("配件", 3000, 4, 1000),
@@ -142,7 +141,6 @@ class InventoryManager:
 # 示例用法
 if __name__ == "__main__":
     manager = InventoryManager('inventory.db')
-    manager.c.execute("DROP TABLE products")
 
     # 查询使用方法：
     db = InventoryManager('inventory.db')
