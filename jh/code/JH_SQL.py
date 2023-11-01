@@ -228,17 +228,17 @@ class JHDataBase:
         MRP1 = self.where("MPS_table", ["product_id", "planned_amount"], planned_deadline=x+1)
         if x in (0, 2, 4, 6, 7, 9, 11):
             self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 31)])
+                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 28)])
         elif x == 1:
             if y % 400 == 0 or (y % 100 != 0 and y % 4 == 0):
                 self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 29)])
+                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 26)])
             else:
                 self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                                  [MRP1[0][0], MRP1[0][1], date(y, x+1, 28)])
+                                  [MRP1[0][0], MRP1[0][1], date(y, x+1, 25)])
         else:
             self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 30)])
+                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 27)])
 
         # 计算物料需求量
         # 毛需求 = 独立需求 + 相关需求
