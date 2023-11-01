@@ -46,7 +46,7 @@
      <property name="font">
       <font>
        <family>Songti SC</family>
-       <pointsize>64</pointsize>
+       <pointsize>48</pointsize>
        <bold>true</bold>
       </font>
      </property>

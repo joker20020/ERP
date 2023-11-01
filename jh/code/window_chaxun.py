@@ -42,7 +42,7 @@ class Ui_Form(object):
         self.label.setSizePolicy(sizePolicy)
         font = QFont()
         font.setFamilies([u"Songti SC"])
-        font.setPointSize(64)
+        font.setPointSize(48)
         font.setBold(True)
         self.label.setFont(font)
         self.label.setAlignment(Qt.AlignCenter)
