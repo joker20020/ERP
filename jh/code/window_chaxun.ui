@@ -16,6 +16,11 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <spacer name="verticalSpacer_4">
+     <property name="font">
+      <font>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -28,7 +33,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="CaptionLabel" name="label">
+    <widget class="TitleLabel" name="label">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -40,7 +45,7 @@
      </property>
      <property name="font">
       <font>
-       <family>Kaiti SC</family>
+       <family>Songti SC</family>
        <pointsize>64</pointsize>
        <bold>true</bold>
       </font>
@@ -377,6 +382,11 @@
   <customwidget>
    <class>PushButton</class>
    <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>TitleLabel</class>
+   <extends>QLabel</extends>
    <header location="global">qfluentwidgets</header>
   </customwidget>
  </customwidgets>
