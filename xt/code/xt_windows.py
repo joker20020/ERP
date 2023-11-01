@@ -1074,6 +1074,7 @@ class XTMainWindow(FluentWindow):
         try:
             workers = self.xt.get_workers()
             chejians = []
+            wcs = []
             tree = Graph("车间-工作中心图", format="svg")
             for worker in workers:
                 place = worker[4]
@@ -1083,8 +1084,10 @@ class XTMainWindow(FluentWindow):
                     if chejian not in chejians:
                         chejians.append(chejian)
                         tree.node("车间"+chejian)
-                    tree.node("车间"+chejian+"工作中心"+wc)
-                    tree.edge("车间"+chejian, "车间"+chejian+"工作中心"+wc)
+                    if wc not in wcs:
+                        wcs.append(wc)
+                        tree.node("车间"+chejian+"工作中心"+wc)
+                        tree.edge("车间"+chejian, "车间"+chejian+"工作中心"+wc)
             tree.render(filename="车间-工作中心图",view=True)
 
         except AuthorityError as e:
