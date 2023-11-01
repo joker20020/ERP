@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QSizePolicy,
     QSpacerItem, QVBoxLayout, QWidget)
 
 from qfluentwidgets import (CalendarPicker, CaptionLabel, ComboBox, LineEdit,
-    PrimaryPushButton, PushButton)
+    PrimaryPushButton, PushButton, TitleLabel)
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -32,7 +32,7 @@ class Ui_Form(object):
 
         self.verticalLayout.addItem(self.verticalSpacer_4)
 
-        self.label = CaptionLabel(Form)
+        self.label = TitleLabel(Form)
         self.label.setObjectName(u"label")
         self.label.setEnabled(True)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
@@ -41,7 +41,7 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
         font = QFont()
-        font.setFamilies([u"Kaiti SC"])
+        font.setFamilies([u"Songti SC"])
         font.setPointSize(64)
         font.setBold(True)
         self.label.setFont(font)
