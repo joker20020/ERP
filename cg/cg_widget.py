@@ -524,7 +524,7 @@ class cg_widget(QWidget):
         self.ui.supplier_logo.setScene(None)
 
         # 从上面传过来供应商id，并且在文件夹中找到同id的png文件
-        logo_path = f"cg_gr/{company_id}.png"
+        logo_path = f"res/cg_image/{company_id}.png"
         logo_pixmap = QPixmap(logo_path)
 
         scene = QGraphicsScene()
