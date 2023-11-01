@@ -6,6 +6,7 @@ import os
 sys.path.append(os.path.abspath("../../xt/code"))
 sys.path.append(os.path.abspath("../../kc"))
 from PySide6.QtWidgets import QApplication, QWidget, QApplication, QTableWidget, QTableWidgetItem, QHeaderView
+from PySide6.QtCore import Qt
 # 导入我们生成的界面
 from JH_SQL import JHDataBase
 from window_chaxun import Ui_Form
@@ -18,6 +19,10 @@ from table_lingliao import table_lingliao
 
 from xt_container import XtContainer,OperationCode
 from datetime import date, datetime, timedelta
+import time
+
+from qfluentwidgets import InfoBar,InfoBarIcon,InfoBarPosition
+
 
 from inventory import InventoryManager
 
@@ -43,7 +48,7 @@ class JHWidget(QWidget):
         self.user_name = user_name
 
         # 数据库和日志库路径均改为传入参数
-        self.jh_db = JHDataBase(file_path, self.user_name, xt_file, xs_file, kc_file, cg_file)
+        self.jh_db = JHDataBase(self.user_name, file_path, xt_file, xs_file, kc_file, cg_file)
 
         self.log = XtContainer(1, log_path, user_name)
 
@@ -66,12 +71,62 @@ class JHWidget(QWidget):
         # self.loadin()
 
     def jihua(self):
-        self.jh_db.MPS_insert()
-        self.jh_db.MRP_calculate()
-        self.jh_db.caigou_cal()
-        self.jh_db.chejianzuoye_cal()
-        self.jh_db.paigong_cal()
-        self.jh_db.lingliao_cal()
+        try:
+
+            self.jh_db.MRP_calculate()
+            self.jh_db.caigou_cal()
+            self.jh_db.chejianzuoye_cal()
+            self.jh_db.paigong_cal()
+            self.jh_db.lingliao_cal()
+
+            InfoBar.success(
+                title="计划成功",
+                content="计划已生成",
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.BOTTOM,
+                duration=2000,  # won't disappear automatically
+                parent=self
+            )
+        except Exception as e:
+            print(e)
+            InfoBar.error(
+                title="计划失败",
+                content="计划未生成",
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.BOTTOM,
+                duration=2000,  # won't disappear automatically
+                parent=self
+            )
+
+    def update_MPS(self):
+
+        try:
+            for i in range(self.MPS.ui.tableWidget.rowCount()):
+                p_id = self.MPS.ui.tableWidget.item(i, 0).text()
+                amount = self.MPS.ui.tableWidget.item(i, 1).text()
+                ddl = self.MPS.ui.tableWidget.item(i, 2).text()
+                self.jh_db.sql_cmd(f"UPDATE MPS_table SET planned_amount={int(amount)} WHERE product_id = {int(p_id)} AND planned_deadline = {ddl}")
+            InfoBar.success(
+                title="修改成功",
+                content="MPS修改已录入",
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.BOTTOM,
+                duration=2000,  # won't disappear automatically
+                parent=self
+            )
+        except Exception as e:
+            InfoBar.error(
+                title="修改失败",
+                content="MPS计划不变",
+                orient=Qt.Horizontal,
+                isClosable=False,
+                position=InfoBarPosition.BOTTOM,
+                duration=2000,  # won't disappear automatically
+                parent=self
+            )
 
 
 
@@ -81,24 +136,59 @@ class JHWidget(QWidget):
         mode = self.ui.target.currentText()
         self.log.generate_log(OperationCode.JH_CHANGE)
 
-        start = self.ui.start.date.toPython()
-        ddl = self.ui.ddl.date.toPython()
+        try:
+            start = self.ui.start.date.toPython()
+            ddl = self.ui.ddl.date.toPython()
+
+        except ValueError as e:
+            print(e)
+            start = ""
+            ddl = ""
 
         if mode == "MPS主生产计划":
             MPS = self.jh_db.find_info("MPS_table", [])
             row1 = len(MPS)
 
+            if start == "":
+                self.MPS.ui.tableWidget.setRowCount(row1)
+                for i in range(row1):
+                    for j in range(len(MPS[i])):
+                        self.MPS.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(MPS[i][j])))
+                self.MPS.show()
+                return
+
             t = 0
             k = 0
             for i in range(row1):
-                deadline = datetime.strptime(MPS[i][2], "%Y-%m-%d").date()
+                num_mon = int(MPS[i][2])
+                num_year = int(time.localtime().tm_year)
+                if num_mon in (1, 3, 5, 7, 8, 10, 12):
+                    deadline = datetime.strptime(str(num_year)+'-'+str(num_mon)+'-31', "%Y-%m-%d").date()
+                elif num_mon == 2:
+                    if num_year % 400 == 0 or (num_year % 100 != 0 and num_year % 4 == 0):
+                        deadline = datetime.strptime(str(num_year)+'-'+str(num_mon)+'-29', "%Y-%m-%d").date()
+                    else:
+                        deadline = datetime.strptime(str(num_year)+'-'+str(num_mon)+'-28', "%Y-%m-%d").date()
+                else:
+                    deadline = datetime.strptime(str(num_year)+'-'+str(num_mon)+'-30', "%Y-%m-%d").date()
                 if deadline > start:
                     if deadline <= ddl:
                         t = t+1
+
             self.MPS.ui.tableWidget.setRowCount(t)
 
             for i in range(row1):
-                deadline = datetime.strptime(MPS[i][2], "%Y-%m-%d").date()
+                num_mon = int(MPS[i][2])
+                num_year = int(time.localtime().tm_year)
+                if num_mon in (1, 3, 5, 7, 8, 10, 12):
+                    deadline = datetime.strptime(str(num_year) + '-' + str(num_mon) + '-31', "%Y-%m-%d").date()
+                elif num_mon == 2:
+                    if num_year % 400 == 0 or (num_year % 100 != 0 and num_year % 4 == 0):
+                        deadline = datetime.strptime(str(num_year) + '-' + str(num_mon) + '-29', "%Y-%m-%d").date()
+                    else:
+                        deadline = datetime.strptime(str(num_year) + '-' + str(num_mon) + '-28', "%Y-%m-%d").date()
+                else:
+                    deadline = datetime.strptime(str(num_year) + '-' + str(num_mon) + '-30', "%Y-%m-%d").date()
                 if deadline > start:
                     if deadline <= ddl:
                         k = k+1
@@ -108,8 +198,18 @@ class JHWidget(QWidget):
             self.MPS.show()
 
         elif mode == "MRP物料需求计划":
+
             MRP = self.jh_db.find_info("MRP_table", [])
             row2 = len(MRP)
+
+            if start == "":
+                self.MRP.ui.tableWidget.setRowCount(row2)
+                for i in range(row2):
+                    for j in range(len(MRP[i])):
+                        self.MRP.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(MRP[i][j])))
+                self.MRP.show()
+                return
+
             t = 0
             k = 0
             for i in range(row2):
@@ -132,6 +232,15 @@ class JHWidget(QWidget):
         elif mode == "车间工作采购单":
             caigou = self.jh_db.find_info("caigou_table", [])
             row3 = len(caigou)
+
+            if start == "":
+                self.caigou.ui.tableWidget.setRowCount(row3)
+                for i in range(row3):
+                    for j in range(len(caigou[i])):
+                        self.caigou.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(caigou[i][j])))
+                self.caigou.show()
+                return
+
             t = 0
             k = 0
             for i in range(row3):
@@ -154,6 +263,15 @@ class JHWidget(QWidget):
         elif mode == "车间工作作业计划":
             zuoye = self.jh_db.find_info("zuoye_table", [])
             row4 = len(zuoye)
+
+            if start == "":
+                self.chejianzuoye.ui.tableWidget.setRowCount(row4)
+                for i in range(row4):
+                    for j in range(len(zuoye[i])):
+                        self.chejianzuoye.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(zuoye[i][j])))
+                self.chejianzuoye.show()
+                return
+
             t = 0
             k = 0
             for i in range(row4):
@@ -173,17 +291,27 @@ class JHWidget(QWidget):
 
             self.chejianzuoye.show()
 
-            zuoye = self.jh_db.find_info("zuoye_table", ["product_id", "product_amount", "ddl_time"])
-            inventor_manager = InventoryManager(self.kc_file)
-            for i in range(len(zuoye)):
-                inventor_manager.add_inventory(zuoye[i][2], zuoye[i][0], int(zuoye[i][1]), self.user_name)
+            # zuoye = self.jh_db.find_info("zuoye_table", ["product_id", "product_amount", "ddl_time"])
+            # inventor_manager = InventoryManager(self.kc_file)
+            # for i in range(len(zuoye)):
+            #     inventor_manager.add_inventory(zuoye[i][2], zuoye[i][0], int(zuoye[i][1]), self.user_name)
 
         elif mode == "派工单":
+
             work_id = self.ui.workID.text()
             if work_id != "":
                 paigong = self.jh_db.sql_cmd(f"SELECT * FROM paigong_table WHERE work_id LIKE '{work_id}-%'")
                 self.paigong.ui.tableWidget.clearContents()
                 row5 = len(paigong)
+
+                if start == "":
+                    self.paigong.ui.tableWidget.setRowCount(row5)
+                    for i in range(row5):
+                        for j in range(len(paigong[i])):
+                            self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong[i][j])))
+                    self.paigong.show()
+                    return
+
                 t = 0
                 k = 0
                 for i in range(row5):
@@ -205,6 +333,15 @@ class JHWidget(QWidget):
                 paigong_table = self.jh_db.find_info("paigong_table", [])
                 self.paigong.ui.tableWidget.clearContents()
                 row5 = len(paigong_table)
+
+                if start == "":
+                    self.paigong.ui.tableWidget.setRowCount(row5)
+                    for i in range(row5):
+                        for j in range(len(paigong_table[i])):
+                            self.paigong.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(paigong_table[i][j])))
+                    self.paigong.show()
+                    return
+
                 t = 0
                 k = 0
                 for i in range(row5):
@@ -230,6 +367,15 @@ class JHWidget(QWidget):
                 lingliao = self.jh_db.sql_cmd(f"SELECT * FROM lingliao_table WHERE work_id LIKE '{work_id}-%'")
                 self.lingliao.ui.tableWidget.clearContents()
                 row6 = len(lingliao)
+
+                if start == "":
+                    self.lingliao.ui.tableWidget.setRowCount(row6)
+                    for i in range(row6):
+                        for j in range(len(lingliao[i])):
+                            self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao[i][j])))
+                    self.lingliao.show()
+                    return
+
                 t = 0
                 k = 0
                 for i in range(row6):
@@ -251,6 +397,15 @@ class JHWidget(QWidget):
                 lingliao_table = self.jh_db.find_info("lingliao_table", [])
                 self.lingliao.ui.tableWidget.clearContents()
                 row6 = len(lingliao_table)
+
+                if start == "":
+                    self.lingliao.ui.tableWidget.setRowCount(row6)
+                    for i in range(row6):
+                        for j in range(len(lingliao_table[i])):
+                            self.lingliao.ui.tableWidget.setItem(i, j, QTableWidgetItem(str(lingliao_table[i][j])))
+                    self.lingliao.show()
+                    return
+
                 t = 0
                 k = 0
                 for i in range(row6):
@@ -277,6 +432,7 @@ class JHWidget(QWidget):
     def bind(self):
         self.ui.pushButton.clicked.connect(self.open)
         self.ui.pushButton_2.clicked.connect(self.jihua)
+        self.MPS.ui.pushButton_2.clicked.connect(self.update_MPS)
 
     # def loadin(self):
         # MPS_table = self.jh_db.find_info("MPS_table", [])

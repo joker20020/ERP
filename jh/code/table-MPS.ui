@@ -18,14 +18,14 @@
     <widget class="QLabel" name="label">
      <property name="font">
       <font>
-       <family>华文隶书</family>
+       <family>Kaiti SC</family>
        <pointsize>36</pointsize>
        <italic>false</italic>
-       <bold>false</bold>
+       <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">font: 36pt &quot;华文隶书&quot;;</string>
+      <string notr="true">font: 700 36pt &quot;Kaiti SC&quot;;</string>
      </property>
      <property name="text">
       <string>MPS主生产计划</string>
@@ -84,10 +84,34 @@
      </column>
      <column>
       <property name="text">
-       <string>计划截止日期</string>
+       <string>计划月</string>
       </property>
      </column>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="PrimaryPushButton" name="pushButton_2">
+       <property name="text">
+        <string>修改</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
@@ -96,6 +120,11 @@
    <class>TableWidget</class>
    <extends>QTableWidget</extends>
    <header location="global">qfluentwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>PrimaryPushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

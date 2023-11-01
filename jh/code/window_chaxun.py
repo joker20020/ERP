@@ -15,11 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
-    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QSizePolicy,
+    QSpacerItem, QVBoxLayout, QWidget)
 
 from qfluentwidgets import (CalendarPicker, CaptionLabel, ComboBox, LineEdit,
-    PrimaryPushButton)
+    PrimaryPushButton, PushButton)
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -41,8 +41,9 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
         font = QFont()
-        font.setFamilies([u"\u96b6\u4e66"])
+        font.setFamilies([u"Kaiti SC"])
         font.setPointSize(64)
+        font.setBold(True)
         self.label.setFont(font)
         self.label.setAlignment(Qt.AlignCenter)
 
@@ -169,31 +170,32 @@ class Ui_Form(object):
 
         self.verticalLayout.addItem(self.verticalSpacer_6)
 
-        self.pushButton_2 = QPushButton(Form)
+        self.pushButton_2 = PushButton(Form)
         self.pushButton_2.setObjectName(u"pushButton_2")
         font4 = QFont()
         font4.setFamilies([u"Kaiti SC"])
-        font4.setPointSize(24)
+        font4.setPointSize(18)
         font4.setBold(False)
         font4.setItalic(False)
         self.pushButton_2.setFont(font4)
 
         self.verticalLayout.addWidget(self.pushButton_2)
 
-        self.horizontalLayout_5 = QHBoxLayout()
-        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer_7)
+
         self.pushButton = PrimaryPushButton(Form)
         self.pushButton.setObjectName(u"pushButton")
         font5 = QFont()
         font5.setFamilies([u"Kaiti SC"])
-        font5.setPointSize(24)
-        font5.setBold(True)
-        font5.setItalic(False)
+        font5.setPointSize(18)
         self.pushButton.setFont(font5)
-        self.pushButton.setStyleSheet(u"font: 700 24pt \"Kaiti SC\";")
 
-        self.horizontalLayout_5.addWidget(self.pushButton)
+        self.verticalLayout.addWidget(self.pushButton)
 
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
 
         self.verticalLayout.addLayout(self.horizontalLayout_5)
 

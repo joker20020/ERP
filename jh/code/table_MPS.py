@@ -15,10 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QHeaderView, QLabel,
-    QSizePolicy, QTableWidgetItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QHBoxLayout, QHeaderView,
+    QLabel, QSizePolicy, QSpacerItem, QTableWidgetItem,
+    QVBoxLayout, QWidget)
 
-from qfluentwidgets import TableWidget
+from qfluentwidgets import (PrimaryPushButton, TableWidget)
 
 class table_MPS(object):
     def setupUi(self, Form):
@@ -30,12 +31,12 @@ class table_MPS(object):
         self.label = QLabel(Form)
         self.label.setObjectName(u"label")
         font = QFont()
-        font.setFamilies([u"\u534e\u6587\u96b6\u4e66"])
+        font.setFamilies([u"Kaiti SC"])
         font.setPointSize(36)
-        font.setBold(False)
+        font.setBold(True)
         font.setItalic(False)
         self.label.setFont(font)
-        self.label.setStyleSheet(u"font: 36pt \"\u534e\u6587\u96b6\u4e66\";")
+        self.label.setStyleSheet(u"font: 700 36pt \"Kaiti SC\";")
         self.label.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout.addWidget(self.label)
@@ -53,12 +54,26 @@ class table_MPS(object):
             self.tableWidget.setRowCount(20)
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setStyleSheet(u"font: 18pt \"STKaiti\";")
-        self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        # self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.tableWidget.setRowCount(20)
         self.tableWidget.setColumnCount(3)
         self.tableWidget.horizontalHeader().setDefaultSectionSize(200)
 
         self.verticalLayout.addWidget(self.tableWidget)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout.addItem(self.horizontalSpacer)
+
+        self.pushButton_2 = PrimaryPushButton(Form)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+
+        self.horizontalLayout.addWidget(self.pushButton_2)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
 
         self.retranslateUi(Form)
@@ -74,6 +89,7 @@ class table_MPS(object):
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("Form", u"\u9700\u6c42\u91cf", None));
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("Form", u"\u8ba1\u5212\u622a\u6b62\u65e5\u671f", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("Form", u"\u8ba1\u5212\u6708", None));
+        self.pushButton_2.setText(QCoreApplication.translate("Form", u"\u4fee\u6539", None))
     # retranslateUi
 
