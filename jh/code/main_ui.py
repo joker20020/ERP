@@ -115,7 +115,7 @@ class JHWidget(QWidget):
                 isClosable=False,
                 position=InfoBarPosition.BOTTOM,
                 duration=2000,  # won't disappear automatically
-                parent=self
+                parent=self.MPS
             )
         except Exception as e:
             InfoBar.error(
@@ -125,7 +125,7 @@ class JHWidget(QWidget):
                 isClosable=False,
                 position=InfoBarPosition.BOTTOM,
                 duration=2000,  # won't disappear automatically
-                parent=self
+                parent=self.MPS
             )
 
 
