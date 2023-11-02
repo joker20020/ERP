@@ -67,6 +67,7 @@ class cg_widget(QWidget):
         self.item_file = item_file
         self.user_name = user_name
         
+        self.company_id = 0
         # 执行初始化方法
         self.init_ui()
         # 设定左上角标题
@@ -105,7 +106,7 @@ class cg_widget(QWidget):
         self.ui.order_delete.clicked.connect(self.order_delete_table)
         self.ui.order_save.clicked.connect(self.order_save_table)
         self.ui.order_table_view.setModel(self.model)
-        self.ui.order_table_view.selectionModel().selectionChanged.connect(self.order_table_changed)
+        # self.ui.order_table_view.selectionModel().selectionChanged.connect(self.order_table_changed)
 
         # 3的槽函数
         self.ui.receive_search.clicked.connect(self.receive_table)
@@ -114,13 +115,16 @@ class cg_widget(QWidget):
         self.ui.receive_save.clicked.connect(self.receive_save_table)
         self.ui.receive_btn.clicked.connect(self.receive_to_inver)
         self.ui.receive_table_view.setModel(self.model)
-        self.ui.receive_table_view.selectionModel().selectionChanged.connect(self.receive_table_changed)
+        # self.ui.receive_table_view.selectionModel().selectionChanged.connect(self.receive_table_changed)
 
         # 4的槽函数
         self.ui.supplier_choose_box.currentTextChanged.connect(self.update_info)
+        # self.ui.supplier_choose_box.clicked.connect(self.update_info)
+        self.ui.supplier_list.clicked.connect(self.supplier_table_view)
         # self.ui.supplier_list.clicked.connect(self.supplier_table_view)
         self.ui.supplier_evaluate.clicked.connect(self.supplier_evaluation)
         # self.supplier_thread.evaluation_completed.connect(self.supplier_diaplay_image)
+
 
         # 5的槽函数
         self.ui.query_choose_btn.clicked.connect(self.query_table)
@@ -185,6 +189,11 @@ class cg_widget(QWidget):
             data = self.supplier_query.value(0)
             self.ui.supplier_choose_box.addItem(data)
         self.ui.supplier_choose_box.show()
+
+        # self.ui.supplier_id.clear()
+        # self.ui.supplier_tel.clear()
+        # self.ui.supplier_location.clear()
+        # self.ui.supplier_profile.clear()
 
     # TODO: 采购业务页面的编写
     # 5.采购业务页面
@@ -271,6 +280,7 @@ class cg_widget(QWidget):
             print("No row selected")
 
     # 2的槽函数
+    @Slot()
     def order_table(self):
         self.database = QSqlDatabase.addDatabase("QSQLITE")
         self.database.setDatabaseName(self.detail_file)
@@ -298,7 +308,7 @@ class cg_widget(QWidget):
             self.ui.order_table_view.resizeColumnToContents(5)
             self.ui.order_table_view.resizeColumnToContents(6)
 
-        # self.ui.order_table_view.selectionModel().selectionChanged.connect(self.order_table_changed)
+        self.ui.order_table_view.selectionModel().selectionChanged.connect(self.order_table_changed)
         self.log.generate_log(OperationCode.CG_CHANGE)
 
     # 2的槽函数
@@ -392,7 +402,7 @@ class cg_widget(QWidget):
             self.ui.receive_table_view.resizeColumnToContents(0)
             self.ui.receive_table_view.resizeColumnToContents(2)
 
-        # self.ui.receive_table_view.selectionModel().selectionChanged.connect(self.receive_table_changed)
+        self.ui.receive_table_view.selectionModel().selectionChanged.connect(self.receive_table_changed)
         self.log.generate_log(OperationCode.CG_CHANGE)
 
     # 3的槽函数
@@ -490,6 +500,7 @@ class cg_widget(QWidget):
     def update_info(self):
         # 读取选取的供应商名字
         selected_supplier_name = self.ui.supplier_choose_box.currentText()
+        company_id = 0
         # 相似的数据库访问操作
         supplier_query = QSqlQuery()
         supplier_query.prepare("SELECT * FROM cg_supplier_info WHERE cg_supplier_name = :supplier_name")
@@ -502,6 +513,10 @@ class cg_widget(QWidget):
             company_tel = supplier_query.value(2)
             company_address = supplier_query.value(3)
             remarks = supplier_query.value(4)
+            self.company_id = company_id
+            if self.company_id != company_id:
+                self.company_id = company_id
+            print("the company id is: ", self.company_id)
 
             self.ui.supplier_id.setText(f"{company_id}")
             self.ui.supplier_tel.setText(f"{company_tel}")
@@ -510,10 +525,8 @@ class cg_widget(QWidget):
 
             # 同时，加载该供应商的logo图片，图片储存在cg_gr中
             self.load_supplier_logo(company_id)
-            self.ui.supplier_list.clicked.connect(lambda: self.supplier_table_view(company_id))
             # if self.ui.supplier_list.clicked:
-            #   print("OKKKKKK!!!! This is: ", company_id)
-        self.supplier_id = company_id
+            # print("OKKKKKK!!!! This is: ", company_id)
         self.log.generate_log(OperationCode.CG_CHANGE)
     
     # TODO: 写这个代码块的注释
@@ -536,11 +549,12 @@ class cg_widget(QWidget):
         del logo_pixmap
         del scene
 
-    @Slot()
-    def supplier_table_view(self, company_id):
-        print("the company id is: ", company_id)
-        dialog = supplier_form(company_id, self.item_file)
+    def supplier_table_view(self):
+        if not self.company_id:
+            pass
+        dialog = supplier_form(self.company_id, self.item_file)
         dialog.exec()
+        self.init_supplier()
 
     # TODO: 写这个代码块
     # FIXME: 调试后可以发现，是因为点击一次后线程已经在运行，点击第二次就会导致堆叠任务导致内存占用过多
@@ -548,7 +562,7 @@ class cg_widget(QWidget):
     @Slot()
     def supplier_evaluation(self):
         if not self.thread_running or not self.thread_running.isRunning():
-            self.supplier_thread = supplier_eval(self.supplier_file, str(self.supplier_id))
+            self.supplier_thread = supplier_eval(self.supplier_file, str(self.company_id))
             self.supplier_thread.evaluation_completed.connect(self.supplier_diaplay_image)
             self.supplier_thread.start()
 
@@ -556,9 +570,9 @@ class cg_widget(QWidget):
     # 4的槽函数，紧跟在supplier_evaluation后面，访问路径并显示图像    
     def supplier_diaplay_image(self, image_file_name):
         directory = os.path.dirname(image_file_name)
-        second_name = f"{self.supplier_id}_2.png"
+        second_name = f"{self.company_id}_2.png"
         second_path = os.path.join(directory, second_name)
-        third_name = f"{self.supplier_id}_3.png"
+        third_name = f"{self.company_id}_3.png"
         third_path = os.path.join(directory, third_name)
         print(second_path)
 
@@ -778,7 +792,6 @@ class supplier_form(QDialog):
         self.ui.supplier_item_delete.clicked.connect(self.item_delete)
         self.ui.supplier_item_save.clicked.connect(self.item_save)
     
-
     def detect_table_name(self):
         tables = self.database.tables()
         print("the table is:", tables)
