@@ -364,7 +364,7 @@ class JHWidget(QWidget):
         elif mode == "领料单":
             work_id = self.ui.workID.text()
             if work_id != "":
-                lingliao = self.jh_db.sql_cmd(f"SELECT * FROM lingliao_table WHERE work_id LIKE '{work_id}-%'")
+                lingliao = self.jh_db.sql_cmd(f"SELECT * FROM lingliao_table WHERE work_id={work_id}")
                 self.lingliao.ui.tableWidget.clearContents()
                 row6 = len(lingliao)
 

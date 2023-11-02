@@ -98,7 +98,7 @@ class cg_widget(QWidget):
         self.ui.requisition_receipt_btn.clicked.connect(self.view_requisition_list)
         self.ui.requisition_accept_btn.clicked.connect(self.accept_requisition)
         self.ui.requisition_table_view.setModel(self.model)
-        self.ui.requisition_table_view.selectionModel().selectionChanged.connect(self.handle_selection_change)
+        # self.ui.requisition_table_view.selectionModel().selectionChanged.connect(self.handle_selection_change)
 
         # 2的槽函数
         self.ui.order_search.clicked.connect(self.order_table)
@@ -156,17 +156,20 @@ class cg_widget(QWidget):
 
     # 1.请购单接收页面
     def init_requisition(self):
-        self.model.clear()
+        # self.model.clear()
+        pass
 
     # 2.采购订单页面
     def init_order(self):
         # TODO: 设定信号，绑定函数
-        self.model.clear()
+        # self.model.clear()
+        pass
     # 3.到货接收页面
     # TODO: 到货接收页面
     def init_recieve(self):
         # 直接绑定槽函数
-        self.model.clear()
+        # self.model.clear()
+        pass
     # 4.供应商管理与评价页面
     def init_supplier(self):
         # 4模块的一个初始化
@@ -198,7 +201,8 @@ class cg_widget(QWidget):
     # TODO: 采购业务页面的编写
     # 5.采购业务页面
     def init_query(self):
-        self.model.clear()
+        # self.model.clear()
+        pass
 
     # 以下是各个页面初始化后需要用到的一些槽函数操作
     # 已经按页面顺序和运行的顺序排好
@@ -227,7 +231,7 @@ class cg_widget(QWidget):
 
         # 嵌套了一个槽函数，对选择的行进行判断        
         self.selected_row = None
-        # self.ui.requisition_table_view.selectionModel().selectionChanged.connect(self.handle_selection_change)
+        self.ui.requisition_table_view.selectionModel().selectionChanged.connect(self.handle_selection_change)
 
         self.log.generate_log(OperationCode.CG_CHANGE)
 
@@ -260,6 +264,7 @@ class cg_widget(QWidget):
     # 实现交互操作：点击某行，确认，就可以将请购单中的某行内容添加到内部的采购计划表中
     @Slot()
     def accept_requisition(self):
+        max_id = 0
         if self.selected_row is not None:
             print("table: ", self.detail_file)
             # You can now use self.selected_row to access the selected row
@@ -269,6 +274,8 @@ class cg_widget(QWidget):
             cursor = conn.cursor()
             cursor.execute("SELECT MAX(cg_purchase_detail_id) FROM cg_purchase_detail")
             max_id = cursor.fetchone()[0]
+            if not max_id:
+                max_id = 40004001
             add_requisition = cg_purchase_detail(self.detail_file, 'cg_purchase_detail', 'cg_purchase_detail_id')
             add_requisition.add_item(
                 cg_purchase_detail_id = max_id + 1,

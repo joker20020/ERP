@@ -228,17 +228,17 @@ class JHDataBase:
         MRP1 = self.where("MPS_table", ["product_id", "planned_amount"], planned_deadline=x+1)
         if x in (0, 2, 4, 6, 7, 9, 11):
             self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 28)])
+                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 31)])
         elif x == 1:
             if y % 400 == 0 or (y % 100 != 0 and y % 4 == 0):
                 self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 26)])
+                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 29)])
             else:
                 self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                                  [MRP1[0][0], MRP1[0][1], date(y, x+1, 25)])
+                                  [MRP1[0][0], MRP1[0][1], date(y, x+1, 28)])
         else:
             self.insert_table("MRP_table", ["product_id", "planned_amount", "planned_deadline"],
-                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 27)])
+                              [MRP1[0][0], MRP1[0][1], date(y, x+1, 30)])
 
         # 计算物料需求量
         # 毛需求 = 独立需求 + 相关需求
@@ -265,7 +265,10 @@ class JHDataBase:
             parent = db1.where("xt_bom_大众自动钳BOM", ["PARENT"], ID=BOM1[j][0])
             relevent = self.where("MRP_table", ["planned_amount", "planned_deadline"], product_id=parent[0][0]) #相关需求
 
-            planned_amount1 = int(relevent[0][0] - table_kc[0][0] - table_cg[0][0] + table_kc[0][1])
+            if table_cg == []:
+                planned_amount1 = int(relevent[0][0] - table_kc[0][0] + table_kc[0][1])
+            else:
+                planned_amount1 = int(relevent[0][0] - table_kc[0][0] - table_cg[0][0] + table_kc[0][1])
             if planned_amount1 < 0:
                 planned_amount1 = 0
             MRP_date = datetime.strptime(relevent[0][1], "%Y-%m-%d")
